@@ -1,0 +1,1133 @@
+/* Reset default styles and prepare for custom design */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700;900&family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&display=swap");
+
+/* Custom Font - Stay Glory Serif */
+@font-face {
+  font-family: "Stay Glory Serif";
+  src: url("/font/Stay Glory Serif.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom Font - Fabregas for Ampersand */
+@font-face {
+  font-family: "Fabregas";
+  src: url("/font/Fabregas.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Noto Serif SC", "Noto Sans SC", "Microsoft YaHei", "PingFang SC",
+    "Hiragino Sans GB", "SimSun", serif;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #8c032d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffc071;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffb444;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced gradient utilities */
+.bg-radial-gradient {
+  background: radial-gradient(circle, transparent 0%, rgba(0, 0, 0, 0.3) 70%);
+}
+
+/* Luxury gradient utilities */
+.bg-gradient-radial {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    rgba(0, 0, 0, 0.2) 70%
+  );
+}
+
+/* Custom animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* 3D Hero Section Effects */
+.couple-image {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.couple-image img {
+  transition: transform 0.6s ease-out;
+}
+
+.couple-image:hover img {
+  transform: translateZ(40px) rotateY(-5deg) scale(1.02);
+}
+
+@keyframes float3d {
+  0%,
+  100% {
+    transform: translateZ(30px) rotateY(-2deg) translateY(0px);
+  }
+  50% {
+    transform: translateZ(30px) rotateY(-2deg) translateY(-10px);
+  }
+}
+
+.couple-image img {
+  animation: float3d 6s ease-in-out infinite;
+}
+
+/* Luxury glass morphism effect */
+.glass-morphism {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(234, 228, 204, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Parallax layers */
+.parallax-layer {
+  will-change: transform;
+}
+
+/* Enhanced floating animation for Chinese characters - Refined */
+@keyframes subtleFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.05;
+  }
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+    opacity: 0.08;
+  }
+  50% {
+    transform: translateY(-4px) rotate(-0.5deg);
+    opacity: 0.06;
+  }
+  75% {
+    transform: translateY(-12px) rotate(0.5deg);
+    opacity: 0.1;
+  }
+}
+
+.floating-heart {
+  animation: subtleFloat 12s ease-in-out infinite;
+}
+
+/* Luxury Typography Shadows */
+.luxury-text-shadow {
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.9), 0 2px 0 rgba(0, 0, 0, 0.8),
+    0 3px 0 rgba(0, 0, 0, 0.7), 0 4px 0 rgba(0, 0, 0, 0.6),
+    0 5px 0 rgba(0, 0, 0, 0.5), 0 6px 1px rgba(0, 0, 0, 0.4),
+    0 0 5px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2),
+    0 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Gold text glow effect */
+.gold-glow {
+  text-shadow: 0 0 5px rgba(212, 175, 55, 0.8), 0 0 10px rgba(212, 175, 55, 0.6),
+    0 0 15px rgba(212, 175, 55, 0.4), 0 0 20px rgba(212, 175, 55, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Refined 3D couple image animation */
+@keyframes elegant3dFloat {
+  0%,
+  100% {
+    transform: translateZ(20px) translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateZ(25px) translateY(-5px) scale(1.005);
+  }
+}
+
+.couple-image img {
+  animation: elegant3dFloat 8s ease-in-out infinite;
+}
+
+/* Chinese Lantern Animations */
+@keyframes lantern-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(220, 20, 60, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(220, 20, 60, 0.9), 0 0 30px rgba(255, 69, 0, 0.5);
+  }
+}
+
+@keyframes lantern-sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes tassel-swing {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+.lantern-glow {
+  animation: lantern-glow 3s ease-in-out infinite;
+}
+
+.lantern-sway {
+  animation: lantern-sway 4s ease-in-out infinite;
+}
+
+.tassel-swing {
+  animation: tassel-swing 2s ease-in-out infinite;
+}
+
+/* Utility classes for 3D effects */
+.transform-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.border-3 {
+  border-width: 3px;
+}
+
+/* Chinese Typography Classes */
+.font-chinese-title {
+  font-family: "Ma Shan Zheng", "ZCOOL KuaiLe", "Noto Serif SC", serif;
+  font-weight: 900;
+}
+
+.font-chinese-elegant {
+  font-family: "Noto Serif SC", "Microsoft YaHei", serif;
+  font-weight: 500;
+}
+
+.font-chinese-modern {
+  font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-weight: 400;
+}
+
+.font-chinese-decorative {
+  font-family: "ZCOOL KuaiLe", "Ma Shan Zheng", fantasy;
+  font-weight: 400;
+}
+
+/* Chinese text effects */
+.text-chinese-shadow {
+  text-shadow: 2px 2px 4px rgba(140, 3, 45, 0.3);
+}
+
+.text-chinese-glow {
+  text-shadow: 0 0 10px rgba(255, 192, 113, 0.8),
+    0 0 20px rgba(255, 192, 113, 0.6);
+}
+
+/* Enhanced animations for hero section */
+@keyframes cardHover {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(255, 192, 113, 0.3);
+  }
+}
+
+@keyframes iconGlow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px rgba(255, 192, 113, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255, 192, 113, 0.8));
+  }
+}
+
+@keyframes textShine {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(255, 192, 113, 0.5),
+      0 0 10px rgba(255, 192, 113, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 192, 113, 0.8),
+      0 0 30px rgba(255, 192, 113, 0.6);
+  }
+}
+
+.card-hover {
+  animation: cardHover 0.3s ease-out forwards;
+}
+
+.icon-glow {
+  animation: iconGlow 2s ease-in-out infinite;
+}
+
+.text-shine {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 192, 113, 0.8),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: textShine 3s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+/* Footer specific animations */
+@keyframes footerPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes footerGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(255, 192, 113, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 192, 113, 0.6);
+  }
+}
+
+/* Footer link hover effects */
+.footer-link {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 192, 113, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.footer-link:hover::before {
+  left: 100%;
+}
+
+.footer-link:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 2px 8px rgba(255, 192, 113, 0.5);
+}
+
+/* Modern Footer Enhancements */
+.footer-card-glow {
+  box-shadow: 0 0 30px rgba(255, 192, 113, 0.1), 0 10px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.footer-card-glow:hover {
+  box-shadow: 0 0 50px rgba(255, 192, 113, 0.3), 0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px) scale(1.02);
+}
+
+.footer-tech-badge {
+  backdrop-filter: blur(10px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.footer-tech-badge:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 192, 113, 0.2),
+    rgba(255, 192, 113, 0.1)
+  );
+  border-color: rgba(255, 192, 113, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Animated gradient text */
+.gradient-text {
+  background: linear-gradient(45deg, #ffc071, #ffd700, #ffc071);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Floating animation for footer elements */
+.footer-float {
+  animation: footerFloat 6s ease-in-out infinite;
+}
+
+@keyframes footerFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+}
+
+/* Pulse animation for tech badges */
+.tech-pulse {
+  animation: techPulse 2s ease-in-out infinite;
+}
+
+@keyframes techPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+/* Romantic floating animations */
+@keyframes romantic-float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+    opacity: 0.15;
+  }
+}
+
+@keyframes gentle-sway {
+  0%,
+  100% {
+    transform: translateX(0px) scale(1);
+  }
+  50% {
+    transform: translateX(5px) scale(1.05);
+  }
+}
+
+/* Stay Glory Serif typography enhancements */
+.stay-glory-text {
+  font-family: "Stay Glory Serif", "Libre Baskerville", serif;
+  font-feature-settings: "liga" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
+}
+
+.romantic-glow {
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 8px 24px rgba(0, 0, 0, 0.9),
+    0 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+/* Liquid Glass Effect for Header */
+.liquid-glass {
+  backdrop-filter: blur(20px);
+  background: linear-gradient(
+    135deg,
+    rgba(234, 228, 204, 0.15) 0%,
+    rgba(212, 175, 55, 0.1) 50%,
+    rgba(139, 115, 85, 0.15) 100%
+  );
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.liquid-animated {
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(212, 175, 55, 0.1) 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.liquid-glass:hover::before {
+  opacity: 1;
+}
+
+/* Glass morphism enhancement */
+@supports (backdrop-filter: blur(0)) {
+  .liquid-glass {
+    backdrop-filter: blur(20px) saturate(1.5);
+  }
+}
+
+/* Header responsive text optimization */
+.header-text-nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.header-text-responsive {
+  max-width: calc(100vw - 200px); /* Leave space for controls */
+}
+
+@media (max-width: 640px) {
+  .header-text-responsive {
+    max-width: calc(100vw - 120px); /* Smaller space on mobile */
+  }
+
+  .header-text-nowrap {
+    font-size: 0.875rem; /* 14px */
+    letter-spacing: 0.025em;
+  }
+
+  .header-subtext-mobile {
+    font-size: 0.75rem; /* 12px */
+  }
+}
+
+/* Header logo hover effects */
+.header-logo:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.header-logo:hover .logo-border {
+  border-color: rgba(212, 175, 55, 1);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+}
+
+.header-logo:active {
+  transform: scale(0.98);
+}
+
+/* Introduce Section Animations */
+@keyframes countdownPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes photoFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(-4px) rotate(-1deg);
+  }
+}
+
+@keyframes heartFloat {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+/* Enhanced IntroduceSection Styles - Ultra Modern */
+.introduce-section {
+  animation: fadeInUp 1.5s ease-out;
+}
+
+/* Enhanced IntroduceSection Styles for Better Layout */
+.floating-photo {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  --rotation: 0deg; /* Default rotation */
+}
+
+.floating-photo:hover {
+  z-index: 50 !important;
+  animation-play-state: paused;
+}
+
+/* Ultra-Modern Photo Gallery Effects */
+.floating-photo {
+  animation: modernPhotoFloat 8s ease-in-out infinite;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.floating-photo:hover {
+  animation-play-state: paused;
+  transform: scale(1.1) translateZ(10px) !important;
+  z-index: 20;
+}
+
+@keyframes modernPhotoFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(var(--rotation, 0deg)) translateZ(0px);
+  }
+  25% {
+    transform: translateY(-8px) rotate(calc(var(--rotation, 0deg) + 2deg))
+      translateZ(2px);
+  }
+  50% {
+    transform: translateY(-4px) rotate(calc(var(--rotation, 0deg) - 1deg))
+      translateZ(4px);
+  }
+  75% {
+    transform: translateY(-12px) rotate(calc(var(--rotation, 0deg) + 1deg))
+      translateZ(2px);
+  }
+}
+
+/* Better photo shadows and effects */
+.floating-photo > div {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-photo:hover > div {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 12px 24px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+/* Enhanced Countdown Cards */
+.countdown-card {
+  animation: modernCountdownPulse 3s ease-in-out infinite;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.countdown-card:hover {
+  transform: translateY(-8px) scale(1.05) rotateY(5deg);
+  animation-play-state: paused;
+}
+
+@keyframes modernCountdownPulse {
+  0%,
+  100% {
+    transform: scale(1) translateZ(0px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.05),
+      inset 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    transform: scale(1.02) translateZ(2px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), 0 6px 16px rgba(0, 0, 0, 0.08),
+      inset 0 2px 4px rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Enhanced Wedding Logo Animation */
+.wedding-logo {
+  animation: modernLogoGlow 4s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.wedding-logo:hover {
+  animation-play-state: paused;
+  transform: scale(1.05);
+}
+
+@keyframes modernLogoGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4),
+      0 0 40px rgba(212, 175, 55, 0.2);
+    filter: brightness(1.1);
+  }
+}
+
+/* Ultra-Subtle Floating Hearts */
+.floating-heart {
+  animation: ultraSubtleFloat 15s ease-in-out infinite;
+  opacity: 0.05;
+  will-change: transform;
+}
+
+@keyframes ultraSubtleFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+    opacity: 0.05;
+  }
+  25% {
+    transform: translateY(-10px) rotate(1deg) scale(1.05);
+    opacity: 0.08;
+  }
+  50% {
+    transform: translateY(-5px) rotate(-0.5deg) scale(1);
+    opacity: 0.06;
+  }
+  75% {
+    transform: translateY(-15px) rotate(0.5deg) scale(1.02);
+    opacity: 0.1;
+  }
+}
+
+/* Enhanced Number Change Animation */
+.countdown-number {
+  animation: modernNumberChange 1s ease-in-out;
+  font-variant-numeric: tabular-nums;
+  will-change: transform;
+}
+
+@keyframes modernNumberChange {
+  0% {
+    transform: rotateX(0deg) scale(1);
+  }
+  25% {
+    transform: rotateX(45deg) scale(0.95);
+  }
+  50% {
+    transform: rotateX(90deg) scale(0.9);
+  }
+  75% {
+    transform: rotateX(45deg) scale(0.95);
+  }
+  100% {
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+/* Modern Frame Effects */
+.introduce-frame {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  backdrop-filter: blur(25px);
+  border: 2px solid rgba(212, 175, 55, 0.15);
+  box-shadow: 0 0 60px rgba(212, 175, 55, 0.08),
+    inset 0 0 60px rgba(255, 255, 255, 0.08);
+}
+
+/* Enhanced photo shadows and effects */
+.floating-photo > div {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 6px 12px rgba(0, 0, 0, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-photo:hover > div {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 12px 24px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+/* Improved countdown spacing */
+.countdown-container {
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .countdown-container {
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .countdown-container {
+    padding-bottom: 4rem;
+  }
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 640px) {
+  .floating-photo {
+    animation: none !important;
+    transform: none !important;
+    opacity: 0.6;
+    will-change: auto;
+  }
+
+  .floating-photo:hover {
+    transform: scale(1.05) !important;
+    opacity: 1;
+    z-index: 10;
+  }
+
+  /* Ensure mobile photos don't overlap content */
+  .floating-photo {
+    pointer-events: none;
+  }
+}
+
+/* Enhanced IntroduceSection Mobile-First Responsive Design */
+.introduce-section {
+  background: linear-gradient(135deg, #f8f6f0 0%, #ede8dc 50%, #e8e2d5 100%);
+}
+
+/* Enhanced countdown cards for mobile */
+@media (max-width: 640px) {
+  .countdown-card {
+    min-height: 80px;
+    padding: 0.75rem !important;
+  }
+
+  .countdown-number {
+    font-size: 1.25rem !important;
+    line-height: 1.2;
+  }
+
+  .countdown-card div:last-child {
+    font-size: 0.75rem !important;
+  }
+}
+
+/* Better logo responsive sizing */
+@media (max-width: 640px) {
+  .wedding-logo {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+}
+
+/* Improved text contrast for better readability */
+.text-luxury-dark {
+  color: #4a3b2a !important;
+}
+
+.text-luxury-gold {
+  color: #c8a882 !important;
+}
+
+/* Enhanced gradient backgrounds */
+.bg-luxury-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(248, 246, 240, 1) 0%,
+    rgba(237, 232, 220, 1) 50%,
+    rgba(232, 226, 213, 1) 100%
+  );
+}
+
+/* Better shadow effects for mobile */
+@media (max-width: 768px) {
+  .floating-photo > div {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .countdown-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+/* Improved spacing for mobile */
+@media (max-width: 640px) {
+  .mobile-spacing {
+    padding: 1rem !important;
+  }
+
+  .mobile-mb-4 {
+    margin-bottom: 1rem !important;
+  }
+
+  .mobile-mb-8 {
+    margin-bottom: 2rem !important;
+  }
+}
+
+/* Better performance for mobile */
+@media (max-width: 640px) {
+  .floating-photo,
+  .countdown-card,
+  .wedding-logo {
+    will-change: auto;
+    transform: none !important;
+  }
+
+  .floating-photo:hover {
+    will-change: transform;
+    transform: scale(1.05) !important;
+  }
+}
+
+/* Enhanced accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .floating-photo,
+  .countdown-card,
+  .wedding-logo {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Better focus states */
+.countdown-card:focus-within {
+  outline: 2px solid #c8a882;
+  outline-offset: 2px;
+}
+
+/* Character Animation Keyframes for Timeline Story */
+@keyframes walk-right {
+  0%,
+  100% {
+    transform: translateX(0) scaleX(1);
+  }
+  50% {
+    transform: translateX(5px) scaleX(1.1);
+  }
+}
+
+@keyframes walk-left {
+  0%,
+  100% {
+    transform: translateX(0) scaleX(-1);
+  }
+  50% {
+    transform: translateX(-5px) scaleX(-1.1);
+  }
+}
+
+@keyframes heart-beat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes propose {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(-5deg);
+  }
+}
+
+@keyframes surprised {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(2deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(-2deg);
+  }
+}
+
+@keyframes shine {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.3) rotate(180deg);
+    filter: brightness(1.5);
+  }
+}
+
+@keyframes dance {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(5deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(-5deg);
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: brightness(1.3);
+  }
+}
+
+@keyframes float-around {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(10px) translateY(-5px) rotate(90deg);
+  }
+  50% {
+    transform: translateX(0) translateY(-10px) rotate(180deg);
+  }
+  75% {
+    transform: translateX(-10px) translateY(-5px) rotate(270deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(360deg);
+  }
+}
+
+@keyframes steam {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-5px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes cinematic-float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+    opacity: 0.2;
+  }
+}
+
+/* Scene container animations */
+.story-scene {
+  animation: scene-entrance 1s ease-out;
+}
+
+@keyframes scene-entrance {
+  0% {
+    transform: scale(0.3) rotate(45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Timeline card cinematic entrance */
+.timeline-card {
+  animation: card-entrance 0.8s ease-out;
+}
+
+@keyframes card-entrance {
+  0% {
+    transform: translateY(50px) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}

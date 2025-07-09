@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <!-- Main wedding invitation page -->
+  <url>
+    <loc>https://minhhuong-kimthuan.vercel.app/</loc>
+    <lastmod>2024-12-19T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <mobile:mobile/>
+    <image:image>
+      <image:loc>https://minhhuong-kimthuan.vercel.app/T-51.JPG</image:loc>
+      <image:title>Thiệp Cưới Minh Hương &amp; Kim Thuận</image:title>
+      <image:caption>Lễ cưới Phạm Minh Hương và Uông Kim Thuận ngày 09/08/2025</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://minhhuong-kimthuan.vercel.app/logo.png</image:loc>
+      <image:title>Logo Wedding Minh Hương Kim Thuận</image:title>
+      <image:caption>Logo thiệp cưới</image:caption>
+    </image:image>
+  </url>
+
+  <!-- English version (if exists) -->
+  <url>
+    <loc>https://minhhuong-kimthuan.vercel.app/en</loc>
+    <lastmod>2024-12-19T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://minhhuong-kimthuan.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://minhhuong-kimthuan.vercel.app/en"/>
+  </url>
+
+  <!-- Important SEO files -->
+  <url>
+    <loc>https://minhhuong-kimthuan.vercel.app/sitemap.xml</loc>
+    <lastmod>2024-12-19T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://minhhuong-kimthuan.vercel.app/robots.txt</loc>
+    <lastmod>2024-12-19T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+  <url>
+    <loc>https://minhhuong-kimthuan.vercel.app/humans.txt</loc>
+    <lastmod>2024-12-19T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+</urlset>

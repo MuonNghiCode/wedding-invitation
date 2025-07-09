@@ -1,0 +1,777 @@
+@import "tailwindcss";
+
+/* Modern Chinese Wedding Invitation Styles */
+.modern-chinese-bg {
+  background: linear-gradient(135deg, #8c032d 0%, #6b0222 100%),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 192, 113, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(212, 175, 55, 0.1) 0%,
+      transparent 50%
+    );
+}
+
+.welcome-page-bg {
+  background: linear-gradient(135deg, #8c032d 0%, #6b0222 50%, #8c032d 100%),
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 192, 113, 0.15) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 70% 70%,
+      rgba(212, 175, 55, 0.1) 0%,
+      transparent 60%
+    );
+}
+
+/* Ultra realistic bamboo pattern */
+.bamboo-pattern {
+  background-image: linear-gradient(
+      90deg,
+      rgba(34, 139, 34, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(rgba(34, 139, 34, 0.08) 1px, transparent 1px),
+    radial-gradient(
+      circle at 15% 25%,
+      rgba(34, 139, 34, 0.12) 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(34, 139, 34, 0.12) 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      ellipse 3px 8px at 10% 30%,
+      rgba(52, 168, 83, 0.15),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 3px 8px at 90% 70%,
+      rgba(52, 168, 83, 0.15),
+      transparent 50%
+    );
+  background-size: 120px 40px, 40px 120px, 200px 200px, 200px 200px, 150px 300px,
+    150px 300px;
+  background-position: 0 0, 0 0, 0 0, 100px 100px, 20px 0, 80px 150px;
+}
+
+/* 3D Realistic bamboo stems */
+.bamboo-stem {
+  background: linear-gradient(
+    to right,
+    #1a4d32 0%,
+    #2d5f3f 10%,
+    #4a8a5c 25%,
+    #66b377 40%,
+    #7bc88a 50%,
+    #66b377 60%,
+    #4a8a5c 75%,
+    #2d5f3f 90%,
+    #1a4d32 100%
+  );
+  position: relative;
+  border-radius: 8px;
+  box-shadow: inset -6px 0 12px rgba(0, 0, 0, 0.5),
+    inset 6px 0 12px rgba(255, 255, 255, 0.2), 4px 0 15px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(34, 139, 34, 0.4);
+  transform-style: preserve-3d;
+}
+
+.bamboo-stem::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 45px,
+    rgba(26, 77, 50, 0.9) 45px,
+    rgba(26, 77, 50, 0.9) 55px,
+    rgba(52, 168, 83, 0.3) 55px,
+    rgba(52, 168, 83, 0.3) 58px,
+    transparent 58px,
+    transparent 103px,
+    rgba(26, 77, 50, 0.7) 103px,
+    rgba(26, 77, 50, 0.7) 113px,
+    rgba(52, 168, 83, 0.3) 113px,
+    rgba(52, 168, 83, 0.3) 116px,
+    transparent 116px,
+    transparent 161px
+  );
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.bamboo-stem::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.2) 30%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.1) 70%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  border-radius: 4px;
+  filter: blur(1px);
+}
+
+/* 3D Realistic bamboo leaves */
+.bamboo-leaf-realistic {
+  background: linear-gradient(
+    135deg,
+    #1a4d32 0%,
+    #2d5f3f 10%,
+    #4a8a5c 25%,
+    #66b377 40%,
+    #7bc88a 50%,
+    #66b377 60%,
+    #4a8a5c 75%,
+    #2d5f3f 90%,
+    #1a4d32 100%
+  );
+  clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+  filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.5));
+  position: relative;
+  border-radius: 6px;
+  transform-style: preserve-3d;
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.2), 0 0 15px rgba(34, 139, 34, 0.3);
+}
+
+.bamboo-leaf-realistic::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent
+  );
+  transform: translateY(-50%);
+  border-radius: 1px;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+.bamboo-leaf-realistic::after {
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent
+  );
+  border-radius: 0.5px;
+}
+
+.chinese-border {
+  border: 3px solid transparent;
+  background: linear-gradient(#8c032d, #8c032d) padding-box,
+    linear-gradient(45deg, #ffc071, #d4af37, #ffc071) border-box;
+  border-radius: 16px;
+}
+
+.modern-card {
+  background: rgba(140, 3, 45, 0.9);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 192, 113, 0.3);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 8px 20px rgba(140, 3, 45, 0.3),
+    inset 0 0 30px rgba(255, 192, 113, 0.1);
+  color: #ffc071;
+}
+
+.chinese-text-shadow {
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.red-envelope {
+  background: linear-gradient(135deg, #8c032d 0%, #6b0222 50%, #8c032d 100%);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.15), 0 0 50px rgba(140, 3, 45, 0.2);
+}
+
+.gold-accent {
+  background: linear-gradient(135deg, #ffc071 0%, #d97706 50%, #ffc071 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bamboo-leaf {
+  background: linear-gradient(45deg, #059669 0%, #10b981 50%, #059669 100%);
+  clip-path: ellipse(40% 60% at 50% 50%);
+}
+
+.paper-texture {
+  background: radial-gradient(
+      circle at 25% 25%,
+      rgba(255, 192, 113, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(255, 192, 113, 0.05) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(140, 3, 45, 0.95) 0%,
+      rgba(107, 2, 34, 0.95) 100%
+    );
+}
+
+/* Spectacular welcome page background with unique effects */
+.fullscreen-invitation {
+  height: 100vh;
+  width: 100vw;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(140, 3, 45, 0.9) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(107, 2, 34, 0.8) 0%, transparent 50%),
+    linear-gradient(135deg, #8C032D 0%, #6B0222 50%, #8C032D 100%);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Enhanced bamboo pattern with animation */
+.bamboo-pattern-real {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/bamboo-pattern.svg');
+  background-size: 300px auto;
+  background-repeat: repeat;
+  background-position: 0 0;
+  opacity: 0.25;
+  pointer-events: none;
+  animation: bambooPatternFlow 20s ease-in-out infinite;
+}
+
+.bamboo-pattern-real::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/bamboo-pattern.svg');
+  background-size: 250px auto;
+  background-repeat: repeat;
+  background-position: 150px 100px;
+  opacity: 0.2;
+  transform: scaleX(-1) scale(0.9);
+  animation: bambooPatternFlow 25s ease-in-out infinite reverse;
+}
+
+.bamboo-pattern-real::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/bamboo-pattern.svg');
+  background-size: 200px auto;
+  background-repeat: repeat;
+  background-position: 75px 50px;
+  opacity: 0.15;
+  transform: scale(0.8) rotate(3deg);
+  animation: bambooPatternFlow 30s ease-in-out infinite;
+}
+
+@keyframes bambooPatternFlow {
+  0%, 100% { 
+    transform: translateY(0px) scale(1); 
+    opacity: 0.25;
+  }
+  25% { 
+    transform: translateY(-10px) scale(1.02); 
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateY(-5px) scale(0.98); 
+    opacity: 0.2;
+  }
+  75% { 
+    transform: translateY(-15px) scale(1.01); 
+    opacity: 0.28;
+  }
+}
+
+.click-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffc071;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.05);
+  }
+}
+
+/* Simple clean animations - no shimmer */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-4px) rotate(-1deg);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.floating {
+  animation: float 8s ease-in-out infinite;
+}
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.chinese-seal {
+  background: radial-gradient(circle, #ffc071 30%, #d97706 70%);
+  border-radius: 50%;
+  position: relative;
+}
+
+.chinese-seal::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: rgba(140, 3, 45, 0.3);
+  border-radius: 50%;
+}
+
+.modern-section {
+  background: rgba(140, 3, 45, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 192, 113, 0.2);
+}
+
+.glass-effect {
+  background: rgba(140, 3, 45, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 192, 113, 0.3);
+}
+
+/* Custom cursor for welcome page */
+.custom-cursor {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="%23FFC071" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>')
+      12 12,
+    pointer;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #8c032d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffc071;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d97706;
+}
+
+/* Removed shimmer and sparkle effects */
+
+/* Modern minimalist styles */
+.minimalist-border {
+  border: 1px solid rgba(255, 192, 113, 0.2);
+  backdrop-filter: blur(5px);
+}
+
+.elegant-glow {
+  box-shadow: 0 0 30px rgba(255, 192, 113, 0.15);
+}
+
+/* Refined bamboo elements */
+.bamboo-accent {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 58, 41, 0.8) 0%,
+    rgba(52, 168, 83, 0.6) 50%,
+    rgba(30, 58, 41, 0.8) 100%
+  );
+  filter: blur(0.5px);
+}
+
+/* Soft entrance animations */
+@keyframes softFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.soft-entrance {
+  animation: softFadeIn 1.5s ease-out forwards;
+}
+
+/* Ultra clean text styles */
+.ultra-clean-text {
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+}
+
+/* Modern invitation card effect */
+.invitation-card {
+  background: rgba(140, 3, 45, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 192, 113, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
+    inset 0 0 40px rgba(255, 192, 113, 0.05);
+}
+
+/* 3D Bamboo Grove Effects */
+.bamboo-grove-3d {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.bamboo-stem-3d {
+  transform: rotateY(15deg) rotateX(5deg);
+  animation: bambooSway 8s ease-in-out infinite;
+}
+
+.bamboo-stem-3d:nth-child(2) {
+  transform: rotateY(-10deg) rotateX(-3deg);
+  animation: bambooSway 10s ease-in-out infinite reverse;
+}
+
+.bamboo-stem-3d:nth-child(3) {
+  transform: rotateY(8deg) rotateX(7deg);
+  animation: bambooSway 12s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+@keyframes bambooSway {
+  0%,
+  100% {
+    transform: rotateY(15deg) rotateX(5deg) translateZ(0px);
+  }
+  25% {
+    transform: rotateY(18deg) rotateX(3deg) translateZ(5px);
+  }
+  50% {
+    transform: rotateY(12deg) rotateX(7deg) translateZ(-3px);
+  }
+  75% {
+    transform: rotateY(16deg) rotateX(4deg) translateZ(8px);
+  }
+}
+
+/* 3D Bamboo Leaves Animation */
+.bamboo-leaf-3d {
+  transform-origin: 0% 50%;
+  animation: leafDance 6s ease-in-out infinite;
+}
+
+.bamboo-leaf-3d:nth-child(odd) {
+  animation: leafDance 8s ease-in-out infinite reverse;
+}
+
+@keyframes leafDance {
+  0%,
+  100% {
+    transform: rotateY(0deg) rotateZ(0deg) scale(1);
+  }
+  25% {
+    transform: rotateY(15deg) rotateZ(5deg) scale(1.05);
+  }
+  50% {
+    transform: rotateY(-10deg) rotateZ(-3deg) scale(0.98);
+  }
+  75% {
+    transform: rotateY(8deg) rotateZ(2deg) scale(1.02);
+  }
+}
+
+/* Enhanced Bamboo Nodes */
+.bamboo-node {
+  background: radial-gradient(
+    ellipse at center,
+    #4a8a5c 0%,
+    #2d5f3f 50%,
+    #1a4d32 100%
+  );
+  border: 2px solid rgba(52, 168, 83, 0.6);
+  box-shadow: 0 0 10px rgba(52, 168, 83, 0.4),
+    inset 0 0 5px rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+
+.bamboo-node::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  border-radius: 50%;
+}
+
+/* 3D Floating Petals */
+.floating-petal {
+  background: radial-gradient(
+    ellipse at 30% 30%,
+    rgba(255, 182, 193, 0.8) 0%,
+    rgba(255, 105, 180, 0.6) 50%,
+    rgba(199, 21, 133, 0.4) 100%
+  );
+  border-radius: 50% 0% 50% 0%;
+  transform-style: preserve-3d;
+  animation: petalFloat 15s ease-in-out infinite;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes petalFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotateZ(0deg) rotateY(0deg);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateY(-20px) rotateZ(90deg) rotateY(180deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-35px) rotateZ(180deg) rotateY(360deg);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateY(-15px) rotateZ(270deg) rotateY(180deg);
+    opacity: 0.7;
+  }
+}
+
+/* Enhanced Chinese Elements */
+.chinese-coin-3d {
+  background: conic-gradient(
+    from 0deg,
+    #ffd700 0deg,
+    #ffa500 72deg,
+    #ffd700 144deg,
+    #ffa500 216deg,
+    #ffd700 288deg,
+    #ffa500 360deg
+  );
+  border-radius: 50%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: coinSpin 20s linear infinite;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6),
+    inset 0 0 20px rgba(255, 165, 0, 0.3);
+}
+
+.chinese-coin-3d::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30%;
+  height: 30%;
+  background: #8c032d;
+  border-radius: 2px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes coinSpin {
+  0% {
+    transform: rotateY(0deg) rotateX(0deg);
+  }
+  25% {
+    transform: rotateY(90deg) rotateX(15deg);
+  }
+  50% {
+    transform: rotateY(180deg) rotateX(0deg);
+  }
+  75% {
+    transform: rotateY(270deg) rotateX(-15deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateX(0deg);
+  }
+}
+
+/* Simple cursor and hover effects */
+.custom-cursor:hover {
+  /* transform: scale(1.01); */
+  transition: transform 0.2s ease;
+}
+
+/* Simple click indicator hover */
+.click-indicator:hover > div > div {
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+/* Bamboo interaction effects */
+.bamboo-grove-3d:hover .bamboo-stem-3d {
+  animation-duration: 4s;
+}
+
+.bamboo-grove-3d:hover .bamboo-leaf-3d {
+  animation-duration: 3s;
+}
+
+/* Responsive design - fit in one viewport */
+.welcome-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.welcome-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Responsive bamboo decorations */
+.bamboo-decoration {
+  position: absolute;
+  height: 100%;
+  opacity: 0.3;
+  z-index: 10;
+}
+
+.bamboo-decoration.left {
+  left: 0;
+  width: clamp(80px, 15vw, 120px);
+}
+
+.bamboo-decoration.right {
+  right: 0;
+  width: clamp(80px, 15vw, 120px);
+}
+
+/* Responsive typography */
+.main-symbol {
+  font-size: clamp(6rem, 20vw, 12rem);
+  line-height: 0.8;
+  margin-bottom: clamp(1rem, 4vh, 2rem);
+}
+
+.main-title {
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  margin-bottom: clamp(0.5rem, 2vh, 1rem);
+}
+
+.subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: clamp(1rem, 3vh, 1.5rem);
+}
+
+.blessing-text {
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .bamboo-decoration {
+    opacity: 0.2;
+  }
+
+  .bamboo-decoration.left {
+    width: 60px;
+  }
+
+  .bamboo-decoration.right {
+    width: 60px;
+  }
+}
+
+@media (max-height: 600px) {
+  .main-symbol {
+    font-size: clamp(4rem, 15vh, 8rem);
+  }
+
+  .welcome-content {
+    gap: 0.5rem;
+  }
+}

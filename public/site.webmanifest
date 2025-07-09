@@ -1,0 +1,28 @@
+{
+  "name": "Thiệp Cưới Minh Hương & Kim Thuận",
+  "short_name": "Wedding Invitation",
+  "description": "Lễ cưới của Phạm Minh Hương và Uông Kim Thuận - 09/08/2025",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EAE4CC",
+  "theme_color": "#D4AF37",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "vi",
+  "dir": "ltr",
+  "categories": ["lifestyle", "social"],
+  "icons": [
+    {
+      "src": "/icons/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

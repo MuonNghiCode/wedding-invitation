@@ -1,0 +1,54 @@
+/* TEAM */
+Cặp đôi: Phạm Minh Hương & Uông Kim Thuận
+Ngày cưới: 09/08/2025
+Địa điểm: White Palace Võ Văn Kiệt, TP.HCM
+Email: contact@minhhuong-kimthuan.vercel.app
+Location: Ho Chi Minh City, Vietnam
+
+/* THANKS */
+Gia đình và bạn bè
+Tất cả khách mời tham dự
+White Palace team
+
+/* SITE */
+Last update: 2024/12/19
+Language: Vietnamese, English, Chinese
+Doctype: HTML5
+IDE: VS Code
+Framework: React + Vite
+Fonts: Google Fonts, Custom fonts
+Standards: HTML5, CSS3, ES6+
+Components: TypeScript, TailwindCSS, GSAP
+Software: Git, Node.js, npm
+
+/* LOCATION */
+Ho Chi Minh City, Vietnam
+Quận 1, TP.HCM
+Việt Nam / Vietnam
+
+/* WEDDING INFO */
+Tên cô dâu: Phạm Minh Hương (范明香)
+Tên chú rể: Uông Kim Thuận (汪金順)
+Ngày cưới: 09/08/2025
+Giờ: 18:00 - 22:00
+Địa điểm: White Palace Võ Văn Kiệt
+Thành phố: TP.Hồ Chí Minh
+Quốc gia: Việt Nam
+
+                              .-.
+                             /   \
+                            | o o |
+                             \___/
+                              | |
+                             _| |_
+                            |     |
+                       .-.  |     |  .-.
+                      /   \ |     | /   \
+                     | o o ||     || o o |
+                      \___/ |     | \___/
+                       _____|     |_____
+                      |               |
+                      |  LOVE WINS!   |
+                      |_______________|
+
+Cảm ơn bạn đã ghé thăm trang web thiệp cưới của chúng tôi!

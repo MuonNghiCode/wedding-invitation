@@ -1,0 +1,29 @@
+# Redirects for SEO
+/home               /                     301
+/index.html         /                     301
+/index              /                     301
+
+# Handle old domain (if needed)
+https://wedding-minhuong-kimthuan.com/*    https://minhhuong-kimthuan.vercel.app/:splat    301!
+
+# Language routing
+/vi                 /                     301
+/vietnamese         /                     301
+/english            /en                   301
+/chinese            /zh                   301
+/繁體中文           /zh                   301
+/中文               /zh                   301
+
+# Common pages that might be accessed
+/wedding            /                     301
+/invitation         /                     301
+/thiep-cuoi         /                     301
+/le-cuoi            /                     301
+
+# Handle missing pages
+/sitemap            /sitemap.xml          301
+/robots             /robots.txt           301
+/manifest           /site.webmanifest     301
+
+# Fallback for SPA
+/*                  /index.html           200
