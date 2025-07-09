@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaHeart } from "react-icons/fa";
+import { getAllPhotoPaths } from "./photoList";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -365,6 +366,11 @@ const IntroduceSection = ({
     return () => ctx.revert();
   }, []);
 
+  // Lấy danh sách ảnh từ photoList
+  const photoList = getAllPhotoPaths();
+  // Lấy 7 ảnh đầu tiên cho floating-photo (hoặc random nếu muốn)
+  const floatingPhotos = photoList.slice(0, 7);
+
   return (
     <section
       ref={sectionRef}
@@ -480,57 +486,42 @@ const IntroduceSection = ({
       </div>
       {/* Enhanced Floating Photos - Overlapping and stacked naturally */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Show 7 floating photos on mobile, each with different rotation */}
-        {[
-          {
-            top: "12%",
-            left: "6%",
-            src: "/backgrounds/hero-background.JPG",
-            rot: -12,
-          },
-          { bottom: "10%", right: "8%", src: "/photos/T-51.JPG", rot: 18 },
-          {
-            top: "60%",
-            left: "12%",
-            src: "/backgrounds/hero-background.JPG",
-            rot: -8,
-          },
-          {
-            top: "22%",
-            right: "10%",
-            src: "/backgrounds/hero-background.JPG",
-            rot: 10,
-          },
-          { bottom: "18%", left: "10%", src: "/photos/T-51.JPG", rot: -20 },
-          {
-            top: "35%",
-            left: "18%",
-            src: "/backgrounds/hero-background.JPG",
-            rot: 24,
-          },
-          { bottom: "25%", right: "14%", src: "/photos/T-51.JPG", rot: -16 },
-        ].map((item, idx) => (
-          <div
-            key={idx}
-            className="floating-photo absolute w-12 h-16 xs:w-14 xs:h-18 sm:w-16 sm:h-20 rounded-lg z-10 block"
-            style={{
-              top: item.top,
-              left: item.left,
-              right: item.right,
-              bottom: item.bottom,
-              transform: `rotate(${item.rot}deg)`,
-            }}
-          >
-            <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full border-2 border-white/95">
-              <img
-                src={item.src}
-                alt="Memory"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+        {/* Show 7 floating photos lấy từ photoList */}
+        {floatingPhotos.map((src, idx) => {
+          // Tạo vị trí và góc xoay ngẫu nhiên cho mỗi ảnh
+          const positions = [
+            { top: "12%", left: "6%", rot: -12 },
+            { bottom: "10%", right: "8%", rot: 18 },
+            { top: "60%", left: "12%", rot: -8 },
+            { top: "22%", right: "10%", rot: 10 },
+            { bottom: "18%", left: "10%", rot: -20 },
+            { top: "35%", left: "18%", rot: 24 },
+            { bottom: "25%", right: "14%", rot: -16 },
+          ];
+          const pos = positions[idx % positions.length];
+          return (
+            <div
+              key={idx}
+              className="floating-photo absolute w-12 h-16 xs:w-14 xs:h-18 sm:w-16 sm:h-20 rounded-lg z-10 block"
+              style={{
+                top: pos.top,
+                left: pos.left,
+                right: pos.right,
+                bottom: pos.bottom,
+                transform: `rotate(${pos.rot}deg)`,
+              }}
+            >
+              <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full border-2 border-white/95">
+                <img
+                  src={src}
+                  alt="Memory"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
+
         {/* Các ảnh luxury khác chỉ hiện tablet trở lên */}
         <div className="floating-photo absolute top-[15%] left-[8%] transition-all duration-700 hover:scale-105 hover:z-50 z-10 hidden xs:block">
           <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-16 h-20 sm:w-20 sm:h-24 md:w-24 md:h-28 lg:w-28 lg:h-32 border-2 border-white/95">

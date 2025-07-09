@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaHeart, FaRing, FaCalendarAlt } from "react-icons/fa";
+import { getAllPhotoPaths } from "./photoList";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -405,6 +406,14 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
           desc: "Graceful, dynamic, loves traveling and reading.",
         };
 
+  // Lấy danh sách ảnh từ photoList
+  const photoList = getAllPhotoPaths();
+  // Lấy đúng link ảnh T-58 cho chú rể, T-4 cho cô dâu
+  const groomPhoto =
+    photoList.find((url) => url.includes("/T-59_")) || photoList[0];
+  const bridePhoto =
+    photoList.find((url) => url.includes("/T-4_")) || photoList[1];
+
   return (
     <>
       <section
@@ -513,7 +522,7 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
                 {/* Ảnh chú rể */}
                 <div className="flex-shrink-0 w-[48vw] max-w-[180px] sm:max-w-[260px] md:max-w-[320px] lg:max-w-[400px] aspect-[3/4] rounded-2xl overflow-visible relative z-10 shadow-2xl -rotate-6">
                   <img
-                    src="/photos/T-51.JPG"
+                    src={groomPhoto}
                     alt={groomInfo.title}
                     className="w-full h-full object-cover rounded-2xl border-4 border-[#D4AF37] shadow-gold"
                     style={{
@@ -554,7 +563,7 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
                 {/* Ảnh cô dâu */}
                 <div className="flex-shrink-0 w-[48vw] max-w-[180px] sm:max-w-[260px] md:max-w-[320px] lg:max-w-[400px] aspect-[3/4] rounded-2xl overflow-visible relative z-10 shadow-2xl rotate-6">
                   <img
-                    src="/photos/T-51.JPG"
+                    src={bridePhoto}
                     alt={brideInfo.title}
                     className="w-full h-full object-cover rounded-2xl border-4 border-[#D4AF37] shadow-gold"
                     style={{

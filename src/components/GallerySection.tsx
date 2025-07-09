@@ -3,7 +3,14 @@ import { getAllPhotoPaths } from "./photoList";
 import { FixedSizeGrid as Grid } from "react-window";
 
 const ALL_PHOTOS = getAllPhotoPaths();
-const PHOTOS = ALL_PHOTOS.slice(0, 12);
+
+// Hàm random lấy n phần tử từ mảng
+function getRandomPhotos(arr: string[], n: number) {
+  const shuffled = arr.slice().sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, n);
+}
+
+const PHOTOS = getRandomPhotos(ALL_PHOTOS, 12);
 
 const LANG = {
   vi: {
