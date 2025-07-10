@@ -838,7 +838,7 @@ const IntroduceSection = ({
             }`}
           >
             {language === "vi"
-              ? "Với niềm hạnh phúc vô bờ, chúng em xin trân trọng chia sẻ với quý khách tin vui này"
+              ? "Với niềm hạnh phúc vô bờ, chúng em xin trân trọng chia sẻ với mọi người tin vui này"
               : "With boundless happiness, we joyfully share this wonderful news with you"}
           </p>
         </div>
