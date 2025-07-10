@@ -68,6 +68,13 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
         en: "Ivory",
       },
     },
+    {
+      color: "#1C1C1C",
+      label: {
+        vi: "Đen tuyền",
+        en: "Jet Black",
+      },
+    },
   ];
 
   // GSAP refs
@@ -692,7 +699,7 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
           <div
             className={
               isMobile
-                ? "flex flex-row justify-center items-stretch gap-2 w-full overflow-x-auto scrollbar-thin scrollbar-thumb-[#E7BFA5]/60 scrollbar-track-transparent px-1"
+                ? "flex flex-row justify-center items-stretch gap-2 w-full overflow-hidden scrollbar-thin scrollbar-thumb-[#E7BFA5]/60 scrollbar-track-transparent px-1"
                 : "flex flex-wrap justify-center gap-8 md:gap-12 mt-8"
             }
           >
@@ -791,11 +798,13 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
                 </div>
                 {/* Label luxury */}
                 <span
-                  className={`text-lg md:text-xl font-semibold group-hover:text-[#C0392B] transition-all duration-300 tracking-wide drop-shadow-lg z-20 ${
-                    lang === "vi"
-                      ? "font-['Noto_Serif_SC',serif]"
-                      : "font-['Stay_Glory_Serif','Playfair_Display',serif]"
-                  }`}
+                  className={
+                    `font-semibold group-hover:text-[#C0392B] transition-all duration-300 tracking-wide drop-shadow-lg z-20 ` +
+                    (lang === "vi"
+                      ? "font-['Noto_Serif_SC',serif] "
+                      : "font-['Stay_Glory_Serif','Playfair_Display',serif] ") +
+                    "text-xs md:text-lg xl:text-xl"
+                  }
                   style={{
                     textShadow: "0 2px 8px #F6E7C1, 0 1px 0 #fff",
                     letterSpacing: "0.06em",

@@ -200,6 +200,7 @@ export const getAllPhotoPaths = () => {
   "https://res.cloudinary.com/ddr6psgs5/image/upload/v1752092794/T-44_tf9oi8.jpg",
   "https://res.cloudinary.com/ddr6psgs5/image/upload/v1752092789/T-160_xwlf38.jpg",
   "https://res.cloudinary.com/ddr6psgs5/image/upload/v1752092781/T-152_fphdzx.jpg",
-  "https://res.cloudinary.com/ddr6psgs5/image/upload/v1752092780/T-147_zmroxo.jpg"
+  "https://res.cloudinary.com/ddr6psgs5/image/upload/v1752092780/T-147_zmroxo.jpg",
+  "https://res.cloudinary.com/ddr6psgs5/image/upload/v1752092780/T-117_axk0sy.jpg"
   ]
 };

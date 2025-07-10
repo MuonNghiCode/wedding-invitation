@@ -381,28 +381,28 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
     language === "vi"
       ? {
           title: "Chú rể",
-          name: "Nguyễn Văn A",
-          birth: "Sinh năm 1995",
+          name: "Uông Kim Thuận",
+          birth: "Sinh năm 1997",
           desc: "Hiền lành, vui tính, yêu thể thao và công nghệ.",
         }
       : {
           title: "Groom",
-          name: "Nguyen Van A",
-          birth: "Born in 1995",
+          name: "Uong Kim Thuan",
+          birth: "Born in 1997",
           desc: "Gentle, humorous, loves sports and technology.",
         };
   const brideInfo =
     language === "vi"
       ? {
           title: "Cô dâu",
-          name: "Trần Thị B",
-          birth: "Sinh năm 1997",
+          name: "Phạm Minh Hương",
+          birth: "Sinh năm 2002",
           desc: "Dịu dàng, năng động, thích du lịch và đọc sách.",
         }
       : {
           title: "Bride",
-          name: "Tran Thi B",
-          birth: "Born in 1997",
+          name: "Pham Minh Huong",
+          birth: "Born in 2002",
           desc: "Graceful, dynamic, loves traveling and reading.",
         };
 
@@ -410,9 +410,9 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
   const photoList = getAllPhotoPaths();
   // Lấy đúng link ảnh T-58 cho chú rể, T-4 cho cô dâu
   const groomPhoto =
-    photoList.find((url) => url.includes("/T-59_")) || photoList[0];
+    photoList.find((url) => url.includes("/T-117_")) || photoList[0];
   const bridePhoto =
-    photoList.find((url) => url.includes("/T-4_")) || photoList[1];
+    photoList.find((url) => url.includes("/T-126_")) || photoList[1];
 
   return (
     <>
@@ -627,167 +627,8 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
           </div>
 
           {/* Timeline */}
-          <div className="relative">
-            {/* Timeline Line - Centered for all screens */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-[#D4AF37] via-[#C8A882] to-[#8B7355] opacity-60 rounded-full shadow-gold">
-              <div
-                ref={timelineLineRef}
-                className="w-full bg-gradient-to-b from-[#D4AF37] via-[#C8A882] to-[#8B7355] rounded-full shadow-gold"
-                style={{ height: 0 }}
-              ></div>
-            </div>
-
-            {/* Extended connecting lines */}
-            <div className="timeline-connector-top hidden sm:block absolute left-1/2 transform -translate-x-1/2 w-0.5 -top-20 h-20 bg-gradient-to-b from-transparent to-[#D4AF37] opacity-40 rounded-full origin-top"></div>
-            <div className="timeline-connector-bottom hidden sm:block absolute left-1/2 transform -translate-x-1/2 w-0.5 -bottom-20 h-20 bg-gradient-to-b from-[#8B7355] to-transparent opacity-40 rounded-full origin-bottom"></div>
-
-            {/* Timeline Items */}
-            <div className="flex flex-col space-y-12 sm:space-y-24">
-              {content.events.map((event, index) => {
-                const Icon = event.icon;
-                const isLeft = index % 2 === 0;
-                return (
-                  <div
-                    key={index}
-                    className={`timeline-item relative flex flex-col sm:flex-row items-center sm:items-stretch ${
-                      isLeft ? "sm:justify-start" : "sm:justify-end"
-                    }`}
-                  >
-                    {/* Icon on top center for mobile, left/right for desktop */}
-                    <div className="flex flex-col items-center sm:block w-full sm:w-auto mb-2 sm:mb-0">
-                      <div className="relative z-10 mb-2 sm:mb-0 sm:absolute sm:left-1/2 sm:transform sm:-translate-x-1/2">
-                        <div
-                          className="w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#D4AF37] via-[#C8A882] to-[#B8860B] flex items-center justify-center shadow-xl sm:shadow-2xl border-4 border-white/90 mx-auto"
-                          style={{
-                            boxShadow:
-                              "0 0 16px 4px #D4AF37, 0 2px 8px #fffbe6",
-                          }}
-                        >
-                          <Icon className="text-white text-xl sm:text-2xl drop-shadow-gold" />
-                        </div>
-                        <div className="absolute inset-0 w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-[#D4AF37]/30 blur-lg -z-10"></div>
-                      </div>
-                    </div>
-
-                    {/* Content Card */}
-                    <div
-                      className={`relative w-full sm:w-7/12 md:w-5/12 flex flex-col items-center sm:items-stretch ${
-                        isLeft ? "sm:pr-8" : "sm:pl-8"
-                      }`}
-                    >
-                      <div className="relative bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 shadow-xl sm:shadow-2xl border-2 border-gradient-gold hover:shadow-gold transition-all duration-500 hover:scale-105 timeline-card w-full flex flex-col items-center">
-                        {/* Badge Chinese - inside card, top center on mobile, outside on desktop */}
-                        <div className="block sm:hidden mb-2">
-                          <div
-                            className={`w-12 h-12 rounded-full bg-gradient-to-br ${event.color} flex items-center justify-center shadow-xl border-4 border-white/90 mx-auto`}
-                            style={{ boxShadow: "0 0 12px 2px #D4AF37" }}
-                          >
-                            <span className="text-white text-xl font-chinese-decorative font-bold drop-shadow-gold">
-                              {event.chinese}
-                            </span>
-                          </div>
-                        </div>
-                        {/* Badge Chinese - outside card on desktop */}
-                        <div
-                          className={`hidden sm:flex absolute -top-10 ${
-                            isLeft ? "-right-10" : "-left-10"
-                          } w-20 h-20 rounded-full bg-gradient-to-br ${
-                            event.color
-                          } items-center justify-center shadow-2xl border-4 border-white/90`}
-                          style={{ boxShadow: "0 0 24px 4px #D4AF37" }}
-                        >
-                          <span className="text-white text-3xl font-chinese-decorative font-bold drop-shadow-gold">
-                            {event.chinese}
-                          </span>
-                        </div>
-                        {/* Luxury corner ornaments */}
-                        <div className="absolute top-2 left-2 w-4 h-4 sm:w-7 sm:h-7 border-t-2 border-l-2 border-[#D4AF37]/60 rounded-tl-lg"></div>
-                        <div className="absolute bottom-2 right-2 w-4 h-4 sm:w-7 sm:h-7 border-b-2 border-r-2 border-[#D4AF37]/60 rounded-br-lg"></div>
-
-                        {/* Title with better spacing */}
-                        <h3
-                          className={`mb-2 sm:mb-4 tracking-wide text-lg sm:text-2xl md:text-3xl text-[#8B7355] ${
-                            language === "vi"
-                              ? "font-['Noto_Serif_SC',serif]"
-                              : "font-['Stay_Glory_Serif',serif] normal-case"
-                          } text-center sm:text-left`}
-                          style={{ textTransform: "none" }}
-                        >
-                          {event.title}
-                        </h3>
-
-                        {/* Chinese Meaning - Elegant typography */}
-                        <div className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 mb-2 sm:mb-4">
-                          <div className="w-8 sm:w-12 h-px bg-gradient-to-r from-[#D4AF37] to-transparent opacity-80"></div>
-                          <p
-                            className={`text-xs sm:text-base text-[#D4AF37] font-chinese-elegant italic tracking-wider ${
-                              language === "en"
-                                ? "font-['Playfair_Display',serif]"
-                                : "font-['Noto_Serif_SC',serif]"
-                            }`}
-                          >
-                            {event.chineseMeaning}
-                          </p>
-                          <div className="w-8 sm:w-12 h-px bg-gradient-to-l from-[#D4AF37] to-transparent opacity-80"></div>
-                        </div>
-
-                        {/* Description with improved typography */}
-                        <p
-                          className={`leading-relaxed text-sm sm:text-lg text-[#8B7355] ${
-                            language === "vi"
-                              ? "font-['Noto_Serif_SC',serif]"
-                              : "font-['Playfair_Display',serif] normal-case"
-                          } text-center sm:text-left`}
-                          style={{ textTransform: "none" }}
-                        >
-                          {event.description}
-                        </p>
-
-                        {/* Subtle inner glow */}
-                        <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#D4AF37]/10 via-transparent to-[#8B7355]/10 pointer-events-none"></div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
 
           {/* Bottom Decoration */}
-          <div className="text-center mt-10 sm:mt-24">
-            <div className="flex flex-col sm:flex-row items-center justify-center sm:space-x-8 mb-4 sm:mb-6">
-              <div className="chinese-char text-2xl sm:text-3xl text-[#8B7355] opacity-40 font-chinese-decorative mb-2 sm:mb-0">
-                永
-              </div>
-              <div className="flex items-center space-x-2 sm:space-x-4">
-                <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-[#D4AF37]"></div>
-                <div className="relative">
-                  <div className="chinese-char text-3xl sm:text-4xl text-[#D4AF37] font-chinese-decorative drop-shadow-gold">
-                    囍
-                  </div>
-                  <div className="absolute inset-0 text-3xl sm:text-4xl text-[#D4AF37] font-chinese-decorative blur-sm opacity-30">
-                    囍
-                  </div>
-                </div>
-                <div className="w-16 sm:w-24 h-px bg-gradient-to-l from-transparent via-[#D4AF37] to-[#D4AF37]"></div>
-              </div>
-              <div className="chinese-char text-2xl sm:text-3xl text-[#8B7355] opacity-40 font-chinese-decorative mt-2 sm:mt-0">
-                恒
-              </div>
-            </div>
-            <p
-              className={`text-base sm:text-lg opacity-70 font-chinese-elegant tracking-wider text-[#8B7355] ${
-                language === "vi"
-                  ? "font-['Noto_Serif_SC',serif]"
-                  : "font-['Playfair_Display',serif] normal-case"
-              }`}
-              style={{ textTransform: "none" }}
-            >
-              {language === "vi"
-                ? "Tình yêu vĩnh cửu • 永恒的爱"
-                : "Eternal Love • 永恒的爱"}
-            </p>
-          </div>
         </div>
 
         {/* Floating Particles */}
