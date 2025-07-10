@@ -48,6 +48,16 @@ if (
   window.__galleryWaveAnimated = false;
 }
 
+// Hàm xử lý url Cloudinary để crop focus vào mặt hoặc vùng nổi bật (face nếu có, không thì auto)
+function getFocusUrl(url: string) {
+  if (url.includes("res.cloudinary.com")) {
+    // Ưu tiên crop vào mặt, nếu không có thì crop auto
+    // Cloudinary sẽ tự động crop vào mặt nếu có, nếu không sẽ crop vào vùng nổi bật
+    return url.replace("/upload/", "/upload/c_fill,g_auto,f_auto/");
+  }
+  return url;
+}
+
 function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
   const [showOverlay, setShowOverlay] = useState(false);
   const t = LANG[lang] || LANG.vi;
@@ -260,7 +270,7 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
         </div>
       </div>
       {/* Gallery Bento luxury layout - bento lộn xộn, đậm chất Trung Hoa */}
-      <div className="relative mx-auto max-w-[98vw] md:max-w-[1800px] pb-8">
+      <div className="relative mx-auto max-w-[98vw] md:max-w-[1800px] pb-8 px-1 xs:px-2 sm:px-3 md:px-0">
         {/* Floating particles luxury - nhiều hơn */}
         <div className="absolute inset-0 pointer-events-none z-10">
           {[...Array(40)].map((_, i) => (
@@ -294,7 +304,7 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
           ))}
         </div>
         {/* Bento grid luxury, lộn xộn, đậm chất Trung Hoa */}
-        <div className="relative z-20 grid grid-cols-2 md:grid-cols-7 gap-8 auto-rows-[180px] md:auto-rows-[260px] lg:auto-rows-[340px]">
+        <div className="relative z-20 grid grid-cols-2 md:grid-cols-7 gap-4 md:gap-8 auto-rows-[120px] md:auto-rows-[180px] lg:auto-rows-[340px]">
           {PHOTOS.map((src, idx) => {
             // Random bento style mỗi lần render
             const { colSpan, rowSpan, borderClass } = getRandomBentoStyle(idx);
@@ -306,9 +316,10 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
                 ? "col-span-2"
                 : "col-span-3";
             const rowSpanClass = rowSpan === 1 ? "row-span-1" : "row-span-2";
-            let className = `group overflow-hidden bg-[#ede8dc] relative transition-transform duration-300 hover:scale-[1.04] hover:shadow-gold ${colSpanClass} ${rowSpanClass} ${borderClass}`;
+            // Tăng bo góc và giảm shadow cho mobile
+            let className = `group overflow-hidden bg-[#ede8dc] relative transition-transform duration-300 hover:scale-[1.04] hover:shadow-gold ${colSpanClass} ${rowSpanClass} ${borderClass} rounded-xl md:rounded-2xl shadow-md md:shadow-xl`;
             let imgClass =
-              "w-full h-full object-cover group-hover:scale-105 group-hover:opacity-95 transition-all duration-500 drop-shadow-xl";
+              "w-full h-full object-cover bg-[#f8f6f0] group-hover:scale-105 group-hover:opacity-95 transition-all duration-500 drop-shadow-xl p-1 md:p-2";
             // Accent Chinese: thêm chữ Trung Hoa nổi bật trên 1 số ảnh
             const chineseAccent =
               idx % 5 === 0 ? (
@@ -332,13 +343,15 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
                 key={src}
                 id={`main-gallery-photo-${idx}`}
                 className={className}
+                style={{ padding: "4px" }} // tăng padding giữa các ảnh trên mobile
               >
                 <img
-                  src={src}
+                  src={getFocusUrl(src)}
                   alt={`Ảnh cưới ${idx + 1}`}
                   className={imgClass}
                   loading="eager"
                   decoding="async"
+                  style={{ borderRadius: "0.75rem", background: "#f8f6f0" }}
                 />
                 {/* Gold/Red particle accent */}
                 {accentParticle}
