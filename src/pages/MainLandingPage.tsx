@@ -7,6 +7,7 @@ import IntroduceSection from "../components/IntroduceSection";
 import LoveStorySection from "../components/LoveStorySection";
 import WeddingDetailsSection from "../components/WeddingDetailsSection";
 import GallerySection from "../components/GallerySection";
+import TimelineSection from "../components/TimelineSection";
 import Footer from "../components/Footer";
 // import { FaHeart, FaRing, FaCalendarAlt, FaLeaf } from "react-icons/fa";
 
@@ -274,6 +275,7 @@ const MainLandingPage = () => {
       <LoveStorySection language={language} />
       <WeddingDetailsSection language={language} />
       <GallerySection lang={language} />
+      <TimelineSection lang={language} />
       {/* Elegant Floating Particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {[...Array(12)].map((_, i) => (

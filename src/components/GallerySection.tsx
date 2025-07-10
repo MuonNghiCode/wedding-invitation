@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  useMemo,
+} from "react";
 import { getAllPhotoPaths } from "./photoList";
 import { FixedSizeGrid as Grid } from "react-window";
 
@@ -9,8 +15,6 @@ function getRandomPhotos(arr: string[], n: number) {
   const shuffled = arr.slice().sort(() => 0.5 - Math.random());
   return shuffled.slice(0, n);
 }
-
-const PHOTOS = getRandomPhotos(ALL_PHOTOS, 12);
 
 const LANG = {
   vi: {
@@ -35,44 +39,65 @@ const LANG = {
 
 type LangKey = keyof typeof LANG;
 
-// Định nghĩa biến toàn cục cho window để tránh lỗi typescript
-declare global {
-  interface Window {
-    __galleryWaveAnimated?: boolean;
-  }
-}
-if (
-  typeof window !== "undefined" &&
-  window.__galleryWaveAnimated === undefined
-) {
-  window.__galleryWaveAnimated = false;
-}
-
-// Hàm xử lý url Cloudinary để crop focus vào mặt hoặc vùng nổi bật (face nếu có, không thì auto)
-function getFocusUrl(url: string) {
-  if (url.includes("res.cloudinary.com")) {
-    // Ưu tiên crop vào mặt, nếu không có thì crop auto
-    // Cloudinary sẽ tự động crop vào mặt nếu có, nếu không sẽ crop vào vùng nổi bật
-    return url.replace("/upload/", "/upload/c_fill,g_auto,f_auto/");
-  }
-  return url;
-}
-
 function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
   const [showOverlay, setShowOverlay] = useState(false);
   const t = LANG[lang] || LANG.vi;
   const overlayPreloaded = useRef(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 640 : false
+  );
 
-  // Preload 12 ảnh đầu khi load trang
+  // Theo dõi thay đổi kích thước màn hình để cập nhật isMobile
   useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 640);
+    }
     if (typeof window !== "undefined") {
-      PHOTOS.forEach((src) => {
-        const img = new window.Image();
-        img.src = src;
-      });
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     }
   }, []);
+
+  // Chọn số lượng ảnh phù hợp cho mobile/desktop
+  const PHOTOS = useMemo(() => {
+    if (isMobile) {
+      // Lấy 1-2 ảnh full (2x2) ở vị trí ngẫu nhiên, còn lại random dọc/vuông
+      const n = 10;
+      const rest = ALL_PHOTOS.slice();
+      // Chọn 1 hoặc 2 vị trí random cho ảnh full
+      const fullCount = Math.random() > 0.5 ? 2 : 1;
+      const fullIndexes: number[] = [];
+      while (fullIndexes.length < fullCount) {
+        const idx = Math.floor(Math.random() * n);
+        if (!fullIndexes.includes(idx)) fullIndexes.push(idx);
+      }
+      // Lấy n ảnh random không trùng
+      const shuffled = rest.slice().sort(() => 0.5 - Math.random());
+      return shuffled
+        .slice(0, n)
+        .map((src: string, i: number) => ({
+          src,
+          full: fullIndexes.includes(i),
+        }));
+    } else {
+      // Desktop giữ logic cũ
+      return getRandomPhotos(ALL_PHOTOS, 12).map((src: string) => ({
+        src,
+        full: false,
+      }));
+    }
+  }, [isMobile, ALL_PHOTOS]);
+
+  // Preload ảnh đầu khi load trang
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      PHOTOS.forEach((item) => {
+        const img = new window.Image();
+        img.src = typeof item === "string" ? item : item.src;
+      });
+    }
+  }, [PHOTOS]);
 
   // Khi overlay mở, preload toàn bộ ảnh còn lại (nếu chưa preload)
   useEffect(() => {
@@ -194,36 +219,36 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
   }, []);
 
   // Utility để random col/row span và style cho từng ảnh
-  function getRandomBentoStyle(idx: number) {
-    // Để giữ layout đẹp, random nhưng có kiểm soát
-    const colSpanArr = [1, 2, 3];
-    const rowSpanArr = [1, 2];
-    // Đảm bảo ảnh đầu và cuối luôn lớn hơn
-    const colSpan =
-      idx === 0 || idx === 11
-        ? 3
-        : colSpanArr[Math.floor(Math.random() * colSpanArr.length)];
-    const rowSpan =
-      idx === 0 || idx === 11
-        ? 2
-        : rowSpanArr[Math.floor(Math.random() * rowSpanArr.length)];
-    // Random border, shadow, bo góc
-    const borderStyles = [
-      "border-4 border-double border-[#C8A882] rounded-tl-[3rem] shadow-[0_0_32px_8px_rgba(200,168,130,0.18)]",
-      "border-2 border-dashed border-[#C0392B] rounded-br-[2.5rem] shadow-lg",
-      "border-2 border-[#C8A882] rounded-bl-[2.5rem] shadow-xl",
-      "border border-[#C8A882] rounded-2xl shadow-md",
-      "border-2 border-[#D4AF37] rounded-tr-[2rem] shadow-gold",
-      "border-2 border-[#C0392B] rounded-bl-[2rem] shadow-red-500/30",
-    ];
-    const borderClass =
-      borderStyles[Math.floor(Math.random() * borderStyles.length)];
-    return {
-      colSpan,
-      rowSpan,
-      borderClass,
-    };
-  }
+  // function getRandomBentoStyle(idx: number) {
+  //   // Để giữ layout đẹp, random nhưng có kiểm soát
+  //   const colSpanArr = [1, 2, 3];
+  //   const rowSpanArr = [1, 2];
+  //   // Đảm bảo ảnh đầu và cuối luôn lớn hơn
+  //   const colSpan =
+  //     idx === 0 || idx === 11
+  //       ? 3
+  //       : colSpanArr[Math.floor(Math.random() * colSpanArr.length)];
+  //   const rowSpan =
+  //     idx === 0 || idx === 11
+  //       ? 2
+  //       : rowSpanArr[Math.floor(Math.random() * rowSpanArr.length)];
+  //   // Random border, shadow, bo góc
+  //   const borderStyles = [
+  //     "border-4 border-double border-[#C8A882] rounded-tl-[3rem] shadow-[0_0_32px_8px_rgba(200,168,130,0.18)]",
+  //     "border-2 border-dashed border-[#C0392B] rounded-br-[2.5rem] shadow-lg",
+  //     "border-2 border-[#C8A882] rounded-bl-[2.5rem] shadow-xl",
+  //     "border border-[#C8A882] rounded-2xl shadow-md",
+  //     "border-2 border-[#D4AF37] rounded-tr-[2rem] shadow-gold",
+  //     "border-2 border-[#C0392B] rounded-bl-[2rem] shadow-red-500/30",
+  //   ];
+  //   const borderClass =
+  //     borderStyles[Math.floor(Math.random() * borderStyles.length)];
+  //   return {
+  //     colSpan,
+  //     rowSpan,
+  //     borderClass,
+  //   };
+  // }
 
   return (
     <section
@@ -304,54 +329,110 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
           ))}
         </div>
         {/* Bento grid luxury, lộn xộn, đậm chất Trung Hoa */}
-        <div className="relative z-20 grid grid-cols-2 md:grid-cols-7 gap-4 md:gap-8 auto-rows-[120px] md:auto-rows-[180px] lg:auto-rows-[340px]">
-          {PHOTOS.map((src, idx) => {
-            // Random bento style mỗi lần render
-            const { colSpan, rowSpan, borderClass } = getRandomBentoStyle(idx);
-            // Ánh xạ col/row span thành class cố định để Tailwind nhận diện
-            const colSpanClass =
-              colSpan === 1
-                ? "col-span-1"
-                : colSpan === 2
-                ? "col-span-2"
-                : "col-span-3";
+        <div
+          className={
+            isMobile
+              ? "relative z-20 grid grid-cols-2 gap-2 auto-rows-[180px]"
+              : "relative z-20 grid grid-cols-1 xs:grid-cols-2 md:grid-cols-7 gap-2 xs:gap-3 md:gap-8 auto-rows-[140px] xs:auto-rows-[160px] md:auto-rows-[180px] lg:auto-rows-[340px]"
+          }
+        >
+          {PHOTOS.map((item, idx) => {
+            // Mobile: lộn xộn hơn, 1-2 ảnh full (2x2), còn lại random dọc/vuông
+            let colSpan = 1,
+              rowSpan = 1;
+            if (isMobile) {
+              if (item.full) {
+                colSpan = 2;
+                rowSpan = 2;
+              } else {
+                const rand = Math.random();
+                if (rand < 0.6) {
+                  // 60% dọc
+                  colSpan = 1;
+                  rowSpan = 2;
+                } else {
+                  // 40% vuông
+                  colSpan = 1;
+                  rowSpan = 1;
+                }
+              }
+            } else {
+              // Desktop giữ nguyên
+              const colSpanArr = [1, 2, 3];
+              const rowSpanArr = [1, 2];
+              colSpan =
+                idx === 0 || idx === PHOTOS.length - 1
+                  ? 3
+                  : colSpanArr[Math.floor(Math.random() * colSpanArr.length)];
+              rowSpan =
+                idx === 0 || idx === PHOTOS.length - 1
+                  ? 2
+                  : rowSpanArr[Math.floor(Math.random() * rowSpanArr.length)];
+            }
+            const colSpanClass = colSpan === 1 ? "col-span-1" : "col-span-2";
             const rowSpanClass = rowSpan === 1 ? "row-span-1" : "row-span-2";
-            // Tăng bo góc và giảm shadow cho mobile
-            let className = `group overflow-hidden bg-[#ede8dc] relative transition-transform duration-300 hover:scale-[1.04] hover:shadow-gold ${colSpanClass} ${rowSpanClass} ${borderClass} rounded-xl md:rounded-2xl shadow-md md:shadow-xl`;
-            let imgClass =
-              "w-full h-full object-cover bg-[#f8f6f0] group-hover:scale-105 group-hover:opacity-95 transition-all duration-500 drop-shadow-xl p-1 md:p-2";
-            // Accent Chinese: thêm chữ Trung Hoa nổi bật trên 1 số ảnh
+            const borderStyles = isMobile
+              ? [
+                  "border-4 border-double border-[#C8A882] rounded-tl-[2rem] shadow-[0_0_16px_4px_rgba(200,168,130,0.18)]",
+                  "border-2 border-dashed border-[#C0392B] rounded-br-[1.5rem] shadow-md",
+                  "border-2 border-[#C8A882] rounded-bl-[1.5rem] shadow-lg",
+                  "border border-[#C8A882] rounded-xl shadow-sm",
+                  "border-2 border-[#D4AF37] rounded-tr-[1.2rem] shadow-gold",
+                  "border-2 border-[#C0392B] rounded-bl-[1.2rem] shadow-red-500/30",
+                ]
+              : [
+                  "border-4 border-double border-[#C8A882] rounded-tl-[3rem] shadow-[0_0_32px_8px_rgba(200,168,130,0.18)]",
+                  "border-2 border-dashed border-[#C0392B] rounded-br-[2.5rem] shadow-lg",
+                  "border-2 border-[#C8A882] rounded-bl-[2.5rem] shadow-xl",
+                  "border border-[#C8A882] rounded-2xl shadow-md",
+                  "border-2 border-[#D4AF37] rounded-tr-[2rem] shadow-gold",
+                  "border-2 border-[#C0392B] rounded-bl-[2rem] shadow-red-500/30",
+                ];
+            const borderClass =
+              borderStyles[Math.floor(Math.random() * borderStyles.length)];
+            const className = `group overflow-hidden bg-[#ede8dc] relative transition-transform duration-300 hover:scale-[1.04] hover:shadow-gold ${colSpanClass} ${rowSpanClass} ${borderClass} ${
+              isMobile
+                ? "rounded-xl shadow-md"
+                : "rounded-lg xs:rounded-xl md:rounded-2xl shadow-sm xs:shadow-md md:shadow-xl"
+            }`;
+            const imgClass = isMobile
+              ? "w-full h-full object-cover bg-[#f8f6f0] rounded-xl"
+              : "w-full h-full object-cover bg-[#f8f6f0] group-hover:scale-105 group-hover:opacity-95 transition-all duration-500 drop-shadow-xl p-0.5 xs:p-1 md:p-2";
+            // Accent Chinese và particle cho cả mobile
             const chineseAccent =
               idx % 5 === 0 ? (
-                <div className="absolute left-2 top-2 text-xl md:text-2xl font-chinese-elegant text-[#C0392B] opacity-70 select-none pointer-events-none">
+                <div className="absolute left-2 top-2 text-lg xs:text-xl md:text-2xl font-chinese-elegant text-[#C0392B] opacity-70 select-none pointer-events-none">
                   囍
                 </div>
               ) : idx % 7 === 0 ? (
-                <div className="absolute right-2 bottom-2 text-lg md:text-xl font-chinese-elegant text-[#C8A882] opacity-60 select-none pointer-events-none">
+                <div className="absolute right-2 bottom-2 text-base xs:text-lg md:text-xl font-chinese-elegant text-[#C8A882] opacity-60 select-none pointer-events-none">
                   福
                 </div>
               ) : null;
-            // Accent particle vàng/đỏ random
             const accentParticle =
               Math.random() > 0.5 ? (
-                <div className="absolute bottom-2 right-2 w-2 h-2 bg-[#D4AF37] rounded-full opacity-80 animate-pulse"></div>
+                <div className="absolute bottom-2 right-2 w-1.5 h-1.5 xs:w-2 xs:h-2 bg-[#D4AF37] rounded-full opacity-80 animate-pulse"></div>
               ) : (
-                <div className="absolute top-2 left-2 w-2 h-2 bg-[#C0392B] rounded-full opacity-70 animate-pulse"></div>
+                <div className="absolute top-2 left-2 w-1.5 h-1.5 xs:w-2 xs:h-2 bg-[#C0392B] rounded-full opacity-70 animate-pulse"></div>
               );
             return (
               <div
-                key={src}
+                key={item.src}
                 id={`main-gallery-photo-${idx}`}
                 className={className}
-                style={{ padding: "4px" }} // tăng padding giữa các ảnh trên mobile
+                style={{ padding: isMobile ? "2px" : "4px" }}
               >
                 <img
-                  src={getFocusUrl(src)}
+                  src={getFocusUrl(item.src)}
                   alt={`Ảnh cưới ${idx + 1}`}
                   className={imgClass}
                   loading="eager"
                   decoding="async"
-                  style={{ borderRadius: "0.75rem", background: "#f8f6f0" }}
+                  style={{
+                    borderRadius: "0.75rem",
+                    background: "#f8f6f0",
+                    objectPosition: "center top",
+                  }}
                 />
                 {/* Gold/Red particle accent */}
                 {accentParticle}
@@ -444,6 +525,23 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
       )}
     </section>
   );
+}
+
+// Định nghĩa biến toàn cục cho window để tránh lỗi typescript
+declare global {
+  interface Window {
+    __galleryWaveAnimated?: boolean;
+  }
+}
+
+// Hàm xử lý url Cloudinary để crop focus vào mặt hoặc vùng nổi bật (face nếu có, không thì auto)
+function getFocusUrl(url: string) {
+  if (url.includes("res.cloudinary.com")) {
+    // Ưu tiên crop vào mặt, nếu không có thì crop auto
+    // Cloudinary sẽ tự động crop vào mặt nếu có, nếu không sẽ crop vào vùng nổi bật
+    return url.replace("/upload/", "/upload/c_fill,g_auto,f_auto/");
+  }
+  return url;
 }
 
 export default GallerySection;

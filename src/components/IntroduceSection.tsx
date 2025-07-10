@@ -790,7 +790,7 @@ const IntroduceSection = ({
             }`}
           >
             {language === "vi"
-              ? "Chúng Tôi Sắp Kết Hôn"
+              ? "Chúng Em Sắp Kết Hôn"
               : "We Are Getting Married"}
           </h2>
           {/* Elegant Separator - Chinese-inspired with traditional elements */}

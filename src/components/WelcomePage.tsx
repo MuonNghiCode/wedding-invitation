@@ -435,17 +435,17 @@ const WelcomePage = ({ onOpen }: { onOpen: () => void }) => {
         {/* Elegant Title */}
         <div className="mb-16">
           <div className="relative inline-block">
-            <h1 className="text-8xl font-['Playfair_Display',serif] font-bold text-[#8B7355] mb-6 tracking-wide drop-shadow-lg italic">
-              ℑ
+            <h1 className="text-8xl font-['Playfair_Display',serif] font-bold text-[#8B7355] mb-6 tracking-wide drop-shadow-lg ">
+              囍
             </h1>
             {/* Subtle glowing effect */}
-            <div className="absolute inset-0 text-8xl font-['Playfair_Display',serif] font-bold text-[#D4AF37] blur-sm opacity-30 italic">
-              ℑ
-            </div>
-            {/* Chinese character overlay */}
-            <div className="absolute -top-2 -right-8 text-3xl font-chinese-decorative text-[#8B7355] opacity-40">
+            <div className="absolute inset-0 text-8xl font-['Playfair_Display',serif] font-bold text-[#D4AF37] blur-sm opacity-30 ">
               囍
             </div>
+            {/* Chinese character overlay */}
+            {/* <div className="absolute -top-2 -right-8 text-3xl font-chinese-decorative text-[#8B7355] opacity-40">
+              囍
+            </div> */}
           </div>
           <h2 className="text-3xl text-[#8B7355] font-['Cormorant_Garamond',serif] font-semibold tracking-[0.3em] mb-4 drop-shadow-sm uppercase">
             WEDDING INVITATION
