@@ -1,131 +1,132 @@
 # Wedding Invitation React App
 
-## 🎭 Description
+A modern, customizable wedding invitation website built with React, TypeScript, and Vite. Inspired by Chinese minimalist design, this template features smooth animations, responsive layouts, and multi-language support.
 
-A modern React-based wedding invitation website template with Chinese-inspired design and smooth animations. This is a technical implementation showcase.
+---
+
+## 📂 Project Structure
+
+```
+├── public/
+│   ├── backgrounds/           # Hero background images
+│   │   ├── hero-background-removebg.png
+│   │   └── hero-background.JPG
+│   ├── decorations/           # Decorative bamboo patterns
+│   │   ├── bamboo-parttern-removebg-preview.png
+│   │   └── bamboo-parttern2-removebg-preview.png
+│   ├── font/                  # Custom fonts (Fabregas, Stay Glory Serif)
+│   ├── icons/                 # Logo images (PNG, SVG)
+│   ├── image/                 # (Empty or for future use)
+│   ├── music/                 # Background music (wedding-music.mp3)
+│   ├── photos/                # Wedding photos (T-51.JPG, T-89.JPG)
+│   ├── humans.txt, robots.txt, sitemap.xml, site.webmanifest, _headers, _redirects
+│   └── ...
+├── src/
+│   ├── assets/
+│   │   └── img/               # Duplicated images for React import
+│   ├── components/            # React components
+│   │   ├── Footer.tsx
+│   │   ├── GallerySection.tsx
+│   │   ├── Header.tsx
+│   │   ├── HeroSection.tsx
+│   │   ├── IntroduceSection.tsx
+│   │   ├── LoveStorySection.tsx
+│   │   ├── photoList.ts
+│   │   ├── TimelineSection.tsx
+│   │   ├── WeddingDetailsSection.tsx
+│   │   └── WelcomePage.tsx
+│   ├── pages/
+│   │   └── MainLandingPage.tsx
+│   ├── App.tsx, main.tsx, App.css, index.css, vite-env.d.ts
+│   └── ...
+├── .vscode/, dist/, node_modules/, .gitignore, package.json, tsconfig*.json, vite.config.ts, eslint.config.js, index.html
+└── README.md
+```
+
+---
 
 ## ✨ Features
 
-### 🎪 Welcome Page Component
-- 3D envelope animation with GSAP
-- Bamboo background layers with parallax effect
-- Floating elements animation
-- Smooth transition effects
+- **3D Welcome Envelope** with GSAP animation and parallax bamboo background
+- **Hero Section** with countdown timer and glassmorphism UI
+- **Smooth scroll-triggered animations**
+- **Background music** with auto-play, loop, and toggle controls
+- **Multi-language support** (Vietnamese/English, Chinese typography)
+- **Responsive design** for all devices
+- **SEO optimized**
 
-### 🏠 Main Landing Page Component
-- Hero section with background image
-- Transparent header with countdown timer
-- Scroll-triggered animations
-- Glassmorphism UI effects
-- Audio controls integration
-- Responsive footer component
-
-### 🎵 Audio System Integration
-- Auto-play background music
-- Audio toggle controls
-- Loop functionality
-- Cross-browser compatibility
-
-### 🌐 Multi-language Support
-- Vietnamese / English localization
-- Chinese typography integration
-- Language switching functionality
+---
 
 ## 🛠️ Tech Stack
 
-- **React 18** + **TypeScript** - Modern frontend framework
-- **Vite** - Fast build tool and dev server
-- **Tailwind CSS** - Utility-first CSS framework
-- **GSAP** - Professional animation library
-- **React Icons** - Comprehensive icon library
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- GSAP (GreenSock Animation Platform)
+- React Icons
+- Cloudinary (optional, for image management)
 
-## 🎨 Design System
+---
 
-- **Color Palette:** Chinese red (#8C032D, #DC143C) + Gold (#FFC071)
-- **Typography:** Noto Serif SC, Ma Shan Zheng fonts
-- **Style:** Modern minimalist Chinese-inspired design
-- **Layout:** Mobile-first responsive design
+## 🚀 Getting Started
 
-## 🚀 Installation & Setup
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/MuonNghiCode/wedding-invitation.git
+   cd wedding-invitation
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+5. **Preview the production build:**
+   ```bash
+   npm run preview
+   ```
 
-```bash
-# Clone the repository
-git clone https://github.com/MuonNghiCode/wedding-invitation.git
+---
 
-# Install dependencies
-npm install
+## 🖼️ Customization Guide
 
-# Start development server
-npm run dev
+- **Hero background:** Replace images in `public/backgrounds/`
+- **Logo:** Replace files in `public/icons/`
+- **Bamboo patterns:** Replace files in `public/decorations/`
+- **Music:** Replace `public/music/wedding-music.mp3` (MP3, 3-5 min recommended)
+- **Photos:** Add or replace images in `public/photos/`
+- **Fonts:** Add custom fonts to `public/font/` and update CSS if needed
 
-# Build for production
-npm run build
-```
+---
 
-## 📁 Project Structure
+## 📱 Technical Highlights
 
-```
-src/
-├── components/
-│   ├── WelcomePage.tsx      # Welcome page component
-│   ├── MainLandingPage.tsx  # Main landing page
-│   ├── Header.tsx           # Header with countdown
-│   ├── HeroSection.tsx      # Hero section component
-│   └── Footer.tsx           # Footer component
-├── App.tsx                  # Main application
-├── App.css                  # Global styles
-└── main.tsx                 # Entry point
+- Mobile-first, responsive layout
+- GSAP-powered animations
+- Multi-language and Chinese typography support
+- Countdown timer to wedding date
+- SEO best practices
 
-public/
-├── T-51.JPG                 # Hero background image
-├── logo.png                 # Logo asset
-├── wedding-music.mp3        # Background music
-└── bamboo-parttern*.png     # Bamboo patterns
-```
+---
 
-## 🎼 Audio Configuration
+## 👤 Author
 
-1. Add `wedding-music.mp3` file to `public/` directory
-2. Supported format: MP3, duration 3-5 minutes
-3. Auto-loop functionality with header controls
-
-**Recommended tracks:**
-- Canon in D - Pachelbel
-- A Thousand Years - Christina Perri (instrumental)
-- Perfect - Ed Sheeran (instrumental)
-
-## 🖼️ Asset Customization
-
-- **Hero background:** Replace `public/T-51.JPG`
-- **Logo:** Replace `public/logo.png`
-- **Bamboo patterns:** Replace `public/bamboo-parttern*.png`
-
-## 📱 Technical Features
-
-- ✅ Responsive design system
-- ✅ GSAP smooth animations
-- ✅ Audio system integration
-- ✅ Multi-language support
-- ✅ Countdown timer functionality
-- ✅ Chinese typography support
-- ✅ SEO optimized structure
-
-## 👨‍💻 Developer
-
-**Developed by:** [Phạm Minh Quân](https://github.com/MuonNghiCode)
-
-**GitHub:** https://github.com/MuonNghiCode
+Developed by [Phạm Minh Quân](https://github.com/MuonNghiCode)
 
 ---
 
 ## 📄 License
 
-MIT License - Free for personal and commercial use.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please create an issue or pull request.
+MIT License — Free for personal and commercial use.
 
 ---
 
-**React Wedding Invitation Template** - Built with modern web technologies.
+## 🤝 Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
