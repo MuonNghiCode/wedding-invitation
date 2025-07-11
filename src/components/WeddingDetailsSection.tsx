@@ -268,19 +268,21 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = ({
           />
         ))}
         {/* Các particle cũ */}
-        {movingParticles.map((particle, i) => (
-          <div
-            key={i}
-            className={`absolute ${particle.style} ${particle.anim}`}
-            style={{
-              top: `${particlePositions[i].top}%`,
-              left: `${particlePositions[i].left}%`,
-            }}
-          >
-            {particle.type === "orn" ? particle.text : null}
-            {particle.type === "svg" ? <ChinesePattern /> : null}
-          </div>
-        ))}
+        {movingParticles
+          .slice(0, particlePositions.length)
+          .map((particle, i) => (
+            <div
+              key={i}
+              className={`absolute ${particle.style} ${particle.anim}`}
+              style={{
+                top: `${particlePositions[i].top}%`,
+                left: `${particlePositions[i].left}%`,
+              }}
+            >
+              {particle.type === "orn" ? particle.text : null}
+              {particle.type === "svg" ? <ChinesePattern /> : null}
+            </div>
+          ))}
       </div>
       {/* Góc section: họa tiết Chinese pattern lớn */}
       <ChinesePattern className="absolute left-0 top-0 w-32 h-32 opacity-10 z-0" />

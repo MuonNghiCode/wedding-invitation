@@ -506,20 +506,6 @@ const IntroduceSection = ({
         {/* Show 7 floating photos lấy từ photoList */}
         {floatingPhotos.map((src, idx) => {
           // Điều chỉnh vị trí cho mobile: chỉ ở viền trên/dưới/trái/phải, tránh giữa
-          const mobilePositions = [
-            { top: "6%", left: "4%", rot: -12 }, // top-left
-            { top: "8%", right: "4%", rot: 10 }, // top-right
-            { bottom: "8%", left: "6%", rot: -20 }, // bottom-left
-            { bottom: "10%", right: "8%", rot: 18 }, // bottom-right
-            { top: "4%", left: "50%", rot: 8, transform: "translateX(-50%)" }, // top-center
-            {
-              bottom: "4%",
-              left: "50%",
-              rot: -8,
-              transform: "translateX(-50%)",
-            }, // bottom-center
-            { top: "50%", left: "2%", rot: 24, transform: "translateY(-50%)" }, // mid-left (sát viền)
-          ];
           const desktopPositions = [
             { top: "12%", left: "6%", rot: -12 },
             { bottom: "10%", right: "8%", rot: 18 },
