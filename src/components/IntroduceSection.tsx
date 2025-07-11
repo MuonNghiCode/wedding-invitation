@@ -540,6 +540,7 @@ const IntroduceSection = ({
                   alt="Memory"
                   className="w-full h-full object-cover"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent hidden xs:block"></div>
               </div>
             </div>
           );
