@@ -550,9 +550,13 @@ declare global {
 // Hàm xử lý url Cloudinary để crop focus vào mặt hoặc vùng nổi bật (face nếu có, không thì auto)
 function getFocusUrl(url: string) {
   if (url.includes("res.cloudinary.com")) {
-    // Ưu tiên crop vào mặt, nếu không có thì crop auto
-    // Cloudinary sẽ tự động crop vào mặt nếu có, nếu không sẽ crop vào vùng nổi bật
+    // Ưu tiên crop vào mặt, nếu không có thì crop auto, luôn dùng f_auto để Cloudinary trả về WebP/AVIF nếu trình duyệt hỗ trợ
     return url.replace("/upload/", "/upload/c_fill,g_auto,f_auto/");
+  }
+  // Nếu là ảnh local JPG/PNG thì ưu tiên .webp nếu có
+  if (url.endsWith(".JPG") || url.endsWith(".jpg") || url.endsWith(".png")) {
+    const webpUrl = url.replace(/\.(JPG|jpg|png)$/i, ".webp");
+    return webpUrl;
   }
   return url;
 }

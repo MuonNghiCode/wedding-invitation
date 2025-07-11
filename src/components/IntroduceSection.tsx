@@ -566,11 +566,18 @@ const IntroduceSection = ({
         {/* Các ảnh luxury khác chỉ hiện tablet trở lên */}
         <div className="floating-photo absolute top-[15%] left-[8%] transition-all duration-700 hover:scale-105 hover:z-50 z-10 hidden xs:block">
           <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-16 h-20 sm:w-20 sm:h-24 md:w-24 md:h-28 lg:w-28 lg:h-32 border-2 border-white/95">
-            <img
-              src="/backgrounds/hero-background.JPG"
-              alt="Memory"
-              className="w-full h-full object-cover"
-            />
+            <picture>
+              <source
+                srcSet="/backgrounds/hero-background.webp"
+                type="image/webp"
+              />
+              <img
+                src="/backgrounds/hero-background.JPG"
+                alt="Memory"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
           </div>
         </div>
@@ -578,11 +585,15 @@ const IntroduceSection = ({
         {/* Overlapping photo on top-left with different rotation */}
         <div className="floating-photo absolute top-[8%] left-[4%] transition-all duration-700 hover:scale-105 hover:z-50 z-20 hidden xs:block">
           <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-14 h-18 sm:w-18 sm:h-22 md:w-22 md:h-26 lg:w-26 lg:h-30 border-2 border-white/95">
-            <img
-              src="/photos/T-51.JPG"
-              alt="Memory"
-              className="w-full h-full object-cover"
-            />
+            <picture>
+              <source srcSet="/photos/T-51.webp" type="image/webp" />
+              <img
+                src="/photos/T-51.JPG"
+                alt="Memory"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
           </div>
         </div>
@@ -590,11 +601,18 @@ const IntroduceSection = ({
         {/* Right side overlapping photos with various rotations */}
         <div className="floating-photo absolute top-[10%] right-[6%] transition-all duration-700 hover:scale-105 hover:z-50 z-15 hidden sm:block">
           <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-18 h-22 sm:w-22 sm:h-26 md:w-26 md:h-30 lg:w-30 lg:h-34 border-2 border-white/95">
-            <img
-              src="/backgrounds/hero-background.JPG"
-              alt="Memory"
-              className="w-full h-full object-cover"
-            />
+            <picture>
+              <source
+                srcSet="/backgrounds/hero-background.webp"
+                type="image/webp"
+              />
+              <img
+                src="/backgrounds/hero-background.JPG"
+                alt="Memory"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
           </div>
         </div>
