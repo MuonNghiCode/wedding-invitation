@@ -86,21 +86,25 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
   }, []);
 
   // Giảm số lượng dot và particle trên mobile
-  const dotCount = isMobile ? Math.ceil(WEDDING_TIMELINE.length / 2) : WEDDING_TIMELINE.length;
+  const dotCount = isMobile
+    ? Math.ceil(WEDDING_TIMELINE.length / 2)
+    : WEDDING_TIMELINE.length;
   const particleCount = isMobile ? 2 : 6;
-  const dotPositions = useMemo(() =>
-    Array.from({ length: dotCount }, () => ({
-      top: 10 + Math.random() * 80,
-      left: 5 + Math.random() * 90,
-    })),
+  const dotPositions = useMemo(
+    () =>
+      Array.from({ length: dotCount }, () => ({
+        top: 10 + Math.random() * 80,
+        left: 5 + Math.random() * 90,
+      })),
     [dotCount]
   );
-  const particlePositions = useMemo(() =>
-    Array.from({ length: particleCount }, () => ({
-      top: 10 + Math.random() * 80,
-      left: 5 + Math.random() * 90,
-      delay: Math.random() * 2,
-    })),
+  const particlePositions = useMemo(
+    () =>
+      Array.from({ length: particleCount }, () => ({
+        top: 10 + Math.random() * 80,
+        left: 5 + Math.random() * 90,
+        delay: Math.random() * 2,
+      })),
     [particleCount]
   );
 

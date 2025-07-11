@@ -159,13 +159,16 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = ({
 
   // Tối ưu vị trí particle chỉ random 1 lần khi mount
   // Giảm số lượng particle trên mobile
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-  const particleCount = isMobile ? Math.ceil(movingParticles.length / 2) : movingParticles.length;
-  const particlePositions = useMemo(() =>
-    Array.from({ length: particleCount }, () => ({
-      top: 10 + Math.random() * 80,
-      left: 5 + Math.random() * 90,
-    })),
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+  const particleCount = isMobile
+    ? Math.ceil(movingParticles.length / 2)
+    : movingParticles.length;
+  const particlePositions = useMemo(
+    () =>
+      Array.from({ length: particleCount }, () => ({
+        top: 10 + Math.random() * 80,
+        left: 5 + Math.random() * 90,
+      })),
     [particleCount]
   );
 
