@@ -242,7 +242,7 @@ const Footer = ({ language }: FooterProps) => {
                   <h3 className="text-2xl font-['Playfair_Display',serif] text-[#EAE4CC] tracking-wider font-semibold">
                     {content[language].couple}
                   </h3>
-                  <p className="text-[#EAE4CC]/70 text-sm font-['Cormorant_Garamond',serif]">
+                  <p className="text-[#EAE4CC]/70 text-sm font-['Montserrat',sans-serif]">
                     {content[language].wedding} • 婚礼
                   </p>
                 </div>
@@ -251,13 +251,13 @@ const Footer = ({ language }: FooterProps) => {
               <div className="space-y-2 text-[#EAE4CC]/60">
                 <div className="flex items-center justify-center lg:justify-start space-x-2">
                   <FaCalendarAlt size={14} className="text-[#D4AF37]" />
-                  <span className="text-sm font-['Cormorant_Garamond',serif]">
+                  <span className="text-sm font-['Montserrat',sans-serif]">
                     09.08.2025
                   </span>
                 </div>
                 <div className="flex items-center justify-center lg:justify-start space-x-2">
                   <FaMapMarkerAlt size={14} className="text-[#D4AF37]" />
-                  <span className="text-sm font-['Cormorant_Garamond',serif]">
+                  <span className="text-sm font-['Montserrat',sans-serif]">
                     White Palace Võ Văn Kiệt
                   </span>
                 </div>
@@ -265,7 +265,7 @@ const Footer = ({ language }: FooterProps) => {
             </div>
 
             <div className="relative">
-              <p className="text-[#EAE4CC]/80 italic font-['Cormorant_Garamond',serif] text-sm leading-relaxed">
+              <p className="text-[#EAE4CC]/80 italic font-['Montserrat',sans-serif] text-sm leading-relaxed">
                 "{content[language].celebrate}"
               </p>
               {/* Chinese blessing */}
@@ -302,22 +302,22 @@ const Footer = ({ language }: FooterProps) => {
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-center space-x-2 text-[#EAE4CC]/90">
-                    <span className="font-['Cormorant_Garamond',serif] text-sm">
+                    <span className="font-['Montserrat',sans-serif] text-sm">
                       {content[language].madeWith}
                     </span>
                     <div ref={heartRef}>
                       <FaHeart className="text-[#D4AF37] text-sm" />
                     </div>
-                    <span className="font-['Cormorant_Garamond',serif] text-sm">
+                    <span className="font-['Montserrat',sans-serif] text-sm">
                       {content[language].by}
                     </span>
                   </div>
 
-                  <h4 className="text-xl font-['Playfair_Display',serif] text-[#D4AF37] tracking-wider font-semibold">
+                  <h4 className="text-xl font-['Montserrat',sans-serif] text-[#D4AF37] tracking-wider font-semibold">
                     {content[language].developer}
                   </h4>
 
-                  <p className="text-[#EAE4CC]/70 text-sm font-['Cormorant_Garamond',serif]">
+                  <p className="text-[#EAE4CC]/70 text-sm font-['Montserrat',sans-serif]">
                     {content[language].role}
                   </p>
 
@@ -339,7 +339,7 @@ const Footer = ({ language }: FooterProps) => {
                       className="text-[#EAE4CC] group-hover:text-[#D4AF37] transition-colors"
                       size={18}
                     />
-                    <span className="font-['Cormorant_Garamond',serif] text-sm text-[#EAE4CC] group-hover:text-[#D4AF37] transition-colors">
+                    <span className="font-['Montserrat',sans-serif] text-sm text-[#EAE4CC] group-hover:text-[#D4AF37] transition-colors">
                       github.com/MuonNghiCode
                     </span>
                   </a>
@@ -352,7 +352,7 @@ const Footer = ({ language }: FooterProps) => {
           <div className="text-center lg:text-right space-y-6">
             <div className="space-y-3">
               <div className="flex items-center justify-center lg:justify-end space-x-2">
-                <h4 className="text-lg font-['Playfair_Display',serif] text-[#D4AF37] tracking-wider font-semibold">
+                <h4 className="text-lg font-['Montserrat',sans-serif] text-[#D4AF37] tracking-wider font-semibold">
                   Tech Stack
                 </h4>
                 <span className="text-[#D4AF37] font-chinese-decorative text-sm opacity-70">
@@ -364,7 +364,7 @@ const Footer = ({ language }: FooterProps) => {
                   (tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 bg-[#EAE4CC]/10 backdrop-blur-sm rounded-full text-xs text-[#EAE4CC]/80 border border-[#D4AF37]/30 font-['Cormorant_Garamond',serif] hover:bg-[#D4AF37]/20 transition-all duration-300"
+                      className="px-3 py-1 bg-[#EAE4CC]/10 backdrop-blur-sm rounded-full text-xs text-[#EAE4CC]/80 border border-[#D4AF37]/30 font-['Montserrat',sans-serif] hover:bg-[#D4AF37]/20 transition-all duration-300"
                     >
                       {tech}
                     </span>
@@ -375,14 +375,14 @@ const Footer = ({ language }: FooterProps) => {
 
             <div className="space-y-3">
               <div className="flex items-center justify-center lg:justify-end space-x-2">
-                <h4 className="text-lg font-['Playfair_Display',serif] text-[#D4AF37] tracking-wider font-semibold">
+                <h4 className="text-lg font-['Montserrat',sans-serif] text-[#D4AF37] tracking-wider font-semibold">
                   Features
                 </h4>
                 <span className="text-[#D4AF37] font-chinese-decorative text-sm opacity-70">
                   特色
                 </span>
               </div>
-              <div className="space-y-2 text-[#EAE4CC]/70 text-sm font-['Cormorant_Garamond',serif]">
+              <div className="space-y-2 text-[#EAE4CC]/70 text-sm font-['Montserrat',sans-serif]">
                 <p className="flex items-center justify-center lg:justify-end space-x-2">
                   <span>✨ GSAP Animations</span>
                   <span className="text-[#D4AF37] font-chinese-decorative text-xs opacity-60">
@@ -427,7 +427,7 @@ const Footer = ({ language }: FooterProps) => {
             {/* Copyright */}
             <div className="flex items-center space-x-2 text-[#EAE4CC]/50 text-sm">
               <FaCopyright size={14} />
-              <span className="font-['Cormorant_Garamond',serif]">
+              <span className="font-['Montserrat',sans-serif]">
                 {content[language].year} {content[language].couple} •{" "}
                 {content[language].rights}
               </span>

@@ -488,8 +488,22 @@ const IntroduceSection = ({
       <div className="absolute inset-0 pointer-events-none">
         {/* Show 7 floating photos lấy từ photoList */}
         {floatingPhotos.map((src, idx) => {
-          // Tạo vị trí và góc xoay ngẫu nhiên cho mỗi ảnh
-          const positions = [
+          // Điều chỉnh vị trí cho mobile: chỉ ở viền trên/dưới/trái/phải, tránh giữa
+          const mobilePositions = [
+            { top: "6%", left: "4%", rot: -12 }, // top-left
+            { top: "8%", right: "4%", rot: 10 }, // top-right
+            { bottom: "8%", left: "6%", rot: -20 }, // bottom-left
+            { bottom: "10%", right: "8%", rot: 18 }, // bottom-right
+            { top: "4%", left: "50%", rot: 8, transform: "translateX(-50%)" }, // top-center
+            {
+              bottom: "4%",
+              left: "50%",
+              rot: -8,
+              transform: "translateX(-50%)",
+            }, // bottom-center
+            { top: "50%", left: "2%", rot: 24, transform: "translateY(-50%)" }, // mid-left (sát viền)
+          ];
+          const desktopPositions = [
             { top: "12%", left: "6%", rot: -12 },
             { bottom: "10%", right: "8%", rot: 18 },
             { top: "60%", left: "12%", rot: -8 },
@@ -498,17 +512,26 @@ const IntroduceSection = ({
             { top: "35%", left: "18%", rot: 24 },
             { bottom: "25%", right: "14%", rot: -16 },
           ];
-          const pos = positions[idx % positions.length];
+          const pos = desktopPositions[idx % desktopPositions.length];
+          const mobilePos = mobilePositions[idx % mobilePositions.length];
+          // Tạo className responsive cho desktop vị trí, mobile dùng style inline
+          let responsiveClass = "";
+          if (pos.top) responsiveClass += ` xs:top-[${pos.top}]`;
+          if (pos.left) responsiveClass += ` xs:left-[${pos.left}]`;
+          if (pos.right) responsiveClass += ` xs:right-[${pos.right}]`;
+          if (pos.bottom) responsiveClass += ` xs:bottom-[${pos.bottom}]`;
           return (
             <div
               key={idx}
-              className="floating-photo absolute w-12 h-16 xs:w-14 xs:h-18 sm:w-16 sm:h-20 rounded-lg z-10 block"
+              className={`floating-photo absolute w-12 h-16 xs:w-14 xs:h-18 sm:w-16 sm:h-20 rounded-lg z-10 block${responsiveClass}`}
               style={{
-                top: pos.top,
-                left: pos.left,
-                right: pos.right,
-                bottom: pos.bottom,
-                transform: `rotate(${pos.rot}deg)`,
+                top: mobilePos.top,
+                left: mobilePos.left,
+                right: mobilePos.right,
+                bottom: mobilePos.bottom,
+                transform: `${mobilePos.transform ?? ""} rotate(${
+                  mobilePos.rot
+                }deg)`,
               }}
             >
               <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full border-2 border-white/95">

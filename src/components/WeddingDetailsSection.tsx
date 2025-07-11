@@ -335,10 +335,10 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = ({
             <span className="relative flex flex-col items-center justify-center w-full min-h-[7.5em] sm:hidden">
               {/* Kim Thuận trên, căn trái, font rất lớn */}
               <span
-                className={`relative z-10 text-[2.5rem] xs:text-[3.2rem] font-extrabold tracking-[0.18em] text-left drop-shadow-gold ${
+                className={`relative z-10 text-[2.5rem] xs:text-[3.2rem] tracking-[0.18em] text-left drop-shadow-gold ${
                   language === "vi"
-                    ? "font-['Noto_Serif',serif]"
-                    : "font-['Stay_Glory_Serif',serif]"
+                    ? "font-['Playfair_Display',serif] font-medium"
+                    : "font-['Playfair_Display',serif] font-medium"
                 } text-[#A67C52] whitespace-nowrap w-full px-2 flex justify-start`}
                 style={{ letterSpacing: "0.18em" }}
               >
@@ -362,10 +362,10 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = ({
               </span>
               {/* Minh Hương dưới, căn phải, font rất lớn */}
               <span
-                className={`relative z-10 text-[2.5rem] xs:text-[3.2rem] font-extrabold tracking-[0.18em] text-right drop-shadow-gold ${
+                className={`relative z-10 text-[2.5rem] xs:text-[3.2rem] tracking-[0.18em] text-right drop-shadow-gold ${
                   language === "vi"
-                    ? "font-['Noto_Serif',serif]"
-                    : "font-['Stay_Glory_Serif',serif]"
+                    ? "font-['Playfair_Display',serif] font-medium"
+                    : "font-['Playfair_Display',serif] font-medium"
                 } text-[#A67C52] whitespace-nowrap w-full px-2 mt-4 flex justify-end`}
                 style={{ letterSpacing: "0.18em" }}
               >
@@ -389,10 +389,10 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = ({
             {/* Desktop layout: ngang, & inline */}
             <span className="relative hidden sm:flex flex-row items-center justify-center w-auto min-h-0">
               <span
-                className={`relative z-10 text-[2.7rem] md:text-[3.7rem] lg:text-[4.3rem] font-extrabold tracking-[0.16em] text-center drop-shadow-gold ${
+                className={`relative z-10 text-[2.7rem] md:text-[3.7rem] lg:text-[4.3rem] tracking-[0.16em] text-center drop-shadow-gold ${
                   language === "vi"
-                    ? "font-['Noto_Serif',serif]"
-                    : "font-['Stay_Glory_Serif',serif]"
+                    ? "font-['Playfair_Display',serif] font-medium"
+                    : "font-['Playfair_Display',serif] font-medium"
                 } text-[#A67C52] whitespace-nowrap px-2`}
                 style={{ letterSpacing: "0.16em" }}
               >
@@ -401,16 +401,23 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = ({
                 </span>
               </span>
               <span
-                className="inline-block mx-3 text-5xl md:text-6xl text-[#C8A882] font-['Noto_Serif_SC',serif] drop-shadow-gold leading-none"
-                style={{ textShadow: "0 2px 8px #c8a88255" }}
+                className="inline-block mx-3 text-5xl md:text-6xl text-[#C8A882] drop-shadow-gold leading-none"
+                style={{
+                  fontFamily: "Fabregas, serif",
+                  fontWeight: 400,
+                  textShadow: "0 2px 8px #c8a88255",
+                  lineHeight: "1",
+                  position: "relative",
+                  top: "0.5em",
+                }}
               >
                 &amp;
               </span>
               <span
-                className={`relative z-10 text-[2.7rem] md:text-[3.7rem] lg:text-[4.3rem] font-extrabold tracking-[0.16em] text-center drop-shadow-gold ${
+                className={`relative z-10 text-[2.7rem] md:text-[3.7rem] lg:text-[4.3rem] tracking-[0.16em] text-center drop-shadow-gold ${
                   language === "vi"
-                    ? "font-['Noto_Serif',serif]"
-                    : "font-['Stay_Glory_Serif',serif]"
+                    ? "font-['Playfair_Display',serif] font-medium"
+                    : "font-['Playfair_Display',serif] font-medium"
                 } text-[#A67C52] whitespace-nowrap px-2`}
                 style={{ letterSpacing: "0.16em" }}
               >

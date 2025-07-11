@@ -275,9 +275,11 @@ const HeroSection = forwardRef<HTMLDivElement, HeroSectionProps>((_, ref) => {
                         fontFamily: "'Fabregas', 'Great Vibes', cursive",
                         textShadow:
                           "0 15px 45px rgba(0,0,0,0.8), 0 8px 24px rgba(212,175,55,0.5), 0 0 40px rgba(212,175,55,0.4)",
-                        transform: "translateY(-0.1em) rotate(-5deg)",
+                        transform: "translateY(0.18em) rotate(-5deg)",
                         fontWeight: "400",
                         filter: "drop-shadow(0 0 30px rgba(212,175,55,0.6))",
+                        position: "relative",
+                        top: "0.3em",
                       }}
                     >
                       &
