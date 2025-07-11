@@ -1,5 +1,6 @@
 import { useState, Suspense, lazy } from "react";
 import "./App.css";
+import WeddingLoading from "./components/WeddingLoading";
 
 const WelcomePage = lazy(() => import("./components/WelcomePage"));
 const MainLandingPage = lazy(() => import("./pages/MainLandingPage"));
@@ -15,13 +16,7 @@ function App() {
 
   return (
     <div className="min-h-screen">
-      <Suspense
-        fallback={
-          <div className="w-full h-screen flex items-center justify-center text-xl">
-            Loading...
-          </div>
-        }
-      >
+      <Suspense fallback={<WeddingLoading />}>
         {showWelcome ? (
           <WelcomePage onOpen={handleOpenInvitation} />
         ) : (

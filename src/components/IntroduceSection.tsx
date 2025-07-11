@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaHeart } from "react-icons/fa";
@@ -376,26 +376,20 @@ const IntroduceSection = ({
   }, []);
 
   // Lấy danh sách ảnh từ photoList
-  const photoList = getAllPhotoPaths();
-  // Lấy 7 ảnh đầu tiên cho floating-photo (hoặc random nếu muốn)
+  const photoList = useMemo(() => getAllPhotoPaths(), []);
   const mobilePositions = [
-    { top: "6%", left: "4%", rot: -12 }, // top-left
-    { top: "8%", right: "4%", rot: 10 }, // top-right
-    { bottom: "8%", left: "6%", rot: -20 }, // bottom-left
-    { bottom: "10%", right: "8%", rot: 18 }, // bottom-right
-    { top: "4%", left: "50%", rot: 8, transform: "translateX(-50%)" }, // top-center
-    {
-      bottom: "4%",
-      left: "50%",
-      rot: -8,
-      transform: "translateX(-50%)",
-    }, // bottom-center
-    { top: "50%", left: "2%", rot: 24, transform: "translateY(-50%)" }, // mid-left (sát viền)
-  ];
+    { top: "6%", left: "4%", rot: -12 },
+    { top: "8%", right: "4%", rot: 10 },
+    { bottom: "8%", left: "6%", rot: -20 },
+    { bottom: "10%", right: "8%", rot: 18 },
+  ]; // Giảm còn 4 ảnh trên mobile
   const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
-  const floatingPhotos = isMobile
-    ? photoList.slice(0, mobilePositions.length)
-    : photoList.slice(0, 7);
+  const floatingPhotos = useMemo(() => {
+    if (isMobile) {
+      return photoList.slice(0, mobilePositions.length);
+    }
+    return photoList.slice(0, 7);
+  }, [isMobile, photoList]);
 
   return (
     <section
@@ -526,7 +520,6 @@ const IntroduceSection = ({
           ];
           const pos = desktopPositions[idx % desktopPositions.length];
           const mobilePos = mobilePositions[idx % mobilePositions.length];
-          // Tạo className responsive cho desktop vị trí, mobile dùng style inline
           let responsiveClass = "";
           if (pos.top) responsiveClass += ` xs:top-[${pos.top}]`;
           if (pos.left) responsiveClass += ` xs:left-[${pos.left}]`;
@@ -541,9 +534,11 @@ const IntroduceSection = ({
                 left: mobilePos.left,
                 right: mobilePos.right,
                 bottom: mobilePos.bottom,
-                transform: `${mobilePos.transform ?? ""} rotate(${
-                  mobilePos.rot
-                }deg)`,
+                transform: `${
+                  "transform" in mobilePos && mobilePos.transform
+                    ? mobilePos.transform
+                    : ""
+                } rotate(${mobilePos.rot}deg)`,
               }}
             >
               <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full border-2 border-white/95">
@@ -551,6 +546,7 @@ const IntroduceSection = ({
                   src={src}
                   alt="Memory"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent hidden xs:block"></div>
               </div>
