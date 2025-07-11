@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useMemo } from "react";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -157,6 +157,18 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = ({
   const addressRef = useRef<HTMLDivElement>(null);
   const blessingRef = useRef<HTMLDivElement>(null);
 
+  // Tối ưu vị trí particle chỉ random 1 lần khi mount
+  // Giảm số lượng particle trên mobile
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const particleCount = isMobile ? Math.ceil(movingParticles.length / 2) : movingParticles.length;
+  const particlePositions = useMemo(() =>
+    Array.from({ length: particleCount }, () => ({
+      top: 10 + Math.random() * 80,
+      left: 5 + Math.random() * 90,
+    })),
+    [particleCount]
+  );
+
   useEffect(() => {
     if (!sectionRef.current) return;
     let ctx = gsap.context(() => {
@@ -253,54 +265,19 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = ({
           />
         ))}
         {/* Các particle cũ */}
-        {movingParticles.map((p, i) =>
-          p.type === "dot" ? (
-            <div
-              key={i}
-              className={`wedding-particle absolute ${p.style
-                .replace(/w-(\d+)/, (_, n) => `w-${Math.round(n * 1.2)}`)
-                .replace(
-                  /h-(\d+)/,
-                  (_, n) => `h-${Math.round(n * 1.2)}`
-                )} rounded-full bg-[#C8A882] opacity-30 ${p.anim}`}
-            />
-          ) : p.type === "line" ? (
-            <div
-              key={i}
-              className={`wedding-particle absolute ${p.style
-                .replace(/w-(\d+)/, (_, n) => `w-${Math.round(n * 1.2)}`)
-                .replace(
-                  /h-(\d+)/,
-                  (_, n) => `h-${Math.round(n * 1.2)}`
-                )} rounded bg-gradient-to-r from-[#C8A882] to-[#A67C52] opacity-20 ${
-                p.anim
-              }`}
-            />
-          ) : p.type === "orn" ? (
-            <div
-              key={i}
-              className={`wedding-particle absolute ${p.style.replace(
-                /text-(\w+)/,
-                (m, n) =>
-                  n === "xl" ? "text-2xl" : n === "2xl" ? "text-3xl" : m
-              )} text-[#C8A882] opacity-20 font-['Noto_Serif_SC',serif] ${
-                p.anim
-              }`}
-            >
-              {p.text}
-            </div>
-          ) : (
-            <ChinesePattern
-              key={i}
-              className={`wedding-particle absolute ${p.style
-                .replace(/w-(\d+)/, (_, n) => `w-${Math.round(n * 1.2)}`)
-                .replace(
-                  /h-(\d+)/,
-                  (_, n) => `h-${Math.round(n * 1.2)}`
-                )} opacity-30 ${p.anim}`}
-            />
-          )
-        )}
+        {movingParticles.map((particle, i) => (
+          <div
+            key={i}
+            className={`absolute ${particle.style} ${particle.anim}`}
+            style={{
+              top: `${particlePositions[i].top}%`,
+              left: `${particlePositions[i].left}%`,
+            }}
+          >
+            {particle.type === "orn" ? particle.text : null}
+            {particle.type === "svg" ? <ChinesePattern /> : null}
+          </div>
+        ))}
       </div>
       {/* Góc section: họa tiết Chinese pattern lớn */}
       <ChinesePattern className="absolute left-0 top-0 w-32 h-32 opacity-10 z-0" />

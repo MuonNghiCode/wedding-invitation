@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, memo } from "react";
+import { forwardRef, useEffect, useMemo } from "react";
 import { gsap } from "gsap";
 
 interface HeroSectionProps {
@@ -90,6 +90,15 @@ const HeroSection = forwardRef<HTMLDivElement, HeroSectionProps>((_, ref) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []); // Empty dependency array - chỉ chạy một lần
+
+  // Tối ưu vị trí các element động chỉ random 1 lần nếu có
+  const floralPositions = useMemo(
+    () => [
+      { top: "20%", left: "25%" },
+      { bottom: "36px", right: "25%" },
+    ],
+    []
+  );
 
   return (
     <section
@@ -358,28 +367,28 @@ const HeroSection = forwardRef<HTMLDivElement, HeroSectionProps>((_, ref) => {
       {/* Subtle Romantic Elements Only */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-5">
         {/* Minimal floral background elements */}
-        <div
-          className="absolute top-20 left-1/4 opacity-8"
-          style={{ animation: "romantic-float 8s ease-in-out infinite 0.5s" }}
-        >
-          <span
-            className="text-3xl text-[#D4AF37]"
-            style={{ fontFamily: "'Stay Glory Serif', serif" }}
+        {floralPositions.map((pos, i) => (
+          <div
+            key={i}
+            className="absolute"
+            style={{
+              ...pos,
+              animation:
+                i === 0
+                  ? "romantic-float 8s ease-in-out infinite 0.5s"
+                  : "gentle-sway 10s ease-in-out infinite 2.5s",
+            }}
           >
-            ❀
-          </span>
-        </div>
-        <div
-          className="absolute bottom-36 right-1/4 opacity-10"
-          style={{ animation: "gentle-sway 10s ease-in-out infinite 2.5s" }}
-        >
-          <span
-            className="text-4xl text-white"
-            style={{ fontFamily: "'Stay Glory Serif', serif" }}
-          >
-            ✿
-          </span>
-        </div>
+            <span
+              className={
+                i === 0 ? "text-3xl text-[#D4AF37]" : "text-4xl text-white"
+              }
+              style={{ fontFamily: "'Stay Glory Serif', serif" }}
+            >
+              {i === 0 ? "\u2740" : "\u273f"}
+            </span>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -387,4 +396,4 @@ const HeroSection = forwardRef<HTMLDivElement, HeroSectionProps>((_, ref) => {
 
 HeroSection.displayName = "HeroSection";
 
-export default memo(HeroSection);
+export default HeroSection;

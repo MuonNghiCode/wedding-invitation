@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { gsap } from "gsap";
 
 const WelcomePage = ({ onOpen }: { onOpen: () => void }) => {
@@ -11,6 +11,46 @@ const WelcomePage = ({ onOpen }: { onOpen: () => void }) => {
   const bambooLayer3Ref = useRef<HTMLDivElement>(null);
   const lanternsRef = useRef<HTMLDivElement[]>([]);
   const [isHovered, setIsHovered] = useState(false);
+
+  // Giảm số lượng ornament, corner, sparkle trên mobile
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+  const ornamentCount = isMobile ? 2 : 6;
+  const cornerCount = isMobile ? 2 : 4;
+  const sparkleCount = isMobile ? 2 : 6;
+  const ornamentPositions = useMemo(
+    () =>
+      [
+        { top: 15, left: 8 },
+        { top: 25, left: 85 },
+        { top: 70, left: 12 },
+        { top: 65, left: 78 },
+        { top: 35, left: 5 },
+        { top: 45, left: 88 },
+      ].slice(0, ornamentCount),
+    [ornamentCount]
+  );
+  const cornerPositions = useMemo(
+    () =>
+      [
+        { top: "10%", left: "5%" },
+        { top: "10%", left: "90%" },
+        { top: "85%", left: "5%" },
+        { top: "85%", left: "90%" },
+      ].slice(0, cornerCount),
+    [cornerCount]
+  );
+  const sparklePositions = useMemo(
+    () =>
+      Array.from({ length: sparkleCount }, () => ({
+        width: 2 + Math.random() * 3,
+        height: 2 + Math.random() * 3,
+        top: 10 + Math.random() * 80,
+        left: 10 + Math.random() * 80,
+        delay: Math.random() * 4,
+        duration: 2 + Math.random() * 3,
+      })),
+    [sparkleCount]
+  );
 
   useEffect(() => {
     // Initial animation - envelope floating in
@@ -343,63 +383,49 @@ const WelcomePage = ({ onOpen }: { onOpen: () => void }) => {
       {/* Luxury Floating Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Elegant floating ornaments */}
-        {[...Array(6)].map((_, i) => {
-          const positions = [
-            { top: 15, left: 8 },
-            { top: 25, left: 85 },
-            { top: 70, left: 12 },
-            { top: 65, left: 78 },
-            { top: 35, left: 5 },
-            { top: 45, left: 88 },
-          ];
-          return (
-            <div
-              key={`ornament-${i}`}
-              ref={(el) => {
-                if (el) lanternsRef.current[i] = el;
-              }}
-              className="absolute transform-gpu opacity-30"
-              style={{
-                top: `${positions[i].top}%`,
-                left: `${positions[i].left}%`,
-                zIndex: 3,
-              }}
-            >
-              <div className="relative">
-                {/* Elegant ornamental design */}
-                <div className="w-16 h-16 relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37] via-[#DAA520] to-[#B8860B] rounded-full shadow-lg border-2 border-[#8B7355] opacity-80">
-                    <div className="absolute inset-2 bg-gradient-to-br from-[#F5DEB3] to-[#DDD5B8] rounded-full">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-[#8B7355] text-lg font-serif">
-                          {i % 3 === 0 ? "❁" : i % 3 === 1 ? "✿" : "❀"}
-                        </div>
+        {ornamentPositions.map((pos, i) => (
+          <div
+            key={`ornament-${i}`}
+            ref={(el) => {
+              if (el) lanternsRef.current[i] = el;
+            }}
+            className="absolute transform-gpu opacity-30"
+            style={{
+              top: `${pos.top}%`,
+              left: `${pos.left}%`,
+              zIndex: 3,
+            }}
+          >
+            <div className="relative">
+              {/* Elegant ornamental design */}
+              <div className="w-16 h-16 relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37] via-[#DAA520] to-[#B8860B] rounded-full shadow-lg border-2 border-[#8B7355] opacity-80">
+                  <div className="absolute inset-2 bg-gradient-to-br from-[#F5DEB3] to-[#DDD5B8] rounded-full">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-[#8B7355] text-lg font-serif">
+                        {i % 3 === 0 ? "❁" : i % 3 === 1 ? "✿" : "❀"}
                       </div>
                     </div>
                   </div>
-                  <div className="absolute -top-1 -left-1 w-2 h-2 bg-[#D4AF37] rounded-full shadow-sm"></div>
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#D4AF37] rounded-full shadow-sm"></div>
-                  <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-[#D4AF37] rounded-full shadow-sm"></div>
-                  <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-[#D4AF37] rounded-full shadow-sm"></div>
                 </div>
+                <div className="absolute -top-1 -left-1 w-2 h-2 bg-[#D4AF37] rounded-full shadow-sm"></div>
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#D4AF37] rounded-full shadow-sm"></div>
+                <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-[#D4AF37] rounded-full shadow-sm"></div>
+                <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-[#D4AF37] rounded-full shadow-sm"></div>
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
 
         {/* Corner elegance elements */}
-        {[...Array(4)].map((_, i) => (
+        {cornerPositions.map((pos, i) => (
           <div
             key={`corner-element-${i}`}
             ref={(el) => {
               if (el) lanternsRef.current[i + 6] = el;
             }}
             className="absolute transform-gpu opacity-25"
-            style={{
-              top: i < 2 ? "10%" : "85%",
-              left: i % 2 === 0 ? "5%" : "90%",
-              zIndex: 2,
-            }}
+            style={{ ...pos, zIndex: 2 }}
           >
             <div className="relative scale-75">
               <div className="w-12 h-12 bg-gradient-to-br from-[#D4AF37] to-[#B8860B] rounded-lg shadow-md border border-[#8B7355] transform rotate-45">
@@ -414,17 +440,17 @@ const WelcomePage = ({ onOpen }: { onOpen: () => void }) => {
 
       {/* Elegant floating particles */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+        {sparklePositions.map((pos, i) => (
           <div
-            key={i}
-            className="absolute w-1 h-1 bg-[#D4AF37] rounded-full opacity-60"
+            key={`sparkle-${i}`}
+            className="absolute bg-[#D4AF37] rounded-full opacity-50"
             style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animation: `float ${
-                3 + Math.random() * 2
-              }s ease-in-out infinite alternate`,
+              width: `${pos.width}px`,
+              height: `${pos.height}px`,
+              top: `${pos.top}%`,
+              left: `${pos.left}%`,
+              animationDelay: `${pos.delay}s`,
+              animation: `twinkle ${pos.duration}s ease-in-out infinite`,
             }}
           />
         ))}

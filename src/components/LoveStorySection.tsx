@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaHeart, FaRing, FaCalendarAlt } from "react-icons/fa";
@@ -414,6 +414,19 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
   const bridePhoto =
     photoList.find((url) => url.includes("/T-126_")) || photoList[1];
 
+  // Tối ưu vị trí particle chỉ random 1 lần khi mount
+  // Giảm số lượng particle trên mobile
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const particleCount = isMobile ? 2 : 8;
+  const particlePositions = useMemo(() =>
+    Array.from({ length: particleCount }, () => ({
+      top: 10 + Math.random() * 80,
+      left: 5 + Math.random() * 90,
+      delay: Math.random() * 2,
+    })),
+    [particleCount]
+  );
+
   return (
     <>
       <section
@@ -633,20 +646,18 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
 
         {/* Floating Particles */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(12)].map((_, i) => (
+          {particlePositions.map((pos, i) => (
             <div
-              key={`timeline-particle-${i}`}
-              className="absolute w-2 h-2 sm:w-3 sm:h-3 bg-[#D4AF37] rounded-full opacity-30 shadow-gold"
+              key={`story-particle-${i}`}
+              className="story-particle absolute text-[#D4AF37] opacity-20 font-chinese-decorative text-sm pointer-events-none"
               style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animation: `float ${
-                  3 + Math.random() * 4
-                }s ease-in-out infinite alternate`,
-                filter: "blur(1.5px)",
+                top: `${pos.top}%`,
+                left: `${pos.left}%`,
+                animationDelay: `${pos.delay}s`,
               }}
-            />
+            >
+              {i % 2 === 0 ? "福" : "缘"}
+            </div>
           ))}
         </div>
       </section>

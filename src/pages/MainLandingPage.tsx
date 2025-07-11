@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Header from "../components/Header";
@@ -9,7 +9,6 @@ import WeddingDetailsSection from "../components/WeddingDetailsSection";
 import GallerySection from "../components/GallerySection";
 import TimelineSection from "../components/TimelineSection";
 import Footer from "../components/Footer";
-// import { FaHeart, FaRing, FaCalendarAlt, FaLeaf } from "react-icons/fa";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -87,6 +86,29 @@ const MainLandingPage = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Giảm số lượng floating-lantern và particle trên mobile
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+  const floatingLanternCount = isMobile ? 2 : 6;
+  const particleCount = isMobile ? 4 : 12;
+  const floatingLanternPositions = useMemo(
+    () =>
+      Array.from({ length: floatingLanternCount }, (_, i) => ({
+        top: 15 + i * 12,
+        left: i % 2 === 0 ? 8 + i * 3 : 82 + i * 2,
+      })),
+    [floatingLanternCount]
+  );
+  const particlePositions = useMemo(
+    () =>
+      Array.from({ length: particleCount }, () => ({
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        delay: Math.random() * 5,
+        duration: 3 + Math.random() * 4,
+      })),
+    [particleCount]
+  );
 
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === "vi" ? "en" : "vi"));
@@ -205,13 +227,13 @@ const MainLandingPage = () => {
       </div>
       {/* Luxury Floating Ornaments with Chinese Elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
+        {floatingLanternPositions.map((pos, i) => (
           <div
             key={`floating-ornament-${i}`}
             className="floating-lantern absolute"
             style={{
-              top: `${15 + i * 12}%`,
-              left: i % 2 === 0 ? `${8 + i * 3}%` : `${82 + i * 2}%`,
+              top: `${pos.top}%`,
+              left: `${pos.left}%`,
               zIndex: 1,
             }}
           >
@@ -278,17 +300,15 @@ const MainLandingPage = () => {
       <TimelineSection lang={language} />
       {/* Elegant Floating Particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(12)].map((_, i) => (
+        {particlePositions.map((pos, i) => (
           <div
             key={`particle-${i}`}
             className="absolute w-1 h-1 bg-[#D4AF37] rounded-full opacity-50"
             style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animation: `float ${
-                3 + Math.random() * 4
-              }s ease-in-out infinite alternate`,
+              top: `${pos.top}%`,
+              left: `${pos.left}%`,
+              animationDelay: `${pos.delay}s`,
+              animation: `float ${pos.duration}s ease-in-out infinite alternate`,
             }}
           />
         ))}

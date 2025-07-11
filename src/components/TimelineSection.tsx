@@ -1,22 +1,9 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
-  // Màu sắc pastel nhẹ nhàng
-  const pastel = {
-    pink: "#F8E1E7",
-    ivory: "#F8F6F0",
-    gold: "#F6E7C1",
-    rose: "#E7C6C6",
-    champagne: "#F7E7CE",
-    accent: "#C8A882",
-    text: "#A67C52",
-    dot: "#E7BFA5",
-    line: "linear-gradient(90deg, #F8E1E7 0%, #F6E7C1 50%, #E7C6C6 100%)",
-  };
-
   // Dữ liệu timeline mới, alternating trên-dưới, dot luxury, không dùng icon thô
   const WEDDING_TIMELINE = [
     {
@@ -97,6 +84,37 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
       return () => window.removeEventListener("resize", handleResize);
     }
   }, []);
+
+  // Giảm số lượng dot và particle trên mobile
+  const dotCount = isMobile ? Math.ceil(WEDDING_TIMELINE.length / 2) : WEDDING_TIMELINE.length;
+  const particleCount = isMobile ? 2 : 6;
+  const dotPositions = useMemo(() =>
+    Array.from({ length: dotCount }, () => ({
+      top: 10 + Math.random() * 80,
+      left: 5 + Math.random() * 90,
+    })),
+    [dotCount]
+  );
+  const particlePositions = useMemo(() =>
+    Array.from({ length: particleCount }, () => ({
+      top: 10 + Math.random() * 80,
+      left: 5 + Math.random() * 90,
+      delay: Math.random() * 2,
+    })),
+    [particleCount]
+  );
+
+  // Optimize dresscode particles: reduce count on mobile, useMemo for positions
+  const dresscodeParticleCount = isMobile ? 8 : 20;
+  const dresscodeParticles = useMemo(() => {
+    return Array.from({ length: dresscodeParticleCount }, () => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      size: isMobile ? 8 + Math.random() * 8 : 12 + Math.random() * 16,
+      opacity: 0.3 + Math.random() * 0.5,
+      delay: Math.random() * 2,
+    }));
+  }, [isMobile, dresscodeParticleCount]);
 
   useEffect(() => {
     // Timeline fade-in
@@ -642,50 +660,45 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
         )}
 
         {/* Particle luxury sparkle effect - cải tiến: random vị trí, màu, opacity, số lượng, hiệu ứng rõ hơn */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          {Array.from({ length: 28 }).map((_, i) => {
-            // Random vị trí toàn section
-            const top = Math.random() * 90 + 2; // 2% - 92%
-            const left = Math.random() * 90 + 2;
-            // Random kích thước
-            const size = 12 + Math.random() * 16; // 12-28px
-            // Random màu luxury
-            const colors = [
-              pastel.gold,
-              pastel.accent,
-              "#fffbe8",
-              "#f6e7c1",
-              "#ffe9b0",
-              "#f8e1e7",
-              "#e7bfa5",
-              "#fff",
-            ];
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            // Random blur cho sparkle
-            const blur = Math.random() > 0.7 ? "blur-sm" : "";
-            // Random opacity (cao hơn)
-            const baseOpacity = 0.22 + Math.random() * 0.18; // 0.22-0.4
-            return (
-              <div
-                key={i}
-                ref={(el) => {
-                  particleRefs.current[i] = el;
-                }}
-                className={`absolute rounded-full ${blur}`}
-                style={{
-                  top: `${top}%`,
-                  left: `${left}%`,
-                  width: size,
-                  height: size,
-                  background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
-                  opacity: baseOpacity,
-                  zIndex: 1,
-                  filter: blur > "" ? "blur(2px)" : undefined,
-                  pointerEvents: "none",
-                }}
-              ></div>
-            );
-          })}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {dotPositions.map((pos, i) => (
+            <div
+              key={`timeline-dot-${i}`}
+              className="timeline-dot absolute bg-[#D4AF37] rounded-full opacity-30"
+              style={{
+                top: `${pos.top}%`,
+                left: `${pos.left}%`,
+              }}
+            />
+          ))}
+          {particlePositions.map((pos, i) => (
+            <div
+              key={`timeline-particle-${i}`}
+              className="timeline-particle absolute text-[#D4AF37] opacity-20 font-chinese-decorative text-sm pointer-events-none"
+              style={{
+                top: `${pos.top}%`,
+                left: `${pos.left}%`,
+                animationDelay: `${pos.delay}s`,
+              }}
+            >
+              {i % 2 === 0 ? "福" : "缘"}
+            </div>
+          ))}
+          {dresscodeParticles.map((particle, idx) => (
+            <div
+              key={idx}
+              className="absolute rounded-full bg-pink-200 pointer-events-none"
+              style={{
+                left: `${particle.left}%`,
+                top: `${particle.top}%`,
+                width: particle.size,
+                height: particle.size,
+                opacity: particle.opacity,
+                animationDelay: `${particle.delay}s`,
+                filter: "blur(1.5px)",
+              }}
+            />
+          ))}
         </div>
 
         {/* Dresscode section - luxury, cách điệu */}

@@ -6,7 +6,7 @@ import {
   FaMapMarkerAlt,
   FaCalendarAlt,
 } from "react-icons/fa";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -23,6 +23,28 @@ const Footer = ({ language }: FooterProps) => {
   const particlesRef = useRef<HTMLDivElement[]>([]);
   const developerCardRef = useRef<HTMLDivElement>(null);
   const [logoError, setLogoError] = useState(false);
+
+  // Giảm số lượng particle và shape trên mobile
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
+  const particleCount = isMobile ? 3 : 8;
+  const shapeCount = isMobile ? 2 : 6;
+  // Sử dụng useMemo để random vị trí particle 1 lần duy nhất khi mount
+  const particlePositions = useMemo(
+    () =>
+      Array.from({ length: particleCount }, () => ({
+        top: 10 + Math.random() * 70,
+        left: 5 + Math.random() * 90,
+      })),
+    [particleCount]
+  );
+  const shapePositions = useMemo(
+    () =>
+      Array.from({ length: shapeCount }, () => ({
+        top: 10 + Math.random() * 70,
+        left: 5 + Math.random() * 90,
+      })),
+    [shapeCount]
+  );
 
   useEffect(() => {
     // Advanced heart animation with breathing effect
@@ -112,6 +134,14 @@ const Footer = ({ language }: FooterProps) => {
         cardElement.removeEventListener("mouseleave", handleMouseLeave);
       };
     }
+
+    // Tắt animation nếu prefers-reduced-motion
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
   }, []);
 
   const content = {
@@ -177,7 +207,7 @@ const Footer = ({ language }: FooterProps) => {
 
       {/* Floating particles with Chinese characters */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(8)].map((_, i) => (
+        {particlePositions.map((pos, i) => (
           <div
             key={`particle-${i}`}
             ref={(el) => {
@@ -185,14 +215,14 @@ const Footer = ({ language }: FooterProps) => {
             }}
             className="absolute text-[#D4AF37] opacity-20 font-chinese-decorative text-sm pointer-events-none"
             style={{
-              top: `${10 + Math.random() * 70}%`,
-              left: `${5 + Math.random() * 90}%`,
+              top: `${pos.top}%`,
+              left: `${pos.left}%`,
             }}
           >
             {["福", "寿", "囍", "龍", "鳳", "喜", "爱", "缘"][i]}
           </div>
         ))}
-        {[...Array(6)].map((_, i) => (
+        {shapePositions.map((pos, i) => (
           <div
             key={`shape-${i}`}
             ref={(el) => {
@@ -206,8 +236,8 @@ const Footer = ({ language }: FooterProps) => {
                 : "w-2 h-6 bg-[#EAE4CC]/25 rounded-full"
             }`}
             style={{
-              top: `${10 + Math.random() * 70}%`,
-              left: `${5 + Math.random() * 90}%`,
+              top: `${pos.top}%`,
+              left: `${pos.left}%`,
             }}
           />
         ))}
