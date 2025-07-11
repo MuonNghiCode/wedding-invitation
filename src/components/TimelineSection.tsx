@@ -26,13 +26,13 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
       accent: "bg-[#F8E1E7] border-[#F6E7C1]",
     },
     {
-      time: "18:00",
+      time: "19:00",
       title: { vi: "Đón Lễ", en: "Ceremony" },
       zh: "开宴",
       accent: "bg-[#F6E7C1] border-[#E7BFA5]",
     },
     {
-      time: "19:00",
+      time: "19:30",
       title: { vi: "Khai Tiệc", en: "Main Banquet" },
       zh: "宴席",
       accent: "bg-[#F7E7CE] border-[#C8A882]",
@@ -50,28 +50,28 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
     {
       color: "#C8A882",
       label: {
-        vi: "Vàng ánh kim",
+        vi: "Vàng",
         en: "Gold",
       },
     },
     {
       color: "#C0392B",
       label: {
-        vi: "Đỏ Trung Hoa",
+        vi: "Đỏ",
         en: "Chinese Red",
       },
     },
     {
       color: "#ede8dc",
       label: {
-        vi: "Trắng kem",
+        vi: "Trắng",
         en: "Ivory",
       },
     },
     {
       color: "#1C1C1C",
       label: {
-        vi: "Đen tuyền",
+        vi: "Đen",
         en: "Jet Black",
       },
     },
@@ -691,7 +691,7 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
         {/* Dresscode section - luxury, cách điệu */}
         <div className="mt-20 text-center">
           <h3 className="text-2xl md:text-3xl font-bold text-[#C0392B] mb-12 font-['Playfair_Display','Stay_Glory_Serif',serif] tracking-wider relative drop-shadow-lg">
-            {lang === "vi" ? "Dresscode Buổi Tiệc" : "Dresscode"}
+            {lang === "vi" ? "DRESSCODE" : "DRESSCODE"}
             {/* Decorative underline */}
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-0.5 bg-gradient-to-r from-[#C8A882] to-[#E7BFA5] mt-2"></div>
           </h3>
@@ -825,7 +825,7 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
 
           {/* Luxury tagline thay cho text cũ */}
           <div className="mt-12 flex flex-col items-center justify-center select-none">
-            <span
+            {/* <span
               className={`luxury-tagline text-xl md:text-2xl font-bold tracking-wider mb-2 drop-shadow-lg ${
                 lang === "vi"
                   ? "font-['Noto_Serif_SC',serif]"
@@ -842,7 +842,7 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
               {lang === "vi"
                 ? "Luxury Dresscode – Sắc màu đồng điệu, tôn vinh vẻ đẹp buổi tiệc"
                 : "Luxury Dresscode – Elegant Harmony for the Celebration"}
-            </span>
+            </span> */}
             {/* Icon luxury nhỏ */}
             <svg
               width="38"

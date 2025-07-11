@@ -380,30 +380,30 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
   const groomInfo =
     language === "vi"
       ? {
-          title: "Chú rể",
+          title: "Chú Rể",
           name: "Uông Kim Thuận",
           birth: "Sinh năm 1997",
-          desc: "Hiền lành, vui tính, yêu thể thao và công nghệ.",
+          desc: "kỹ sư vi mạch, điểm đạm, trưởng thành.",
         }
       : {
           title: "Groom",
           name: "Uong Kim Thuan",
           birth: "Born in 1997",
-          desc: "Gentle, humorous, loves sports and technology.",
+          desc: "Electrical engineering, computer science, and mature.",
         };
   const brideInfo =
     language === "vi"
       ? {
-          title: "Cô dâu",
+          title: "Cô Dâu",
           name: "Phạm Minh Hương",
           birth: "Sinh năm 2002",
-          desc: "Dịu dàng, năng động, thích du lịch và đọc sách.",
+          desc: "Vui tính thích du lịch và đọc sách.",
         }
       : {
           title: "Bride",
           name: "Pham Minh Huong",
           birth: "Born in 2002",
-          desc: "Graceful, dynamic, loves traveling and reading.",
+          desc: "Humorous loves traveling and reading.",
         };
 
   // Lấy danh sách ảnh từ photoList
