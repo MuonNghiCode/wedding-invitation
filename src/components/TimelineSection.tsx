@@ -13,25 +13,25 @@ const TimelineSection = memo(function TimelineSection({
     {
       time: "17:30",
       title: { vi: "Đón Khách", en: "Guest Reception" },
-      zh: "迎宾",
+      zh: "迎",
       accent: "bg-[#F8E1E7] border-[#F6E7C1]",
     },
     {
       time: "19:00",
       title: { vi: "Đón Lễ", en: "Ceremony" },
-      zh: "开宴",
+      zh: "礼",
       accent: "bg-[#F6E7C1] border-[#E7BFA5]",
     },
     {
       time: "19:30",
       title: { vi: "Khai Tiệc", en: "Main Banquet" },
-      zh: "宴席",
+      zh: "宴",
       accent: "bg-[#F7E7CE] border-[#C8A882]",
     },
     {
       time: "20:00",
       title: { vi: "Tưng Bừng", en: "End & Photos" },
-      zh: "留影",
+      zh: "喜",
       accent: "bg-[#F8F6F0] border-[#A67C52]",
     },
   ];
@@ -814,7 +814,13 @@ const TimelineSection = memo(function TimelineSection({
                       letterSpacing: "0.08em",
                     }}
                   >
-                    {idx === 0 ? "金" : idx === 1 ? "红" : "白"}
+                    {idx === 0
+                      ? "金"
+                      : idx === 1
+                      ? "红"
+                      : idx === 2
+                      ? "白"
+                      : "黑"}
                   </span>
                 </div>
                 {/* Label luxury */}
