@@ -178,11 +178,11 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
       gsap.to(".story-bg-element", {
         y: -20,
         rotation: 10,
-        duration: 4,
+        duration: 6,
         ease: "sine.inOut",
         yoyo: true,
         repeat: -1,
-        stagger: 0.5,
+        stagger: 0.7,
       });
 
       // Animate Chinese characters

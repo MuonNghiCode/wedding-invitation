@@ -270,18 +270,10 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
       >
         Wedding Photo Gallery
       </h2>
-      {/* Luxury Title (song ngữ) */}
+      {/* Tiêu đề thư viện ảnh */}
       <div className="text-center pt-12 pb-8">
         <div className="text-3xl md:text-5xl font-['Playfair_Display','Stay_Glory_Serif','Cormorant_Garamond',serif] font-bold text-[#A67C52] tracking-wide">
           {t.album2}
-        </div>
-        <div className="text-2xl md:text-4xl font-serif mt-2 text-[#C8A882] flex flex-col items-center">
-          <span className="font-['Great_Vibes','Fabregas',cursive] text-3xl md:text-4xl text-[#A67C52] mx-2">
-            {t.of}
-          </span>
-          <span className="font-['Playfair_Display','Stay_Glory_Serif','Cormorant_Garamond',serif] text-[#4A3B2A]">
-            {t.love2}
-          </span>
         </div>
       </div>
       {/* Chinese pattern background luxury - pattern chìm */}
@@ -429,6 +421,8 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
               ) : (
                 <div className="absolute top-2 left-2 w-1.5 h-1.5 xs:w-2 xs:h-2 bg-[#C0392B] rounded-full opacity-70 animate-pulse"></div>
               );
+            // Hiệu ứng fade-in khi ảnh load xong
+            const [loaded, setLoaded] = React.useState(false);
             return (
               <div
                 key={item.src}
@@ -439,14 +433,19 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
                 <img
                   src={getFocusUrl(item.src)}
                   alt={`Ảnh cưới ${idx + 1}`}
-                  className={imgClass}
-                  loading="eager"
+                  className={
+                    imgClass +
+                    " transition-opacity duration-700 " +
+                    (loaded ? "opacity-100" : "opacity-0")
+                  }
+                  loading="lazy"
                   decoding="async"
                   style={{
                     borderRadius: "0.75rem",
                     background: "#f8f6f0",
                     objectPosition: "center top",
                   }}
+                  onLoad={() => setLoaded(true)}
                 />
                 {/* Gold/Red particle accent */}
                 {accentParticle}
@@ -527,7 +526,7 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
                       src={ALL_PHOTOS[idx]}
                       alt={`Ảnh cưới ${idx + 1}`}
                       className="w-full h-full object-cover rounded-2xl shadow-2xl"
-                      loading="eager"
+                      loading="lazy"
                       decoding="async"
                     />
                   </div>

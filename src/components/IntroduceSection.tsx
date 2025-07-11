@@ -38,6 +38,18 @@ const IntroduceSection = ({
   });
 
   // Update countdown every second
+  // Chỉ render floating-photo khi section xuất hiện trên màn hình
+  const [showFloating, setShowFloating] = useState(false);
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const observer = new window.IntersectionObserver(
+      ([entry]) => setShowFloating(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -506,53 +518,50 @@ const IntroduceSection = ({
       </div>
       {/* Enhanced Floating Photos - Overlapping and stacked naturally */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Show 7 floating photos lấy từ photoList */}
-        {floatingPhotos.map((src, idx) => {
-          // Điều chỉnh vị trí cho mobile: chỉ ở viền trên/dưới/trái/phải, tránh giữa
-          const desktopPositions = [
-            { top: "12%", left: "6%", rot: -12 },
-            { bottom: "10%", right: "8%", rot: 18 },
-            { top: "60%", left: "12%", rot: -8 },
-            { top: "22%", right: "10%", rot: 10 },
-            { bottom: "18%", left: "10%", rot: -20 },
-            { top: "35%", left: "18%", rot: 24 },
-            { bottom: "25%", right: "14%", rot: -16 },
-          ];
-          const pos = desktopPositions[idx % desktopPositions.length];
-          const mobilePos = mobilePositions[idx % mobilePositions.length];
-          let responsiveClass = "";
-          if (pos.top) responsiveClass += ` xs:top-[${pos.top}]`;
-          if (pos.left) responsiveClass += ` xs:left-[${pos.left}]`;
-          if (pos.right) responsiveClass += ` xs:right-[${pos.right}]`;
-          if (pos.bottom) responsiveClass += ` xs:bottom-[${pos.bottom}]`;
-          return (
-            <div
-              key={idx}
-              className={`floating-photo absolute w-12 h-16 xs:w-14 xs:h-18 sm:w-16 sm:h-20 rounded-lg z-10 block${responsiveClass}`}
-              style={{
-                top: mobilePos.top,
-                left: mobilePos.left,
-                right: mobilePos.right,
-                bottom: mobilePos.bottom,
-                transform: `${
-                  "transform" in mobilePos && mobilePos.transform
-                    ? mobilePos.transform
-                    : ""
-                } rotate(${mobilePos.rot}deg)`,
-              }}
-            >
-              <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full border-2 border-white/95">
-                <img
-                  src={src}
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent hidden xs:block"></div>
+        {/* Chỉ render floating-photo khi section xuất hiện trên màn hình */}
+        {showFloating &&
+          floatingPhotos.map((src, idx) => {
+            const pos = isMobile
+              ? mobilePositions[idx % mobilePositions.length]
+              : [
+                  { top: "12%", left: "6%", rot: -12 },
+                  { bottom: "10%", right: "8%", rot: 18 },
+                  { top: "60%", left: "12%", rot: -8 },
+                  { top: "22%", right: "10%", rot: 10 },
+                ][idx % 4];
+            let responsiveClass = "";
+            if (!isMobile) {
+              if (pos.top) responsiveClass += ` xs:top-[${pos.top}]`;
+              if (pos.left) responsiveClass += ` xs:left-[${pos.left}]`;
+              if (pos.right) responsiveClass += ` xs:right-[${pos.right}]`;
+              if (pos.bottom) responsiveClass += ` xs:bottom-[${pos.bottom}]`;
+            }
+            return (
+              <div
+                key={idx}
+                className={`floating-photo absolute w-12 h-16 xs:w-14 xs:h-18 sm:w-16 sm:h-20 rounded-lg z-10 block${responsiveClass}`}
+                style={{
+                  top: pos.top,
+                  left: pos.left,
+                  right: pos.right,
+                  bottom: pos.bottom,
+                  transform: `${
+                    "transform" in pos && pos.transform ? pos.transform : ""
+                  } rotate(${pos.rot}deg)`,
+                }}
+              >
+                <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full border-2 border-white/95">
+                  <img
+                    src={src}
+                    alt="Memory"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent hidden xs:block"></div>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
         {/* Các ảnh luxury khác chỉ hiện tablet trở lên */}
         <div className="floating-photo absolute top-[15%] left-[8%] transition-all duration-700 hover:scale-105 hover:z-50 z-10 hidden xs:block">
