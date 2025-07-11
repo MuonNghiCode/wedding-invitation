@@ -24,37 +24,48 @@ const MainLandingPage = () => {
   const weddingDate = new Date("2025-08-09T18:00:00");
 
   useEffect(() => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const ctx = gsap.context(() => {
       // Initial page animations
       gsap.fromTo(
         heroRef.current,
         { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }
+        {
+          opacity: 1,
+          y: 0,
+          duration: prefersReducedMotion ? 0.01 : 1.5,
+          ease: "power3.out",
+        }
       );
 
       // Bamboo parallax effect
-      gsap.to(".bamboo-layer", {
-        y: -100,
-        duration: 2,
-        ease: "none",
-        scrollTrigger: {
-          trigger: mainRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
+      if (!prefersReducedMotion) {
+        gsap.to(".bamboo-layer", {
+          y: -100,
+          duration: 2,
+          ease: "none",
+          scrollTrigger: {
+            trigger: mainRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
 
-      // Lantern floating animations
-      gsap.to(".floating-lantern", {
-        y: -30,
-        rotation: 5,
-        duration: 3,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.5,
-      });
+        // Lantern floating animations
+        gsap.to(".floating-lantern", {
+          y: -30,
+          rotation: 5,
+          duration: 3,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          stagger: 0.5,
+        });
+      }
     }, mainRef);
 
     return () => ctx.revert();
@@ -162,6 +173,13 @@ const MainLandingPage = () => {
             : "Stay Glory Serif, serif",
       }}
     >
+      {/* SEO Headings */}
+      <h1 className="sr-only">
+        Thiệp cưới Minh Hương &amp; Kim Thuận - Wedding Invitation
+      </h1>
+      <h2 className="sr-only">
+        Thông tin lễ cưới, album ảnh, bản đồ, lời chúc
+      </h2>
       {/* Elegant Background Pattern */}
       <div className="absolute inset-0">
         {/* Luxury gradient overlay */}

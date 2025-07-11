@@ -434,6 +434,10 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
         ref={timelineRef}
         className="relative min-h-screen py-20 bg-gradient-to-bl from-[#e8e2d5] via-[#ede8dc] to-[#f8f6f0] overflow-hidden"
       >
+        {/* SEO Heading */}
+        <h2 className="sr-only">
+          Hành trình tình yêu của Minh Hương &amp; Kim Thuận
+        </h2>
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10 blur-sm">
           <div className="absolute inset-0 bg-[url('/bamboo-parttern-removebg-preview.png')] bg-repeat bg-center opacity-30 blur-md"></div>

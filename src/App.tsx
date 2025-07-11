@@ -1,8 +1,8 @@
-import { useState } from "react";
-import WelcomePage from "./components/WelcomePage";
-import MainLandingPage from "./pages/MainLandingPage";
-
+import { useState, Suspense, lazy } from "react";
 import "./App.css";
+
+const WelcomePage = lazy(() => import("./components/WelcomePage"));
+const MainLandingPage = lazy(() => import("./pages/MainLandingPage"));
 
 function App() {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -15,11 +15,19 @@ function App() {
 
   return (
     <div className="min-h-screen">
-      {showWelcome ? (
-        <WelcomePage onOpen={handleOpenInvitation} />
-      ) : (
-        <MainLandingPage />
-      )}
+      <Suspense
+        fallback={
+          <div className="w-full h-screen flex items-center justify-center text-xl">
+            Loading...
+          </div>
+        }
+      >
+        {showWelcome ? (
+          <WelcomePage onOpen={handleOpenInvitation} />
+        ) : (
+          <MainLandingPage />
+        )}
+      </Suspense>
     </div>
   );
 }

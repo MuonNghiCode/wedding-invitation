@@ -252,6 +252,10 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = ({
   }, []);
   return (
     <section className="relative min-h-screen w-full py-3 xs:py-4 sm:py-10 md:py-16 bg-gradient-to-br from-[#f8f6f0] via-[#ede8dc] to-[#e8e2d5] flex flex-col items-center justify-center overflow-hidden select-none text-[15px] xs:text-[17px] sm:text-lg md:text-xl lg:text-2xl">
+      {/* SEO Heading */}
+      <h2 className="sr-only">
+        Thông tin lễ cưới, địa điểm, thời gian, bản đồ, dresscode
+      </h2>
       <div className="absolute inset-0 pointer-events-none z-0">
         {/* Balloon particles luxury */}
         {balloonParticles.map((c, i) => (

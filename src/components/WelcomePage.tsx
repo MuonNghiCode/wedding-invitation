@@ -53,6 +53,10 @@ const WelcomePage = ({ onOpen }: { onOpen: () => void }) => {
   );
 
   useEffect(() => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     // Initial animation - envelope floating in
     gsap.fromTo(
       envelopeRef.current,
@@ -67,149 +71,151 @@ const WelcomePage = ({ onOpen }: { onOpen: () => void }) => {
         opacity: 1,
         scale: 1,
         rotation: 0,
-        duration: 2,
+        duration: prefersReducedMotion ? 0.01 : 2,
         ease: "elastic.out(1, 0.8)",
       }
     );
 
-    // Floating animation
-    gsap.to(envelopeRef.current, {
-      y: -10,
-      duration: 3,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-    });
+    if (!prefersReducedMotion) {
+      // Floating animation
+      gsap.to(envelopeRef.current, {
+        y: -10,
+        duration: 3,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
 
-    // Seal glowing effect
-    gsap.to(sealRef.current, {
-      scale: 1.1,
-      duration: 2,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-    });
+      // Seal glowing effect
+      gsap.to(sealRef.current, {
+        scale: 1.1,
+        duration: 2,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
 
-    // Bamboo layers 3D parallax animations
-    gsap.to(bambooLayer1Ref.current, {
-      y: -20,
-      rotation: 1,
-      duration: 8,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-    });
+      // Bamboo layers 3D parallax animations
+      gsap.to(bambooLayer1Ref.current, {
+        y: -20,
+        rotation: 1,
+        duration: 8,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
 
-    gsap.to(bambooLayer2Ref.current, {
-      y: -15,
-      x: 10,
-      rotation: -0.5,
-      duration: 10,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-    });
+      gsap.to(bambooLayer2Ref.current, {
+        y: -15,
+        x: 10,
+        rotation: -0.5,
+        duration: 10,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
 
-    gsap.to(bambooLayer3Ref.current, {
-      y: -25,
-      x: -8,
-      rotation: 0.8,
-      duration: 12,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-    });
+      gsap.to(bambooLayer3Ref.current, {
+        y: -25,
+        x: -8,
+        rotation: 0.8,
+        duration: 12,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
 
-    // Animate Chinese lanterns - Random chaotic movement
-    lanternsRef.current.forEach((lantern, index) => {
-      if (lantern) {
-        if (index < 6) {
-          // Medium lanterns - chaotic floating patterns
-          const randomDirection = Math.random() > 0.5 ? 1 : -1;
-          const randomIntensity = 20 + Math.random() * 40;
-          const randomSpeed = 4 + Math.random() * 8;
+      // Animate Chinese lanterns - Random chaotic movement
+      lanternsRef.current.forEach((lantern, index) => {
+        if (lantern) {
+          if (index < 6) {
+            // Medium lanterns - chaotic floating patterns
+            const randomDirection = Math.random() > 0.5 ? 1 : -1;
+            const randomIntensity = 20 + Math.random() * 40;
+            const randomSpeed = 4 + Math.random() * 8;
 
-          gsap.to(lantern, {
-            y: randomDirection * randomIntensity,
-            x: (Math.random() - 0.5) * 30,
-            rotation: (Math.random() - 0.5) * 8,
-            duration: randomSpeed,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: Math.random() * 2,
-          });
+            gsap.to(lantern, {
+              y: randomDirection * randomIntensity,
+              x: (Math.random() - 0.5) * 30,
+              rotation: (Math.random() - 0.5) * 8,
+              duration: randomSpeed,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+              delay: Math.random() * 2,
+            });
 
-          // Chaotic swaying
-          gsap.to(lantern, {
-            rotationZ: (Math.random() - 0.5) * 6,
-            duration: 3 + Math.random() * 4,
-            ease: "power1.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: Math.random() * 1.5,
-          });
+            // Chaotic swaying
+            gsap.to(lantern, {
+              rotationZ: (Math.random() - 0.5) * 6,
+              duration: 3 + Math.random() * 4,
+              ease: "power1.inOut",
+              yoyo: true,
+              repeat: -1,
+              delay: Math.random() * 1.5,
+            });
 
-          // Random scale pulsing
-          gsap.to(lantern, {
-            scale: 0.95 + Math.random() * 0.1,
-            duration: 2 + Math.random() * 3,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: Math.random() * 1,
-          });
-        } else if (index < 9) {
-          // Large background lanterns - slow chaotic drift
-          const randomDrift = Math.random() * 60 - 30;
-          const randomFloat = Math.random() * 40 - 20;
+            // Random scale pulsing
+            gsap.to(lantern, {
+              scale: 0.95 + Math.random() * 0.1,
+              duration: 2 + Math.random() * 3,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+              delay: Math.random() * 1,
+            });
+          } else if (index < 9) {
+            // Large background lanterns - slow chaotic drift
+            const randomDrift = Math.random() * 60 - 30;
+            const randomFloat = Math.random() * 40 - 20;
 
-          gsap.to(lantern, {
-            y: randomFloat,
-            x: randomDrift,
-            rotation: (Math.random() - 0.5) * 3,
-            duration: 12 + Math.random() * 8,
-            ease: "power1.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: Math.random() * 3,
-          });
+            gsap.to(lantern, {
+              y: randomFloat,
+              x: randomDrift,
+              rotation: (Math.random() - 0.5) * 3,
+              duration: 12 + Math.random() * 8,
+              ease: "power1.inOut",
+              yoyo: true,
+              repeat: -1,
+              delay: Math.random() * 3,
+            });
 
-          gsap.to(lantern, {
-            rotationZ: (Math.random() - 0.5) * 4,
-            duration: 10 + Math.random() * 6,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: Math.random() * 2,
-          });
-        } else {
-          // Small corner lanterns - subtle random bob
-          const randomBob = Math.random() * 20 - 10;
-          const randomSway = Math.random() * 15 - 7.5;
+            gsap.to(lantern, {
+              rotationZ: (Math.random() - 0.5) * 4,
+              duration: 10 + Math.random() * 6,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+              delay: Math.random() * 2,
+            });
+          } else {
+            // Small corner lanterns - subtle random bob
+            const randomBob = Math.random() * 20 - 10;
+            const randomSway = Math.random() * 15 - 7.5;
 
-          gsap.to(lantern, {
-            y: randomBob,
-            x: randomSway,
-            rotation: (Math.random() - 0.5) * 4,
-            duration: 6 + Math.random() * 4,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: Math.random() * 2,
-          });
+            gsap.to(lantern, {
+              y: randomBob,
+              x: randomSway,
+              rotation: (Math.random() - 0.5) * 4,
+              duration: 6 + Math.random() * 4,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+              delay: Math.random() * 2,
+            });
 
-          gsap.to(lantern, {
-            rotationZ: (Math.random() - 0.5) * 3,
-            duration: 5 + Math.random() * 3,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: -1,
-            delay: Math.random() * 1.5,
-          });
+            gsap.to(lantern, {
+              rotationZ: (Math.random() - 0.5) * 3,
+              duration: 5 + Math.random() * 3,
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+              delay: Math.random() * 1.5,
+            });
+          }
         }
-      }
-    });
+      });
+    }
   }, []);
 
   const handleEnvelopeClick = () => {

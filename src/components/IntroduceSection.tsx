@@ -57,6 +57,12 @@ const IntroduceSection = ({
   }, [weddingDate]);
 
   useEffect(() => {
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const animDuration = prefersReducedMotion ? 0.01 : 1;
+    const animDurationLong = prefersReducedMotion ? 0.01 : 1.5;
     const ctx = gsap.context(() => {
       // Main section animation
       gsap.fromTo(
@@ -65,7 +71,7 @@ const IntroduceSection = ({
         {
           opacity: 1,
           y: 0,
-          duration: 1.5,
+          duration: animDurationLong,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -83,7 +89,7 @@ const IntroduceSection = ({
         {
           scale: 1,
           rotation: 0,
-          duration: 1,
+          duration: animDuration,
           ease: "back.out(1.7)",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -100,9 +106,9 @@ const IntroduceSection = ({
         {
           scale: 1,
           y: 0,
-          duration: 0.8,
+          duration: animDuration,
           ease: "back.out(1.7)",
-          stagger: 0.2,
+          stagger: prefersReducedMotion ? 0 : 0.2,
           scrollTrigger: {
             trigger: ".countdown-container",
             start: "top 80%",
@@ -112,87 +118,86 @@ const IntroduceSection = ({
       );
 
       // Animate floating-photo (mobile): scale, opacity, rotation
-      gsap.utils.toArray(".floating-photo").forEach((el, i) => {
-        gsap.fromTo(
-          el as Element,
-          {
-            opacity: 0,
-            scale: 0.7,
-            rotate: gsap.getProperty(el as Element, "rotate") || 0,
-          },
-          {
-            opacity: 1,
-            scale: 1,
-            rotate: gsap.getProperty(el as Element, "rotate") || 0,
-            duration: 1.1,
-            delay: 0.15 + i * 0.08,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: el as Element,
-              start: "top 95%",
-              toggleActions: "play none none reverse",
+      if (!prefersReducedMotion) {
+        gsap.utils.toArray(".floating-photo").forEach((el, i) => {
+          gsap.fromTo(
+            el as Element,
+            {
+              opacity: 0,
+              scale: 0.7,
+              rotate: gsap.getProperty(el as Element, "rotate") || 0,
             },
-          }
-        );
-      });
+            {
+              opacity: 1,
+              scale: 1,
+              rotate: gsap.getProperty(el as Element, "rotate") || 0,
+              duration: 1.1,
+              delay: 0.15 + i * 0.08,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: el as Element,
+                start: "top 95%",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        });
+      }
 
       // Enhanced Photos Flying In Animation - More dynamic and varied
-      gsap.fromTo(
-        ".floating-photo",
-        {
-          scale: 0,
-          opacity: 0,
-          x: (index) => {
-            // More varied starting positions from outside screen
-            const positions = [
-              -600, 600, -500, 500, -400, 400, -700, 700, -450, 450, -550, 550,
-              -350, 350, -650, 650, -300, 300, -750, 750,
-            ];
-            return positions[index % positions.length];
+      if (!prefersReducedMotion) {
+        gsap.fromTo(
+          ".floating-photo",
+          {
+            scale: 0,
+            opacity: 0,
+            x: (index) => {
+              const positions = [
+                -600, 600, -500, 500, -400, 400, -700, 700, -450, 450, -550,
+                550, -350, 350, -650, 650, -300, 300, -750, 750,
+              ];
+              return positions[index % positions.length];
+            },
+            y: (index) => {
+              const positions = [
+                -300, -250, 400, 350, -200, 450, -150, 400, -100, 350, 500, -50,
+                300, 250, -400, 200, -350, 150, -300, 100,
+              ];
+              return positions[index % positions.length];
+            },
+            rotation: (index) => {
+              const rotations = [
+                90, -90, 180, -180, 135, -135, 225, -225, 270, -270, 45, -45,
+                315, -315, 120, -120, 240, -240, 60, -60,
+              ];
+              return rotations[index % rotations.length];
+            },
           },
-          y: (index) => {
-            // More varied vertical positions
-            const positions = [
-              -300, -250, 400, 350, -200, 450, -150, 400, -100, 350, 500, -50,
-              300, 250, -400, 200, -350, 150, -300, 100,
-            ];
-            return positions[index % positions.length];
-          },
-          rotation: (index) => {
-            // More varied rotations
-            const rotations = [
-              90, -90, 180, -180, 135, -135, 225, -225, 270, -270, 45, -45, 315,
-              -315, 120, -120, 240, -240, 60, -60,
-            ];
-            return rotations[index % rotations.length];
-          },
-        },
-        {
-          scale: 1,
-          opacity: 1,
-          x: 0,
-          y: 0,
-          rotation: (index) => {
-            // Final scattered rotations - different for each photo
-            const finalRotations = [
-              -18, 25, -32, 14, 28, -22, 35, -16, -24, 31, 19, -27, 38, -33, 26,
-              -29, 41, -12, 8, -6,
-            ];
-            return finalRotations[index % finalRotations.length];
-          },
-          duration: (index) => {
-            // Varied durations for more natural feel
-            const durations = [
-              1.2, 1.5, 1.8, 1.3, 1.6, 1.4, 1.7, 1.1, 1.9, 1.0, 2.0, 1.25, 1.75,
-              1.35, 1.65, 1.45, 1.55, 1.85, 1.15, 1.95,
-            ];
-            return durations[index % durations.length];
-          },
-          ease: "power3.out",
-          stagger: 0.1,
-          delay: 0.5, // Add delay to see the effect
-        }
-      );
+          {
+            scale: 1,
+            opacity: 1,
+            x: 0,
+            y: 0,
+            rotation: (index) => {
+              const finalRotations = [
+                -18, 25, -32, 14, 28, -22, 35, -16, -24, 31, 19, -27, 38, -33,
+                26, -29, 41, -12, 8, -6,
+              ];
+              return finalRotations[index % finalRotations.length];
+            },
+            duration: (index) => {
+              const durations = [
+                1.2, 1.5, 1.8, 1.3, 1.6, 1.4, 1.7, 1.1, 1.9, 1.0, 2.0, 1.25,
+                1.75, 1.35, 1.65, 1.45, 1.55, 1.85, 1.15, 1.95,
+              ];
+              return durations[index % durations.length];
+            },
+            ease: "power3.out",
+            stagger: 0.1,
+            delay: 0.5,
+          }
+        );
+      }
 
       // Set immediate rotation using CSS variables for testing
       gsap.set(".floating-photo", {
@@ -206,25 +211,29 @@ const IntroduceSection = ({
       });
 
       // Subtle floating hearts
-      gsap.to(".floating-heart", {
-        y: -20,
-        duration: 4,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.5,
-      });
+      if (!prefersReducedMotion) {
+        gsap.to(".floating-heart", {
+          y: -20,
+          duration: 4,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          stagger: 0.5,
+        });
+      }
 
       // Subtle sparkle animation
-      gsap.to(".sparkle", {
-        scale: 1.2,
-        opacity: 0.8,
-        duration: 2,
-        ease: "sine.inOut",
-        yoyo: true,
-        repeat: -1,
-        stagger: 0.3,
-      });
+      if (!prefersReducedMotion) {
+        gsap.to(".sparkle", {
+          scale: 1.2,
+          opacity: 0.8,
+          duration: 2,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          stagger: 0.3,
+        });
+      }
 
       // Title animation
       if (titleRef.current) {

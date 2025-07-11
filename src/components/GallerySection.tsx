@@ -74,12 +74,10 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
       }
       // Lấy n ảnh random không trùng
       const shuffled = rest.slice().sort(() => 0.5 - Math.random());
-      return shuffled
-        .slice(0, n)
-        .map((src: string, i: number) => ({
-          src,
-          full: fullIndexes.includes(i),
-        }));
+      return shuffled.slice(0, n).map((src: string, i: number) => ({
+        src,
+        full: fullIndexes.includes(i),
+      }));
     } else {
       // Desktop giữ logic cũ
       return getRandomPhotos(ALL_PHOTOS, 12).map((src: string) => ({
@@ -256,6 +254,22 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
       className="w-full min-h-[60vh] px-2 md:px-8 py-8 bg-gradient-to-bl from-[#e8e2d5] via-[#ede8dc] to-[#f8f6f0] relative overflow-x-hidden"
       id="gallery"
     >
+      {/* Visually hidden H2 for SEO */}
+      <h2
+        style={{
+          position: "absolute",
+          width: "1px",
+          height: "1px",
+          padding: 0,
+          margin: "-1px",
+          overflow: "hidden",
+          clip: "rect(0,0,0,0)",
+          whiteSpace: "nowrap",
+          border: 0,
+        }}
+      >
+        Wedding Photo Gallery
+      </h2>
       {/* Luxury Title (song ngữ) */}
       <div className="text-center pt-12 pb-8">
         <div className="text-3xl md:text-5xl font-['Playfair_Display','Stay_Glory_Serif','Cormorant_Garamond',serif] font-bold text-[#A67C52] tracking-wide">

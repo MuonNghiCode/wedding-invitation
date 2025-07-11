@@ -105,6 +105,11 @@ const HeroSection = forwardRef<HTMLDivElement, HeroSectionProps>((_, ref) => {
       ref={ref}
       className="relative h-screen flex items-center justify-center overflow-hidden"
     >
+      {/* SEO Heading */}
+      <h2 className="sr-only">
+        Cặp đôi Minh Hương &amp; Kim Thuận - Lễ cưới 09/08/2025 tại White Palace
+        Võ Văn Kiệt
+      </h2>
       {/* Background Image Layer (Clear, Sharp, Main Focus) */}
       <div className="absolute inset-0 z-0">
         <img
