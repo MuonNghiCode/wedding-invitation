@@ -429,7 +429,7 @@ const IntroduceSection = memo(
     const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
     const floatingPhotos = useMemo(() => {
       if (isMobile) {
-        return photoList.slice(0, mobilePositions.length);
+        return photoList.slice(0, 4);
       }
       return photoList.slice(0, 7);
     }, [isMobile, photoList, mobilePositions]);
@@ -594,279 +594,94 @@ const IntroduceSection = memo(
               );
             })}
 
-          {/* Các ảnh luxury khác chỉ hiện tablet trở lên */}
-          <div className="floating-photo absolute top-[15%] left-[8%] transition-all duration-700 hover:scale-105 hover:z-50 z-10 hidden xs:block">
-            <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-16 h-20 sm:w-20 sm:h-24 md:w-24 md:h-28 lg:w-28 lg:h-32 border-2 border-white/95">
-              <picture>
-                <source
-                  srcSet="/backgrounds/hero-background.webp"
-                  type="image/webp"
-                />
-                <img
-                  src="/backgrounds/hero-background.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          {/* Overlapping photo on top-left with different rotation */}
-          <div className="floating-photo absolute top-[8%] left-[4%] transition-all duration-700 hover:scale-105 hover:z-50 z-20 hidden xs:block">
-            <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-14 h-18 sm:w-18 sm:h-22 md:w-22 md:h-26 lg:w-26 lg:h-30 border-2 border-white/95">
-              <picture>
-                <source srcSet="/photos/T-51.webp" type="image/webp" />
-                <img
-                  src="/photos/T-51.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          {/* Right side overlapping photos with various rotations */}
-          <div className="floating-photo absolute top-[10%] right-[6%] transition-all duration-700 hover:scale-105 hover:z-50 z-15 hidden sm:block">
-            <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-18 h-22 sm:w-22 sm:h-26 md:w-26 md:h-30 lg:w-30 lg:h-34 border-2 border-white/95">
-              <picture>
-                <source
-                  srcSet="/backgrounds/hero-background.webp"
-                  type="image/webp"
-                />
-                <img
-                  src="/backgrounds/hero-background.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute top-[18%] right-[2%] transition-all duration-700 hover:scale-105 hover:z-50 z-25 hidden sm:block">
-            <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-12 h-16 sm:w-16 sm:h-20 md:w-20 md:h-24 lg:w-24 lg:h-28 border-2 border-white/95">
-              <picture>
-                <source srcSet="/photos/T-51.webp" type="image/webp" />
-                <img
-                  src="/photos/T-51.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          {/* Bottom overlapping cluster with wild rotations */}
-          <div className="floating-photo absolute bottom-[18%] left-[2%] transition-all duration-700 hover:scale-105 hover:z-50 z-10 hidden sm:block">
-            <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-14 h-18 sm:w-18 sm:h-22 md:w-22 md:h-26 lg:w-26 lg:h-30 border-2 border-white/95">
-              <picture>
-                <source
-                  srcSet="/backgrounds/hero-background.webp"
-                  type="image/webp"
-                />
-                <img
-                  src="/backgrounds/hero-background.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute bottom-[12%] left-[6%] transition-all duration-700 hover:scale-105 hover:z-50 z-20 hidden sm:block">
-            <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-16 h-20 sm:w-20 sm:h-24 md:w-24 md:h-28 lg:w-28 lg:h-32 border-2 border-white/95">
-              <picture>
-                <source srcSet="/photos/T-51.webp" type="image/webp" />
-                <img
-                  src="/photos/T-51.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute bottom-[8%] right-[4%] transition-all duration-700 hover:scale-105 hover:z-50 z-15 hidden md:block">
-            <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-18 h-22 sm:w-22 sm:h-26 md:w-26 md:h-30 lg:w-30 lg:h-34 border-2 border-white/95">
-              <picture>
-                <source
-                  srcSet="/backgrounds/hero-background.webp"
-                  type="image/webp"
-                />
-                <img
-                  src="/backgrounds/hero-background.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute bottom-[16%] right-[8%] transition-all duration-700 hover:scale-105 hover:z-50 z-25 hidden md:block">
-            <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-12 h-16 sm:w-16 sm:h-20 md:w-20 md:h-24 lg:w-24 lg:h-28 border-2 border-white/95">
-              <picture>
-                <source srcSet="/photos/T-51.webp" type="image/webp" />
-                <img
-                  src="/photos/T-51.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          {/* Middle layer overlapping photos - Hidden on mobile with GSAP rotations */}
-          <div className="floating-photo absolute top-[35%] left-[2%] transition-all duration-700 hover:scale-105 hover:z-50 z-10 hidden md:block">
-            <div className="relative bg-white rounded-lg shadow-xl overflow-hidden w-12 h-16 md:w-16 md:h-20 lg:w-20 lg:h-24 border-2 border-white/95">
-              <picture>
-                <source
-                  srcSet="/backgrounds/hero-background.webp"
-                  type="image/webp"
-                />
-                <img
-                  src="/backgrounds/hero-background.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute top-[42%] left-[5%] transition-all duration-700 hover:scale-105 hover:z-50 z-20 hidden md:block">
-            <div className="relative bg-white rounded-lg shadow-xl overflow-hidden w-10 h-14 md:w-14 md:h-18 lg:w-18 lg:h-22 border-2 border-white/95">
-              <picture>
-                <source srcSet="/photos/T-51.webp" type="image/webp" />
-                <img
-                  src="/photos/T-51.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute top-[50%] right-[1%] transition-all duration-700 hover:scale-105 hover:z-50 z-15 hidden md:block">
-            <div className="relative bg-white rounded-lg shadow-xl overflow-hidden w-12 h-16 md:w-16 md:h-20 lg:w-20 lg:h-24 border-2 border-white/95">
-              <picture>
-                <source
-                  srcSet="/backgrounds/hero-background.webp"
-                  type="image/webp"
-                />
-                <img
-                  src="/backgrounds/hero-background.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute top-[45%] right-[4%] transition-all duration-700 hover:scale-105 hover:z-50 z-25 hidden md:block">
-            <div className="relative bg-white rounded-lg shadow-xl overflow-hidden w-14 h-18 md:w-18 md:h-22 lg:w-22 lg:h-26 border-2 border-white/95">
-              <picture>
-                <source srcSet="/photos/T-51.webp" type="image/webp" />
-                <img
-                  src="/photos/T-51.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          {/* Additional overlapping details - Only on larger screens with GSAP rotations */}
-          <div className="floating-photo absolute top-[25%] left-[12%] transition-all duration-700 hover:scale-105 hover:z-50 z-30 hidden xl:block">
-            <div className="relative bg-white rounded-lg shadow-lg overflow-hidden w-10 h-14 lg:w-14 lg:h-18 border-2 border-white/95">
-              <picture>
-                <source
-                  srcSet="/backgrounds/hero-background.webp"
-                  type="image/webp"
-                />
-                <img
-                  src="/backgrounds/hero-background.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute top-[30%] left-[16%] transition-all duration-700 hover:scale-105 hover:z-50 z-35 hidden xl:block">
-            <div className="relative bg-white rounded-lg shadow-lg overflow-hidden w-8 h-12 lg:w-12 lg:h-16 border-2 border-white/95">
-              <picture>
-                <source srcSet="/photos/T-51.webp" type="image/webp" />
-                <img
-                  src="/photos/T-51.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute top-[60%] left-[15%] transition-all duration-700 hover:scale-105 hover:z-50 z-30 hidden 2xl:block">
-            <div className="relative bg-white rounded-lg shadow-lg overflow-hidden w-8 h-12 border-2 border-white/95">
-              <picture>
-                <source
-                  srcSet="/backgrounds/hero-background.webp"
-                  type="image/webp"
-                />
-                <img
-                  src="/backgrounds/hero-background.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute top-[65%] right-[18%] transition-all duration-700 hover:scale-105 hover:z-50 z-35 hidden 2xl:block">
-            <div className="relative bg-white rounded-lg shadow-lg overflow-hidden w-10 h-14 border-2 border-white/95">
-              <picture>
-                <source srcSet="/photos/T-51.webp" type="image/webp" />
-                <img
-                  src="/photos/T-51.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="floating-photo absolute top-[70%] right-[22%] transition-all duration-700 hover:scale-105 hover:z-50 z-40 hidden 2xl:block">
-            <div className="relative bg-white rounded-lg shadow-lg overflow-hidden w-6 h-10 border-2 border-white/95">
-              <picture>
-                <source
-                  srcSet="/backgrounds/hero-background.webp"
-                  type="image/webp"
-                />
-                <img
-                  src="/backgrounds/hero-background.JPG"
-                  alt="Memory"
-                  className="w-full h-full object-cover"
-                />
-              </picture>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-            </div>
-          </div>
+          {/* Floating photos for desktop/tablet: dynamic from getAllPhotoPaths, 8 images, with predefined positions/rotations */}
+          {showFloating &&
+            !isMobile &&
+            photoList.slice(0, 8).map((src, idx) => {
+              const desktopFloatingPositions = [
+                {
+                  top: "15%",
+                  left: "8%",
+                  rot: -10,
+                  z: 10,
+                  className: "hidden xs:block",
+                },
+                {
+                  top: "8%",
+                  left: "4%",
+                  rot: 12,
+                  z: 20,
+                  className: "hidden xs:block",
+                },
+                {
+                  top: "10%",
+                  right: "6%",
+                  rot: 8,
+                  z: 15,
+                  className: "hidden sm:block",
+                },
+                {
+                  top: "18%",
+                  right: "2%",
+                  rot: -14,
+                  z: 25,
+                  className: "hidden sm:block",
+                },
+                {
+                  bottom: "18%",
+                  left: "2%",
+                  rot: 16,
+                  z: 10,
+                  className: "hidden sm:block",
+                },
+                {
+                  bottom: "12%",
+                  left: "6%",
+                  rot: -8,
+                  z: 20,
+                  className: "hidden sm:block",
+                },
+                {
+                  bottom: "8%",
+                  right: "4%",
+                  rot: 10,
+                  z: 15,
+                  className: "hidden md:block",
+                },
+                {
+                  top: "35%",
+                  left: "2%",
+                  rot: -6,
+                  z: 10,
+                  className: "hidden md:block",
+                },
+              ];
+              const pos =
+                desktopFloatingPositions[idx % desktopFloatingPositions.length];
+              return (
+                <div
+                  key={src}
+                  className={`floating-photo absolute transition-all duration-700 hover:scale-105 hover:z-50 z-${pos.z} block ${pos.className}`}
+                  style={{
+                    top: pos.top,
+                    left: pos.left,
+                    right: pos.right,
+                    bottom: pos.bottom,
+                    transform: `rotate(${pos.rot}deg)`,
+                  }}
+                >
+                  <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-16 h-20 sm:w-20 sm:h-24 md:w-24 md:h-28 lg:w-28 lg:h-32 border-2 border-white/95">
+                    <img
+                      src={src}
+                      alt="Memory"
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                  </div>
+                </div>
+              );
+            })}
         </div>
 
         {/* Ultra-subtle floating elements with luxury colors */}
