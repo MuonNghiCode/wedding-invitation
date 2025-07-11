@@ -35,13 +35,23 @@ const IntroduceSection = memo(
     });
 
     // Update countdown every second
-    // Chỉ render floating-photo khi section xuất hiện trên màn hình
+    // Chỉ render floating-photo khi section xuất hiện trên màn hình, đồng thời delay animation để tối ưu INP
     const [showFloating, setShowFloating] = useState(false);
     useEffect(() => {
       const section = sectionRef.current;
       if (!section) return;
       const observer = new window.IntersectionObserver(
-        ([entry]) => setShowFloating(entry.isIntersecting),
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            if (window.requestIdleCallback) {
+              window.requestIdleCallback(() => setShowFloating(true));
+            } else {
+              setTimeout(() => setShowFloating(true), 200);
+            }
+          } else {
+            setShowFloating(false);
+          }
+        },
         { threshold: 0.1 }
       );
       observer.observe(section);

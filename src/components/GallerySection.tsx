@@ -63,7 +63,7 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
   const PHOTOS = useMemo(() => {
     if (isMobile) {
       // Lấy 1-2 ảnh full (2x2) ở vị trí ngẫu nhiên, còn lại random dọc/vuông
-      const n = 10;
+      const n = 8;
       const rest = ALL_PHOTOS.slice();
       // Chọn 1 hoặc 2 vị trí random cho ảnh full
       const fullCount = Math.random() > 0.5 ? 2 : 1;
@@ -79,8 +79,8 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
         full: fullIndexes.includes(i),
       }));
     } else {
-      // Desktop giữ logic cũ
-      return getRandomPhotos(ALL_PHOTOS, 12).map((src: string) => ({
+      // Desktop: chỉ lấy 10 ảnh
+      return getRandomPhotos(ALL_PHOTOS, 8).map((src: string) => ({
         src,
         full: false,
       }));
@@ -304,7 +304,21 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
       <div className="relative mx-auto max-w-[98vw] md:max-w-[1800px] pb-8 px-1 xs:px-2 sm:px-3 md:px-0">
         {/* Floating particles luxury - nhiều hơn */}
         <div className="absolute inset-0 pointer-events-none z-10">
+          {/* Particle rendering is delayed for INP optimization */}
           {useMemo(() => {
+            let showParticles = false;
+            if (typeof window !== "undefined") {
+              if (window.requestIdleCallback) {
+                window.requestIdleCallback(() => {
+                  showParticles = true;
+                });
+              } else {
+                setTimeout(() => {
+                  showParticles = true;
+                }, 200);
+              }
+            }
+            if (!showParticles) return null;
             const goldParticles = Array.from(
               { length: isMobile ? 16 : 40 },
               (_, i) => ({
@@ -335,6 +349,7 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
                     left: `${p.left}%`,
                     animationDelay: `${p.delay}s`,
                     animation: `float ${p.duration}s ease-in-out infinite alternate`,
+                    willChange: "transform, opacity",
                   }}
                 />
               )),
@@ -347,6 +362,7 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
                     left: `${p.left}%`,
                     animationDelay: `${p.delay}s`,
                     animation: `float ${p.duration}s ease-in-out infinite alternate`,
+                    willChange: "transform, opacity",
                   }}
                 />
               )),

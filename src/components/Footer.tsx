@@ -30,14 +30,28 @@ const Footer = React.memo(({ language }: FooterProps) => {
   const particleCount = isMobile ? 3 : 8;
   const shapeCount = isMobile ? 2 : 6;
   // Sử dụng useMemo để random vị trí particle 1 lần duy nhất khi mount
-  const particlePositions = useMemo(
-    () =>
-      Array.from({ length: particleCount }, () => ({
-        top: 10 + Math.random() * 70,
-        left: 5 + Math.random() * 90,
-      })),
-    [particleCount]
-  );
+  const [particlePositions, setParticlePositions] = useState<any[]>([]);
+  useEffect(() => {
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(() => {
+        setParticlePositions(
+          Array.from({ length: particleCount }, () => ({
+            top: 10 + Math.random() * 70,
+            left: 5 + Math.random() * 90,
+          }))
+        );
+      });
+    } else {
+      setTimeout(() => {
+        setParticlePositions(
+          Array.from({ length: particleCount }, () => ({
+            top: 10 + Math.random() * 70,
+            left: 5 + Math.random() * 90,
+          }))
+        );
+      }, 200);
+    }
+  }, [particleCount]);
   const shapePositions = useMemo(
     () =>
       Array.from({ length: shapeCount }, () => ({

@@ -318,18 +318,41 @@ const MainLandingPage = () => {
       <TimelineSection lang={language} />
       {/* Elegant Floating Particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {particlePositions.map((pos, i) => (
-          <div
-            key={`particle-${i}`}
-            className="absolute w-1 h-1 bg-[#D4AF37] rounded-full opacity-50"
-            style={{
-              top: `${pos.top}%`,
-              left: `${pos.left}%`,
-              animationDelay: `${pos.delay}s`,
-              animation: `float ${pos.duration}s ease-in-out infinite alternate`,
-            }}
-          />
-        ))}
+        {/* Delay particle rendering for INP optimization */}
+        {typeof window !== "undefined" && window.requestIdleCallback
+          ? (() => {
+              const [showParticles, setShowParticles] = useState(false);
+              useEffect(() => {
+                window.requestIdleCallback(() => setShowParticles(true));
+              }, []);
+              if (!showParticles) return null;
+              return particlePositions.map((pos, i) => (
+                <div
+                  key={`particle-${i}`}
+                  className="absolute w-1 h-1 bg-[#D4AF37] rounded-full opacity-50"
+                  style={{
+                    top: `${pos.top}%`,
+                    left: `${pos.left}%`,
+                    animationDelay: `${pos.delay}s`,
+                    animation: `float ${pos.duration}s ease-in-out infinite alternate`,
+                    willChange: "transform, opacity",
+                  }}
+                />
+              ));
+            })()
+          : particlePositions.map((pos, i) => (
+              <div
+                key={`particle-${i}`}
+                className="absolute w-1 h-1 bg-[#D4AF37] rounded-full opacity-50"
+                style={{
+                  top: `${pos.top}%`,
+                  left: `${pos.left}%`,
+                  animationDelay: `${pos.delay}s`,
+                  animation: `float ${pos.duration}s ease-in-out infinite alternate`,
+                  willChange: "transform, opacity",
+                }}
+              />
+            ))}
       </div>
       {/* Footer */}
       <Footer language={language} />
