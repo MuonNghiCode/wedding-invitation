@@ -383,7 +383,7 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
           title: "Chú Rể",
           name: "Uông Kim Thuận",
           birth: "Sinh năm 1997",
-          desc: "kỹ sư vi mạch, điểm đạm, trưởng thành.",
+          desc: "Kỹ sư vi mạch, điểm đạm, trưởng thành.",
         }
       : {
           title: "Groom",
