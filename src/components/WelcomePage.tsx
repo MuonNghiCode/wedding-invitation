@@ -1,7 +1,20 @@
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useState, useMemo, memo } from "react";
 import { gsap } from "gsap";
 
-const WelcomePage = ({ onOpen }: { onOpen: () => void }) => {
+const WelcomePage = memo(({ onOpen }: { onOpen: () => void }) => {
+  // Sparkles for bottom floating effect (memoized)
+  const bottomSparkles = useMemo(
+    () =>
+      Array.from({ length: 6 }, () => ({
+        width: 2 + Math.random() * 3,
+        height: 2 + Math.random() * 3,
+        top: 10 + Math.random() * 80,
+        left: 10 + Math.random() * 80,
+        delay: Math.random() * 4,
+        duration: 2 + Math.random() * 3,
+      })),
+    []
+  );
   const envelopeRef = useRef<HTMLDivElement>(null);
   const flapRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -723,26 +736,24 @@ const WelcomePage = ({ onOpen }: { onOpen: () => void }) => {
 
       {/* Luxury floating effects */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Elegant sparkles */}
-        {[...Array(6)].map((_, i) => (
+        {/* Elegant sparkles (memoized) */}
+        {bottomSparkles.map((pos, i) => (
           <div
             key={`sparkle-${i}`}
             className="absolute bg-[#D4AF37] rounded-full opacity-50"
             style={{
-              width: `${2 + Math.random() * 3}px`,
-              height: `${2 + Math.random() * 3}px`,
-              top: `${10 + Math.random() * 80}%`,
-              left: `${10 + Math.random() * 80}%`,
-              animationDelay: `${Math.random() * 4}s`,
-              animation: `twinkle ${
-                2 + Math.random() * 3
-              }s ease-in-out infinite`,
+              width: `${pos.width}px`,
+              height: `${pos.height}px`,
+              top: `${pos.top}%`,
+              left: `${pos.left}%`,
+              animationDelay: `${pos.delay}s`,
+              animation: `twinkle ${pos.duration}s ease-in-out infinite`,
             }}
           />
         ))}
       </div>
     </div>
   );
-};
+});
 
 export default WelcomePage;

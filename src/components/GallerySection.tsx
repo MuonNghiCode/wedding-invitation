@@ -304,35 +304,54 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
       <div className="relative mx-auto max-w-[98vw] md:max-w-[1800px] pb-8 px-1 xs:px-2 sm:px-3 md:px-0">
         {/* Floating particles luxury - nhiều hơn */}
         <div className="absolute inset-0 pointer-events-none z-10">
-          {[...Array(40)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1.5 h-1.5 bg-[#D4AF37] rounded-full opacity-70 animate-pulse"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animation: `float ${
-                  3 + Math.random() * 3
-                }s ease-in-out infinite alternate`,
-              }}
-            />
-          ))}
-          {/* Thêm particle đỏ Trung Hoa */}
-          {[...Array(12)].map((_, i) => (
-            <div
-              key={100 + i}
-              className="absolute w-2 h-2 bg-[#C0392B] rounded-full opacity-60 animate-pulse"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 6}s`,
-                animation: `float ${
-                  4 + Math.random() * 3
-                }s ease-in-out infinite alternate`,
-              }}
-            />
-          ))}
+          {useMemo(() => {
+            const goldParticles = Array.from(
+              { length: isMobile ? 16 : 40 },
+              (_, i) => ({
+                key: i,
+                top: Math.random() * 100,
+                left: Math.random() * 100,
+                delay: Math.random() * 5,
+                duration: 3 + Math.random() * 3,
+              })
+            );
+            const redParticles = Array.from(
+              { length: isMobile ? 4 : 12 },
+              (_, i) => ({
+                key: 100 + i,
+                top: Math.random() * 100,
+                left: Math.random() * 100,
+                delay: Math.random() * 6,
+                duration: 4 + Math.random() * 3,
+              })
+            );
+            return [
+              ...goldParticles.map((p) => (
+                <div
+                  key={p.key}
+                  className="absolute w-1.5 h-1.5 bg-[#D4AF37] rounded-full opacity-70 animate-pulse"
+                  style={{
+                    top: `${p.top}%`,
+                    left: `${p.left}%`,
+                    animationDelay: `${p.delay}s`,
+                    animation: `float ${p.duration}s ease-in-out infinite alternate`,
+                  }}
+                />
+              )),
+              ...redParticles.map((p) => (
+                <div
+                  key={p.key}
+                  className="absolute w-2 h-2 bg-[#C0392B] rounded-full opacity-60 animate-pulse"
+                  style={{
+                    top: `${p.top}%`,
+                    left: `${p.left}%`,
+                    animationDelay: `${p.delay}s`,
+                    animation: `float ${p.duration}s ease-in-out infinite alternate`,
+                  }}
+                />
+              )),
+            ];
+          }, [isMobile])}
         </div>
         {/* Bento grid luxury, lộn xộn, đậm chất Trung Hoa */}
         <div

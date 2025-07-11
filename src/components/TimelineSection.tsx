@@ -1,9 +1,13 @@
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useState, useMemo, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
-function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
+const TimelineSection = memo(function TimelineSection({
+  lang = "vi",
+}: {
+  lang?: "vi" | "en";
+}) {
   // Dữ liệu timeline mới, alternating trên-dưới, dot luxury, không dùng icon thô
   const WEDDING_TIMELINE = [
     {
@@ -882,6 +886,6 @@ function TimelineSection({ lang = "vi" }: { lang?: "vi" | "en" }) {
       </div>
     </section>
   );
-}
+});
 
 export default TimelineSection;

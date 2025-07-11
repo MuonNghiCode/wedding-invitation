@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaHeart, FaRing, FaCalendarAlt } from "react-icons/fa";
@@ -10,7 +10,7 @@ interface LoveStorySectionProps {
   language: "vi" | "en";
 }
 
-const LoveStorySection = ({ language }: LoveStorySectionProps) => {
+const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
   const timelineRef = useRef<HTMLDivElement>(null);
   const timelineLineRef = useRef<HTMLDivElement>(null);
 
@@ -539,14 +539,20 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
                 </span>
                 {/* Ảnh chú rể */}
                 <div className="flex-shrink-0 w-[48vw] max-w-[180px] sm:max-w-[260px] md:max-w-[320px] lg:max-w-[400px] aspect-[3/4] rounded-2xl overflow-visible relative z-10 shadow-2xl -rotate-6">
-                  <img
-                    src={groomPhoto}
-                    alt={groomInfo.title}
-                    className="w-full h-full object-cover rounded-2xl border-4 border-[#D4AF37] shadow-gold"
-                    style={{
-                      boxShadow: "0 8px 32px 0 #D4AF37, 0 2px 8px #fffbe6",
-                    }}
-                  />
+                  <picture>
+                    <source
+                      srcSet={groomPhoto.replace(/\.(jpg|jpeg|png)$/i, ".webp")}
+                      type="image/webp"
+                    />
+                    <img
+                      src={groomPhoto}
+                      alt={groomInfo.title}
+                      className="w-full h-full object-cover rounded-2xl border-4 border-[#D4AF37] shadow-gold"
+                      style={{
+                        boxShadow: "0 8px 32px 0 #D4AF37, 0 2px 8px #fffbe6",
+                      }}
+                    />
+                  </picture>
                 </div>
                 {/* Thông tin chú rể */}
                 <div className="flex-1 ml-4 sm:ml-10 md:ml-16 text-left relative z-10 py-2 sm:py-6">
@@ -580,14 +586,20 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
                 </span>
                 {/* Ảnh cô dâu */}
                 <div className="flex-shrink-0 w-[48vw] max-w-[180px] sm:max-w-[260px] md:max-w-[320px] lg:max-w-[400px] aspect-[3/4] rounded-2xl overflow-visible relative z-10 shadow-2xl rotate-6">
-                  <img
-                    src={bridePhoto}
-                    alt={brideInfo.title}
-                    className="w-full h-full object-cover rounded-2xl border-4 border-[#D4AF37] shadow-gold"
-                    style={{
-                      boxShadow: "0 8px 32px 0 #D4AF37, 0 2px 8px #fffbe6",
-                    }}
-                  />
+                  <picture>
+                    <source
+                      srcSet={bridePhoto.replace(/\.(jpg|jpeg|png)$/i, ".webp")}
+                      type="image/webp"
+                    />
+                    <img
+                      src={bridePhoto}
+                      alt={brideInfo.title}
+                      className="w-full h-full object-cover rounded-2xl border-4 border-[#D4AF37] shadow-gold"
+                      style={{
+                        boxShadow: "0 8px 32px 0 #D4AF37, 0 2px 8px #fffbe6",
+                      }}
+                    />
+                  </picture>
                 </div>
                 {/* Thông tin cô dâu */}
                 <div className="flex-1 mr-4 sm:mr-10 md:mr-16 text-right relative z-10 py-2 sm:py-6">
@@ -668,6 +680,6 @@ const LoveStorySection = ({ language }: LoveStorySectionProps) => {
       </section>
     </>
   );
-};
+});
 
 export default LoveStorySection;

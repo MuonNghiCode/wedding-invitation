@@ -1,3 +1,4 @@
+import React from "react";
 import {
   FaHeart,
   FaGithub,
@@ -16,7 +17,7 @@ interface FooterProps {
   language: "vi" | "en";
 }
 
-const Footer = ({ language }: FooterProps) => {
+const Footer = React.memo(({ language }: FooterProps) => {
   const footerRef = useRef<HTMLDivElement>(null);
   const heartRef = useRef<HTMLDivElement>(null);
   const wavesRef = useRef<HTMLDivElement>(null);
@@ -506,6 +507,6 @@ const Footer = ({ language }: FooterProps) => {
       </div>
     </footer>
   );
-};
+});
 
 export default Footer;
