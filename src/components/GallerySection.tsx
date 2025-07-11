@@ -456,8 +456,30 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
               ) : (
                 <div className="absolute top-2 left-2 w-1.5 h-1.5 xs:w-2 xs:h-2 bg-[#C0392B] rounded-full opacity-70 animate-pulse"></div>
               );
-            // Hiệu ứng fade-in khi ảnh load xong
+            // Hiệu ứng fade-in khi ảnh vào viewport (IntersectionObserver) và load xong
+            const [visible, setVisible] = React.useState(false);
             const [loaded, setLoaded] = React.useState(false);
+            const imgRef = React.useRef<HTMLImageElement>(null);
+            React.useEffect(() => {
+              const el = imgRef.current;
+              if (!el) return;
+              let timeout: any;
+              const observer = new window.IntersectionObserver(
+                ([entry]) => {
+                  if (entry.isIntersecting) {
+                    // Debounce để tránh animate đồng loạt
+                    timeout = setTimeout(() => setVisible(true), 80 + idx * 30);
+                    observer.disconnect();
+                  }
+                },
+                { threshold: 0.15 }
+              );
+              observer.observe(el);
+              return () => {
+                observer.disconnect();
+                clearTimeout(timeout);
+              };
+            }, []);
             return (
               <div
                 key={item.src}
@@ -466,12 +488,13 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
                 style={{ padding: isMobile ? "2px" : "4px" }}
               >
                 <img
+                  ref={imgRef}
                   src={getFocusUrl(item.src)}
                   alt={`Ảnh cưới ${idx + 1}`}
                   className={
                     imgClass +
                     " transition-opacity duration-700 " +
-                    (loaded ? "opacity-100" : "opacity-0")
+                    (visible && loaded ? "opacity-100" : "opacity-0")
                   }
                   loading="lazy"
                   decoding="async"

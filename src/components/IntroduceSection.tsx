@@ -136,31 +136,52 @@ const IntroduceSection = memo(
           }
         );
 
-        // Animate floating-photo (mobile): scale, opacity, rotation
+        // Animate floating-photo (mobile): scale, opacity, rotation, debounce by group for INP
         if (!prefersReducedMotion) {
-          gsap.utils.toArray(".floating-photo").forEach((el, i) => {
-            gsap.fromTo(
-              el as Element,
-              {
-                opacity: 0,
-                scale: 0.7,
-                rotate: gsap.getProperty(el as Element, "rotate") || 0,
-              },
-              {
-                opacity: 1,
-                scale: 1,
-                rotate: gsap.getProperty(el as Element, "rotate") || 0,
-                duration: 1.1,
-                delay: 0.15 + i * 0.08,
-                ease: "power2.out",
-                scrollTrigger: {
-                  trigger: el as Element,
-                  start: "top 95%",
-                  toggleActions: "play none none reverse",
+          const floatingEls = gsap.utils.toArray(".floating-photo");
+          const groupSize = 4; // animate 4 at a time
+          let groupIndex = 0;
+          function animateGroup() {
+            const group = floatingEls.slice(groupIndex, groupIndex + groupSize);
+            group.forEach((el, i) => {
+              // Only animate if in viewport
+              const observer = new window.IntersectionObserver(
+                ([entry], obs) => {
+                  if (entry.isIntersecting) {
+                    gsap.fromTo(
+                      el as Element,
+                      {
+                        opacity: 0,
+                        scale: 0.7,
+                        rotate: gsap.getProperty(el as Element, "rotate") || 0,
+                      },
+                      {
+                        opacity: 1,
+                        scale: 1,
+                        rotate: gsap.getProperty(el as Element, "rotate") || 0,
+                        duration: 1.1,
+                        delay: 0.15 + i * 0.08,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                          trigger: el as Element,
+                          start: "top 95%",
+                          toggleActions: "play none none reverse",
+                        },
+                      }
+                    );
+                    obs.disconnect();
+                  }
                 },
-              }
-            );
-          });
+                { threshold: 0.1 }
+              );
+              observer.observe(el as Element);
+            });
+            groupIndex += groupSize;
+            if (groupIndex < floatingEls.length) {
+              setTimeout(animateGroup, 350); // debounce next group
+            }
+          }
+          animateGroup();
         }
 
         // Enhanced Photos Flying In Animation - More dynamic and varied
