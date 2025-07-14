@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useMemo, memo } from "react";
+import FloatingParticles from "./FloatingParticles";
 import { gsap } from "gsap";
 
 const WelcomePage = memo(({ onOpen }: { onOpen: () => void }) => {
@@ -52,18 +53,7 @@ const WelcomePage = memo(({ onOpen }: { onOpen: () => void }) => {
       ].slice(0, cornerCount),
     [cornerCount]
   );
-  const sparklePositions = useMemo(
-    () =>
-      Array.from({ length: sparkleCount }, () => ({
-        width: 2 + Math.random() * 3,
-        height: 2 + Math.random() * 3,
-        top: 10 + Math.random() * 80,
-        left: 10 + Math.random() * 80,
-        delay: Math.random() * 4,
-        duration: 2 + Math.random() * 3,
-      })),
-    [sparkleCount]
-  );
+  // sparkleCount is used for FloatingParticles
 
   useEffect(() => {
     const prefersReducedMotion =
@@ -458,22 +448,17 @@ const WelcomePage = memo(({ onOpen }: { onOpen: () => void }) => {
       </div>
 
       {/* Elegant floating particles */}
-      <div className="absolute inset-0 pointer-events-none">
-        {sparklePositions.map((pos, i) => (
-          <div
-            key={`sparkle-${i}`}
-            className="absolute bg-[#D4AF37] rounded-full opacity-50"
-            style={{
-              width: `${pos.width}px`,
-              height: `${pos.height}px`,
-              top: `${pos.top}%`,
-              left: `${pos.left}%`,
-              animationDelay: `${pos.delay}s`,
-              animation: `twinkle ${pos.duration}s ease-in-out infinite`,
-            }}
-          />
-        ))}
-      </div>
+      <FloatingParticles
+        count={sparkleCount}
+        areaClassName="absolute inset-0 pointer-events-none"
+        type="sparkle"
+        minSize={2}
+        maxSize={5}
+        color="#D4AF37"
+        animationName="twinkle"
+        randomize={true}
+        zIndex={0}
+      />
 
       {/* Main envelope container */}
       <div className="relative z-20 text-center">

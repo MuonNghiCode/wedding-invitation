@@ -40,16 +40,17 @@ const IntroduceSection = memo(
     useEffect(() => {
       const section = sectionRef.current;
       if (!section) return;
+      let triggered = false;
       const observer = new window.IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && !triggered) {
+            triggered = true;
             if (window.requestIdleCallback) {
               window.requestIdleCallback(() => setShowFloating(true));
             } else {
               setTimeout(() => setShowFloating(true), 200);
             }
-          } else {
-            setShowFloating(false);
+            observer.disconnect(); // chỉ trigger 1 lần
           }
         },
         { threshold: 0.1 }
@@ -83,23 +84,78 @@ const IntroduceSection = memo(
       const animDuration = prefersReducedMotion ? 0.01 : 1;
       const animDurationLong = prefersReducedMotion ? 0.01 : 1.5;
       const ctx = gsap.context(() => {
-        // Main section animation
-        gsap.fromTo(
-          sectionRef.current,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: animDurationLong,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 80%",
-              end: "bottom 20%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
+        // Animate từng phần tử nội dung chính
+        if (titleRef.current) {
+          gsap.fromTo(
+            titleRef.current,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: animDurationLong,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: titleRef.current,
+                start: "top 90%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
+        if (descRef.current) {
+          gsap.fromTo(
+            descRef.current,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: animDurationLong + 0.1,
+              delay: 0.1,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: descRef.current,
+                start: "top 92%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
+        if (countdownTitleRef.current) {
+          gsap.fromTo(
+            countdownTitleRef.current,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: animDurationLong + 0.15,
+              delay: 0.15,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: countdownTitleRef.current,
+                start: "top 94%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
+        if (countdownCardsRef.current) {
+          gsap.fromTo(
+            countdownCardsRef.current,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: animDurationLong + 0.2,
+              delay: 0.2,
+              ease: "power1.out",
+              scrollTrigger: {
+                trigger: countdownCardsRef.current,
+                start: "top 96%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
 
         // Logo animation
         gsap.fromTo(
@@ -136,119 +192,25 @@ const IntroduceSection = memo(
           }
         );
 
-        // Animate floating-photo (mobile): scale, opacity, rotation, debounce by group for INP
-        if (!prefersReducedMotion) {
-          const floatingEls = gsap.utils.toArray(".floating-photo");
-          const groupSize = 4; // animate 4 at a time
-          let groupIndex = 0;
-          function animateGroup() {
-            const group = floatingEls.slice(groupIndex, groupIndex + groupSize);
-            group.forEach((el, i) => {
-              // Only animate if in viewport
-              const observer = new window.IntersectionObserver(
-                ([entry], obs) => {
-                  if (entry.isIntersecting) {
-                    gsap.fromTo(
-                      el as Element,
-                      {
-                        opacity: 0,
-                        scale: 0.7,
-                        rotate: gsap.getProperty(el as Element, "rotate") || 0,
-                      },
-                      {
-                        opacity: 1,
-                        scale: 1,
-                        rotate: gsap.getProperty(el as Element, "rotate") || 0,
-                        duration: 1.1,
-                        delay: 0.15 + i * 0.08,
-                        ease: "power2.out",
-                        scrollTrigger: {
-                          trigger: el as Element,
-                          start: "top 95%",
-                          toggleActions: "play none none reverse",
-                        },
-                      }
-                    );
-                    obs.disconnect();
-                  }
-                },
-                { threshold: 0.1 }
-              );
-              observer.observe(el as Element);
-            });
-            groupIndex += groupSize;
-            if (groupIndex < floatingEls.length) {
-              setTimeout(animateGroup, 350); // debounce next group
-            }
-          }
-          animateGroup();
-        }
-
-        // Enhanced Photos Flying In Animation - More dynamic and varied
+        // Tối ưu: chỉ fade-in + scale floating-photo, stagger nhẹ
         if (!prefersReducedMotion) {
           gsap.fromTo(
             ".floating-photo",
+            { opacity: 0, scale: 0.85 },
             {
-              scale: 0,
-              opacity: 0,
-              x: (index) => {
-                const positions = [
-                  -600, 600, -500, 500, -400, 400, -700, 700, -450, 450, -550,
-                  550, -350, 350, -650, 650, -300, 300, -750, 750,
-                ];
-                return positions[index % positions.length];
-              },
-              y: (index) => {
-                const positions = [
-                  -300, -250, 400, 350, -200, 450, -150, 400, -100, 350, 500,
-                  -50, 300, 250, -400, 200, -350, 150, -300, 100,
-                ];
-                return positions[index % positions.length];
-              },
-              rotation: (index) => {
-                const rotations = [
-                  90, -90, 180, -180, 135, -135, 225, -225, 270, -270, 45, -45,
-                  315, -315, 120, -120, 240, -240, 60, -60,
-                ];
-                return rotations[index % rotations.length];
-              },
-            },
-            {
-              scale: 1,
               opacity: 1,
-              x: 0,
-              y: 0,
-              rotation: (index) => {
-                const finalRotations = [
-                  -18, 25, -32, 14, 28, -22, 35, -16, -24, 31, 19, -27, 38, -33,
-                  26, -29, 41, -12, 8, -6,
-                ];
-                return finalRotations[index % finalRotations.length];
+              scale: 1,
+              duration: 0.8,
+              stagger: 0.12,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: "top 90%",
+                toggleActions: "play none none reverse",
               },
-              duration: (index) => {
-                const durations = [
-                  1.2, 1.5, 1.8, 1.3, 1.6, 1.4, 1.7, 1.1, 1.9, 1.0, 2.0, 1.25,
-                  1.75, 1.35, 1.65, 1.45, 1.55, 1.85, 1.15, 1.95,
-                ];
-                return durations[index % durations.length];
-              },
-              ease: "power3.out",
-              stagger: 0.1,
-              delay: 0.5,
             }
           );
         }
-
-        // Set immediate rotation using CSS variables for testing
-        gsap.set(".floating-photo", {
-          "--rotation": (index: number) => {
-            const finalRotations = [
-              -18, 25, -32, 14, 28, -22, 35, -16, -24, 31, 19, -27, 38, -33, 26,
-              -29, 41, -12, 8, -6,
-            ];
-            return finalRotations[index % finalRotations.length] + "deg";
-          },
-        });
 
         // Subtle floating hearts
         if (!prefersReducedMotion) {
@@ -551,34 +513,32 @@ const IntroduceSection = memo(
         <div className="absolute inset-0 pointer-events-none">
           {/* Chỉ render floating-photo khi section xuất hiện trên màn hình */}
           {showFloating &&
-            floatingPhotos.map((src, idx) => {
-              const pos = isMobile
-                ? mobilePositions[idx % mobilePositions.length]
-                : [
-                    { top: "12%", left: "6%", rot: -12 },
-                    { bottom: "10%", right: "8%", rot: 18 },
-                    { top: "60%", left: "12%", rot: -8 },
-                    { top: "22%", right: "10%", rot: 10 },
-                  ][idx % 4];
-              let responsiveClass = "";
-              if (!isMobile) {
-                if (pos.top) responsiveClass += ` xs:top-[${pos.top}]`;
-                if (pos.left) responsiveClass += ` xs:left-[${pos.left}]`;
-                if (pos.right) responsiveClass += ` xs:right-[${pos.right}]`;
-                if (pos.bottom) responsiveClass += ` xs:bottom-[${pos.bottom}]`;
-              }
+            floatingPhotos.slice(0, isMobile ? 4 : 6).map((src, idx) => {
+              // Đặt vị trí sát mép ngoài section, tránh vùng trung tâm
+              const mobilePos = [
+                { top: "6%", left: "2%" }, // góc trên trái
+                { top: "6%", right: "2%" }, // góc trên phải
+                { bottom: "6%", left: "2%" }, // góc dưới trái
+                { bottom: "6%", right: "2%" }, // góc dưới phải
+              ];
+              const desktopPos = [
+                { top: "4%", left: "2%" }, // sát trên trái
+                { top: "4%", right: "2%" }, // sát trên phải
+                { bottom: "4%", left: "2%" }, // sát dưới trái
+                { bottom: "4%", right: "2%" }, // sát dưới phải
+                { top: "50%", left: "2%" }, // giữa trái
+                { top: "50%", right: "2%" }, // giữa phải
+              ];
+              const pos = isMobile ? mobilePos[idx % 4] : desktopPos[idx % 6];
               return (
                 <div
                   key={idx}
-                  className={`floating-photo absolute w-12 h-16 xs:w-14 xs:h-18 sm:w-16 sm:h-20 rounded-lg z-10 block${responsiveClass}`}
+                  className="floating-photo absolute w-14 h-18 sm:w-16 sm:h-20 rounded-lg z-10 block"
                   style={{
-                    top: pos.top,
-                    left: pos.left,
-                    right: pos.right,
-                    bottom: pos.bottom,
-                    transform: `${
-                      "transform" in pos && pos.transform ? pos.transform : ""
-                    } rotate(${pos.rot}deg)`,
+                    ...("top" in pos ? { top: pos.top } : {}),
+                    ...("left" in pos ? { left: pos.left } : {}),
+                    ...("right" in pos ? { right: pos.right } : {}),
+                    ...("bottom" in pos ? { bottom: pos.bottom } : {}),
                   }}
                 >
                   <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden w-full h-full border-2 border-white/95">

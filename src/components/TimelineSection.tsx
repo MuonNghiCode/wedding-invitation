@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useMemo, memo } from "react";
+import FloatingParticles from "./FloatingParticles";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -90,27 +91,6 @@ const TimelineSection = memo(function TimelineSection({
   }, []);
 
   // Giảm số lượng dot và particle trên mobile
-  const dotCount = isMobile
-    ? Math.ceil(WEDDING_TIMELINE.length / 2)
-    : WEDDING_TIMELINE.length;
-  const particleCount = isMobile ? 2 : 6;
-  const dotPositions = useMemo(
-    () =>
-      Array.from({ length: dotCount }, () => ({
-        top: 10 + Math.random() * 80,
-        left: 5 + Math.random() * 90,
-      })),
-    [dotCount]
-  );
-  const particlePositions = useMemo(
-    () =>
-      Array.from({ length: particleCount }, () => ({
-        top: 10 + Math.random() * 80,
-        left: 5 + Math.random() * 90,
-        delay: Math.random() * 2,
-      })),
-    [particleCount]
-  );
 
   // Optimize dresscode particles: reduce count on mobile, useMemo for positions
   const dresscodeParticleCount = isMobile ? 8 : 20;
@@ -275,6 +255,53 @@ const TimelineSection = memo(function TimelineSection({
       className="w-full px-2 md:px-8 py-12 bg-gradient-to-br from-[#f8f6f0] via-[#ede8dc] to-[#e8e2d5] relative overflow-hidden "
       id="timeline"
     >
+      {/* Particle background: phủ kín toàn bộ section timeline */}
+      {/* Particle count tự động theo diện tích màn hình */}
+      {(() => {
+        // dotCount removed (no dot particles)
+        const [customCount, setCustomCount] = useState(10);
+        useEffect(() => {
+          function updateParticleCount() {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            // 1 particle mỗi ~25000px2, tối thiểu 6, tối đa 40
+            setCustomCount(
+              Math.max(2, Math.min(16, Math.floor((w * h) / 60000)))
+            );
+          }
+          updateParticleCount();
+          window.addEventListener("resize", updateParticleCount);
+          return () =>
+            window.removeEventListener("resize", updateParticleCount);
+        }, []);
+        return (
+          <>
+            <FloatingParticles
+              count={customCount}
+              areaClassName="absolute left-0 top-0 w-full h-full pointer-events-none overflow-hidden"
+              type="custom"
+              configs={dresscodeParticles
+                .slice(0, customCount)
+                .map((particle) => ({
+                  type: "custom" as const,
+                  custom: undefined,
+                  style: "pointer-events-none",
+                  anim: "",
+                  color: "#F8BBD0",
+                  width: particle.size,
+                  height: particle.size,
+                  opacity: particle.opacity,
+                  top: particle.top,
+                  left: particle.left,
+                }))}
+              minSize={8}
+              maxSize={32}
+              randomize={false}
+              zIndex={0}
+            />
+          </>
+        );
+      })()}
       {/* Chinese luxury pattern 4 góc */}
       <svg
         className="absolute left-0 top-0 w-24 h-24 md:w-32 md:h-32 opacity-30 z-0"
@@ -667,47 +694,38 @@ const TimelineSection = memo(function TimelineSection({
           </div>
         )}
 
-        {/* Particle luxury sparkle effect - cải tiến: random vị trí, màu, opacity, số lượng, hiệu ứng rõ hơn */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {dotPositions.map((pos, i) => (
-            <div
-              key={`timeline-dot-${i}`}
-              className="timeline-dot absolute bg-[#D4AF37] rounded-full opacity-30"
-              style={{
-                top: `${pos.top}%`,
-                left: `${pos.left}%`,
-              }}
-            />
-          ))}
-          {particlePositions.map((pos, i) => (
-            <div
-              key={`timeline-particle-${i}`}
-              className="timeline-particle absolute text-[#D4AF37] opacity-20 font-chinese-decorative text-sm pointer-events-none"
-              style={{
-                top: `${pos.top}%`,
-                left: `${pos.left}%`,
-                animationDelay: `${pos.delay}s`,
-              }}
-            >
-              {i % 2 === 0 ? "福" : "缘"}
-            </div>
-          ))}
-          {dresscodeParticles.map((particle, idx) => (
-            <div
-              key={idx}
-              className="absolute rounded-full bg-pink-200 pointer-events-none"
-              style={{
-                left: `${particle.left}%`,
-                top: `${particle.top}%`,
-                width: particle.size,
-                height: particle.size,
-                opacity: particle.opacity,
-                animationDelay: `${particle.delay}s`,
-                filter: "blur(1.5px)",
-              }}
-            />
-          ))}
-        </div>
+        {/* Particle background: phủ kín toàn bộ section timeline */}
+        <FloatingParticles
+          count={isMobile ? 12 : 24}
+          areaClassName="absolute left-0 top-0 w-full h-full pointer-events-none overflow-hidden"
+          type="dot"
+          minSize={8}
+          maxSize={14}
+          color="#D4AF37"
+          randomize={true}
+          zIndex={1}
+        />
+        <FloatingParticles
+          count={dresscodeParticleCount}
+          areaClassName="absolute left-0 top-0 w-full h-full pointer-events-none overflow-hidden"
+          type="custom"
+          configs={dresscodeParticles.map((particle) => ({
+            type: "custom" as const,
+            custom: undefined,
+            style: "pointer-events-none",
+            anim: "",
+            color: "#F8BBD0",
+            width: particle.size,
+            height: particle.size,
+            opacity: particle.opacity,
+            top: particle.top,
+            left: particle.left,
+          }))}
+          minSize={8}
+          maxSize={32}
+          randomize={false}
+          zIndex={0}
+        />
 
         {/* Dresscode section - luxury, cách điệu */}
         <div className="mt-20 text-center">

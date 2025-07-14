@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, useMemo } from "react";
+import FloatingParticles from "../components/FloatingParticles";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Header from "../components/Header";
@@ -110,16 +111,7 @@ const MainLandingPage = () => {
       })),
     [floatingLanternCount]
   );
-  const particlePositions = useMemo(
-    () =>
-      Array.from({ length: particleCount }, () => ({
-        top: Math.random() * 100,
-        left: Math.random() * 100,
-        delay: Math.random() * 5,
-        duration: 3 + Math.random() * 4,
-      })),
-    [particleCount]
-  );
+  // No need to manually generate particlePositions, handled by FloatingParticles
 
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === "vi" ? "en" : "vi"));
@@ -317,43 +309,17 @@ const MainLandingPage = () => {
       <GallerySection lang={language} />
       <TimelineSection lang={language} />
       {/* Elegant Floating Particles */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Delay particle rendering for INP optimization */}
-        {typeof window !== "undefined" && window.requestIdleCallback
-          ? (() => {
-              const [showParticles, setShowParticles] = useState(false);
-              useEffect(() => {
-                window.requestIdleCallback(() => setShowParticles(true));
-              }, []);
-              if (!showParticles) return null;
-              return particlePositions.map((pos, i) => (
-                <div
-                  key={`particle-${i}`}
-                  className="absolute w-1 h-1 bg-[#D4AF37] rounded-full opacity-50"
-                  style={{
-                    top: `${pos.top}%`,
-                    left: `${pos.left}%`,
-                    animationDelay: `${pos.delay}s`,
-                    animation: `float ${pos.duration}s ease-in-out infinite alternate`,
-                    willChange: "transform, opacity",
-                  }}
-                />
-              ));
-            })()
-          : particlePositions.map((pos, i) => (
-              <div
-                key={`particle-${i}`}
-                className="absolute w-1 h-1 bg-[#D4AF37] rounded-full opacity-50"
-                style={{
-                  top: `${pos.top}%`,
-                  left: `${pos.left}%`,
-                  animationDelay: `${pos.delay}s`,
-                  animation: `float ${pos.duration}s ease-in-out infinite alternate`,
-                  willChange: "transform, opacity",
-                }}
-              />
-            ))}
-      </div>
+      <FloatingParticles
+        count={particleCount}
+        areaClassName="absolute inset-0 pointer-events-none overflow-hidden"
+        type="dot"
+        minSize={4}
+        maxSize={8}
+        color="#D4AF37"
+        animationName="float"
+        randomize={true}
+        zIndex={0}
+      />
       {/* Footer */}
       <Footer language={language} />
     </div>

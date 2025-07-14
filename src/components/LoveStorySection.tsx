@@ -1,4 +1,5 @@
-import { useEffect, useRef, useMemo, memo } from "react";
+import { useEffect, useRef, memo } from "react";
+import FloatingParticles from "./FloatingParticles";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaHeart, FaRing, FaCalendarAlt } from "react-icons/fa";
@@ -21,14 +22,14 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
         timelineLineRef.current,
         { height: 0 },
         {
-          height: "calc(100% + 40px)", // Extend beyond container
-          duration: 3,
+          height: "calc(100% + 40px)",
+          duration: 4.5,
           ease: "power2.out",
           scrollTrigger: {
             trigger: timelineRef.current,
             start: "top 80%",
             end: "bottom 20%",
-            scrub: 1,
+            scrub: 1.5,
           },
         }
       );
@@ -39,7 +40,7 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
         { scaleY: 0 },
         {
           scaleY: 1,
-          duration: 1,
+          duration: 1.7,
           ease: "power2.out",
           scrollTrigger: {
             trigger: timelineRef.current,
@@ -54,7 +55,7 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
         { scaleY: 0 },
         {
           scaleY: 1,
-          duration: 1,
+          duration: 1.7,
           ease: "power2.out",
           scrollTrigger: {
             trigger: timelineRef.current,
@@ -80,8 +81,8 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
           y: 0,
           scale: 1,
           rotation: 0,
-          duration: 1.2,
-          stagger: 0.4,
+          duration: 1.7,
+          stagger: 0.7,
           ease: "back.out(1.7)",
           scrollTrigger: {
             trigger: ".timeline-item",
@@ -104,8 +105,8 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
           opacity: 0.3,
           y: 0,
           scale: 1,
-          duration: 1.5,
-          stagger: 0.2,
+          duration: 2.2,
+          stagger: 0.35,
           ease: "power2.out",
           scrollTrigger: {
             trigger: ".story-particle",
@@ -127,8 +128,8 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 1,
-          stagger: 0.3,
+          duration: 1.5,
+          stagger: 0.5,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".timeline-card",
@@ -163,8 +164,8 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
           opacity: 0.1,
           scale: 1,
           rotation: 0,
-          duration: 2,
-          stagger: 0.5,
+          duration: 3,
+          stagger: 0.8,
           ease: "power2.out",
           scrollTrigger: {
             trigger: timelineRef.current,
@@ -178,11 +179,11 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
       gsap.to(".story-bg-element", {
         y: -20,
         rotation: 10,
-        duration: 6,
+        duration: 9,
         ease: "sine.inOut",
         yoyo: true,
         repeat: -1,
-        stagger: 0.7,
+        stagger: 1.1,
       });
 
       // Animate Chinese characters
@@ -193,8 +194,8 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
           opacity: 1,
           scale: 1,
           rotation: 0,
-          duration: 0.6,
-          stagger: 0.2,
+          duration: 1.1,
+          stagger: 0.35,
           ease: "back.out(1.7)",
           scrollTrigger: {
             trigger: timelineRef.current,
@@ -211,8 +212,8 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
         {
           opacity: 1,
           y: 0,
-          duration: 1.2,
-          stagger: 0.3,
+          duration: 1.8,
+          stagger: 0.6,
           ease: "power2.out",
           scrollTrigger: {
             trigger: ".groom-animate",
@@ -418,15 +419,6 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
   // Giảm số lượng particle trên mobile
   const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
   const particleCount = isMobile ? 2 : 8;
-  const particlePositions = useMemo(
-    () =>
-      Array.from({ length: particleCount }, () => ({
-        top: 10 + Math.random() * 80,
-        left: 5 + Math.random() * 90,
-        delay: Math.random() * 2,
-      })),
-    [particleCount]
-  );
 
   return (
     <>
@@ -662,21 +654,22 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
         </div>
 
         {/* Floating Particles */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {particlePositions.map((pos, i) => (
-            <div
-              key={`story-particle-${i}`}
-              className="story-particle absolute text-[#D4AF37] opacity-20 font-chinese-decorative text-sm pointer-events-none"
-              style={{
-                top: `${pos.top}%`,
-                left: `${pos.left}%`,
-                animationDelay: `${pos.delay}s`,
-              }}
-            >
-              {i % 2 === 0 ? "福" : "缘"}
-            </div>
-          ))}
-        </div>
+        <FloatingParticles
+          count={particleCount}
+          areaClassName="absolute inset-0 pointer-events-none overflow-hidden"
+          type="orn"
+          configs={Array.from({ length: particleCount }, (_, i) => ({
+            type: "orn" as const,
+            text: i % 2 === 0 ? "福" : "缘",
+            style:
+              "story-particle text-[#D4AF37] opacity-20 font-chinese-decorative text-sm pointer-events-none",
+            anim: "",
+          }))}
+          minSize={12}
+          maxSize={18}
+          randomize={true}
+          zIndex={0}
+        />
       </section>
     </>
   );

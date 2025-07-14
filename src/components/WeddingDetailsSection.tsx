@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useMemo } from "react";
+import React, { useEffect, useRef } from "react";
+import FloatingParticles from "./FloatingParticles";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -158,18 +159,8 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = React.memo(
 
     // Tối ưu vị trí particle chỉ random 1 lần khi mount
     // Giảm số lượng particle trên mobile
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
-    const particleCount = isMobile
-      ? Math.ceil(movingParticles.length / 2)
-      : movingParticles.length;
-    const particlePositions = useMemo(
-      () =>
-        Array.from({ length: particleCount }, () => ({
-          top: 10 + Math.random() * 80,
-          left: 5 + Math.random() * 90,
-        })),
-      [particleCount]
-    );
+    // Đã tối ưu, không cần biến isMobile nữa
+    // Đã dùng FloatingParticles nên không cần particlePositions nữa
 
     useEffect(() => {
       if (!sectionRef.current) return;
@@ -257,41 +248,36 @@ const WeddingDetailsSection: React.FC<WeddingDetailsSectionProps> = React.memo(
         <h2 className="sr-only">
           Thông tin lễ cưới, địa điểm, thời gian, bản đồ, dresscode
         </h2>
-        <div className="absolute inset-0 pointer-events-none z-0">
-          {/* Balloon particles luxury */}
-          {balloonParticles.map((c, i) => (
-            <div
-              key={i}
-              className={`wedding-particle absolute ${c.style
-                .replace(
-                  /w-(\d+)/,
-                  (_, n) => `w-${Math.round(Number(n) * 1.15)}`
-                )
-                .replace(
-                  /h-(\d+)/,
-                  (_, n) => `h-${Math.round(Number(n) * 1.15)}`
-                )} rounded-full bg-gradient-to-br from-[#fffbe6] via-[#C8A882] to-[#BFA980] blur-2xl ${
-                c.anim
-              }`}
-            />
-          ))}
-          {/* Các particle cũ */}
-          {movingParticles
-            .slice(0, particlePositions.length)
-            .map((particle, i) => (
-              <div
-                key={i}
-                className={`absolute ${particle.style} ${particle.anim}`}
-                style={{
-                  top: `${particlePositions[i].top}%`,
-                  left: `${particlePositions[i].left}%`,
-                }}
-              >
-                {particle.type === "orn" ? particle.text : null}
-                {particle.type === "svg" ? <ChinesePattern /> : null}
-              </div>
-            ))}
-        </div>
+        <FloatingParticles
+          count={balloonParticles.length}
+          areaClassName="absolute inset-0 pointer-events-none z-0"
+          type="balloon"
+          configs={balloonParticles.map((c) => ({
+            ...c,
+            type: "balloon" as const,
+          }))}
+          minSize={40}
+          maxSize={80}
+          randomize={false}
+          zIndex={0}
+        />
+        <FloatingParticles
+          count={movingParticles.length}
+          areaClassName="absolute inset-0 pointer-events-none z-0"
+          type="custom"
+          configs={movingParticles.map((p) => ({
+            ...p,
+            type: p.type as import("./FloatingParticles").ParticleType,
+            custom: p.type === "svg" ? <ChinesePattern /> : undefined,
+            text: p.type === "orn" ? p.text : undefined,
+            style: p.style,
+            anim: p.anim,
+          }))}
+          minSize={8}
+          maxSize={32}
+          randomize={false}
+          zIndex={0}
+        />
         {/* Góc section: họa tiết Chinese pattern lớn */}
         <ChinesePattern className="absolute left-0 top-0 w-32 h-32 opacity-10 z-0" />
         <ChinesePattern className="absolute right-0 bottom-0 w-36 h-36 opacity-10 z-0" />

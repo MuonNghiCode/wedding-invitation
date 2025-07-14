@@ -5,16 +5,11 @@ import React, {
   useLayoutEffect,
   useMemo,
 } from "react";
+import FloatingParticles from "./FloatingParticles";
 import { getAllPhotoPaths } from "./photoList";
 import { FixedSizeGrid as Grid } from "react-window";
 
 const ALL_PHOTOS = getAllPhotoPaths();
-
-// Hàm random lấy n phần tử từ mảng
-function getRandomPhotos(arr: string[], n: number) {
-  const shuffled = arr.slice().sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, n);
-}
 
 const LANG = {
   vi: {
@@ -44,43 +39,36 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
   const t = LANG[lang] || LANG.vi;
   const overlayPreloaded = useRef(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  // Particle count responsive by viewport area
+  const [dotGoldCount, setDotGoldCount] = useState(12);
+  const [dotRedCount, setDotRedCount] = useState(6);
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" ? window.innerWidth < 640 : false
   );
-
-  // Theo dõi thay đổi kích thước màn hình để cập nhật isMobile
   useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth < 640);
+    function updateCounts() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      setDotGoldCount(Math.max(4, Math.min(32, Math.floor((w * h) / 40000))));
+      setDotRedCount(Math.max(2, Math.min(16, Math.floor((w * h) / 80000))));
+      setIsMobile(w < 640);
     }
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
+    updateCounts();
+    window.addEventListener("resize", updateCounts);
+    return () => window.removeEventListener("resize", updateCounts);
   }, []);
 
   // Chọn số lượng ảnh phù hợp cho mobile/desktop
   const PHOTOS = useMemo(() => {
+    // Luôn lấy 8 ảnh đầu tiên, không random, không shuffle
     if (isMobile) {
-      // Lấy 1-2 ảnh full (2x2) ở vị trí ngẫu nhiên, còn lại random dọc/vuông
-      const n = 8;
-      const rest = ALL_PHOTOS.slice();
-      // Chọn 1 hoặc 2 vị trí random cho ảnh full
-      const fullCount = Math.random() > 0.5 ? 2 : 1;
-      const fullIndexes: number[] = [];
-      while (fullIndexes.length < fullCount) {
-        const idx = Math.floor(Math.random() * n);
-        if (!fullIndexes.includes(idx)) fullIndexes.push(idx);
-      }
-      // Lấy n ảnh random không trùng
-      const shuffled = rest.slice().sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, n).map((src: string, i: number) => ({
-        src,
-        full: fullIndexes.includes(i),
-      }));
+      // Ảnh đầu tiên là full (4x4), 7 ảnh còn lại là vuông nhỏ (1x1)
+      return [
+        { src: ALL_PHOTOS[0], full: true },
+        ...ALL_PHOTOS.slice(1, 8).map((src: string) => ({ src, full: false })),
+      ];
     } else {
-      // Desktop: chỉ lấy 10 ảnh
-      return getRandomPhotos(ALL_PHOTOS, 8).map((src: string) => ({
+      return ALL_PHOTOS.slice(0, 8).map((src: string) => ({
         src,
         full: false,
       }));
@@ -303,72 +291,28 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
       {/* Gallery Bento luxury layout - bento lộn xộn, đậm chất Trung Hoa */}
       <div className="relative mx-auto max-w-[98vw] md:max-w-[1800px] pb-8 px-1 xs:px-2 sm:px-3 md:px-0">
         {/* Floating particles luxury - nhiều hơn */}
-        <div className="absolute inset-0 pointer-events-none z-10">
-          {/* Particle rendering is delayed for INP optimization */}
-          {useMemo(() => {
-            let showParticles = false;
-            if (typeof window !== "undefined") {
-              if (window.requestIdleCallback) {
-                window.requestIdleCallback(() => {
-                  showParticles = true;
-                });
-              } else {
-                setTimeout(() => {
-                  showParticles = true;
-                }, 200);
-              }
-            }
-            if (!showParticles) return null;
-            const goldParticles = Array.from(
-              { length: isMobile ? 16 : 40 },
-              (_, i) => ({
-                key: i,
-                top: Math.random() * 100,
-                left: Math.random() * 100,
-                delay: Math.random() * 5,
-                duration: 3 + Math.random() * 3,
-              })
-            );
-            const redParticles = Array.from(
-              { length: isMobile ? 4 : 12 },
-              (_, i) => ({
-                key: 100 + i,
-                top: Math.random() * 100,
-                left: Math.random() * 100,
-                delay: Math.random() * 6,
-                duration: 4 + Math.random() * 3,
-              })
-            );
-            return [
-              ...goldParticles.map((p) => (
-                <div
-                  key={p.key}
-                  className="absolute w-1.5 h-1.5 bg-[#D4AF37] rounded-full opacity-70 animate-pulse"
-                  style={{
-                    top: `${p.top}%`,
-                    left: `${p.left}%`,
-                    animationDelay: `${p.delay}s`,
-                    animation: `float ${p.duration}s ease-in-out infinite alternate`,
-                    willChange: "transform, opacity",
-                  }}
-                />
-              )),
-              ...redParticles.map((p) => (
-                <div
-                  key={p.key}
-                  className="absolute w-2 h-2 bg-[#C0392B] rounded-full opacity-60 animate-pulse"
-                  style={{
-                    top: `${p.top}%`,
-                    left: `${p.left}%`,
-                    animationDelay: `${p.delay}s`,
-                    animation: `float ${p.duration}s ease-in-out infinite alternate`,
-                    willChange: "transform, opacity",
-                  }}
-                />
-              )),
-            ];
-          }, [isMobile])}
-        </div>
+        <FloatingParticles
+          count={dotGoldCount}
+          areaClassName="absolute inset-0 pointer-events-none z-10"
+          type="dot"
+          minSize={6}
+          maxSize={10}
+          color="#D4AF37"
+          animationName="float"
+          randomize={true}
+          zIndex={10}
+        />
+        <FloatingParticles
+          count={dotRedCount}
+          areaClassName="absolute inset-0 pointer-events-none z-10"
+          type="dot"
+          minSize={8}
+          maxSize={14}
+          color="#C0392B"
+          animationName="float"
+          randomize={true}
+          zIndex={10}
+        />
         {/* Bento grid luxury, lộn xộn, đậm chất Trung Hoa */}
         <div
           className={
@@ -378,37 +322,32 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
           }
         >
           {PHOTOS.map((item, idx) => {
-            // Mobile: lộn xộn hơn, 1-2 ảnh full (2x2), còn lại random dọc/vuông
-            let colSpan = 1,
-              rowSpan = 1;
+            // Tính toán layout cố định theo idx
+            let colSpan = 1, rowSpan = 1;
             if (isMobile) {
               if (item.full) {
                 colSpan = 2;
                 rowSpan = 2;
               } else {
-                const rand = Math.random();
-                if (rand < 0.6) {
-                  // 60% dọc
+                // Quy luật: chẵn dọc, lẻ vuông
+                if (idx % 2 === 0) {
                   colSpan = 1;
                   rowSpan = 2;
                 } else {
-                  // 40% vuông
                   colSpan = 1;
                   rowSpan = 1;
                 }
               }
             } else {
-              // Desktop giữ nguyên
+              // Desktop: quy luật theo idx
               const colSpanArr = [1, 2, 3];
               const rowSpanArr = [1, 2];
-              colSpan =
-                idx === 0 || idx === PHOTOS.length - 1
-                  ? 3
-                  : colSpanArr[Math.floor(Math.random() * colSpanArr.length)];
-              rowSpan =
-                idx === 0 || idx === PHOTOS.length - 1
-                  ? 2
-                  : rowSpanArr[Math.floor(Math.random() * rowSpanArr.length)];
+              colSpan = idx === 0 || idx === PHOTOS.length - 1
+                ? 3
+                : colSpanArr[idx % colSpanArr.length];
+              rowSpan = idx === 0 || idx === PHOTOS.length - 1
+                ? 2
+                : rowSpanArr[idx % rowSpanArr.length];
             }
             const colSpanClass = colSpan === 1 ? "col-span-1" : "col-span-2";
             const rowSpanClass = rowSpan === 1 ? "row-span-1" : "row-span-2";
@@ -429,8 +368,8 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
                   "border-2 border-[#D4AF37] rounded-tr-[2rem] shadow-gold",
                   "border-2 border-[#C0392B] rounded-bl-[2rem] shadow-red-500/30",
                 ];
-            const borderClass =
-              borderStyles[Math.floor(Math.random() * borderStyles.length)];
+            // borderClass cố định theo idx
+            const borderClass = borderStyles[idx % borderStyles.length];
             const className = `group overflow-hidden bg-[#ede8dc] relative transition-transform duration-300 hover:scale-[1.04] hover:shadow-gold ${colSpanClass} ${rowSpanClass} ${borderClass} ${
               isMobile
                 ? "rounded-xl shadow-md"
@@ -439,7 +378,7 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
             const imgClass = isMobile
               ? "w-full h-full object-cover bg-[#f8f6f0] rounded-xl"
               : "w-full h-full object-cover bg-[#f8f6f0] group-hover:scale-105 group-hover:opacity-95 transition-all duration-500 drop-shadow-xl p-0.5 xs:p-1 md:p-2";
-            // Accent Chinese và particle cho cả mobile
+            // Chinese accent cố định theo idx
             const chineseAccent =
               idx % 5 === 0 ? (
                 <div className="absolute left-2 top-2 text-lg xs:text-xl md:text-2xl font-chinese-elegant text-[#C0392B] opacity-70 select-none pointer-events-none">
@@ -450,8 +389,9 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
                   福
                 </div>
               ) : null;
+            // accentParticle cố định theo idx
             const accentParticle =
-              Math.random() > 0.5 ? (
+              idx % 2 === 0 ? (
                 <div className="absolute bottom-2 right-2 w-1.5 h-1.5 xs:w-2 xs:h-2 bg-[#D4AF37] rounded-full opacity-80 animate-pulse"></div>
               ) : (
                 <div className="absolute top-2 left-2 w-1.5 h-1.5 xs:w-2 xs:h-2 bg-[#C0392B] rounded-full opacity-70 animate-pulse"></div>

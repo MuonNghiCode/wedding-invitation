@@ -1,4 +1,5 @@
 import React from "react";
+import FloatingParticles from "./FloatingParticles";
 import {
   FaHeart,
   FaGithub,
@@ -7,7 +8,7 @@ import {
   FaMapMarkerAlt,
   FaCalendarAlt,
 } from "react-icons/fa";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -26,40 +27,20 @@ const Footer = React.memo(({ language }: FooterProps) => {
   const [logoError, setLogoError] = useState(false);
 
   // Giảm số lượng particle và shape trên mobile
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
-  const particleCount = isMobile ? 3 : 8;
-  const shapeCount = isMobile ? 2 : 6;
-  // Sử dụng useMemo để random vị trí particle 1 lần duy nhất khi mount
-  const [particlePositions, setParticlePositions] = useState<any[]>([]);
+  // Particle count responsive by viewport area
+  const [particleCount, setParticleCount] = useState(6);
+  const [shapeCount, setShapeCount] = useState(4);
   useEffect(() => {
-    if (window.requestIdleCallback) {
-      window.requestIdleCallback(() => {
-        setParticlePositions(
-          Array.from({ length: particleCount }, () => ({
-            top: 10 + Math.random() * 70,
-            left: 5 + Math.random() * 90,
-          }))
-        );
-      });
-    } else {
-      setTimeout(() => {
-        setParticlePositions(
-          Array.from({ length: particleCount }, () => ({
-            top: 10 + Math.random() * 70,
-            left: 5 + Math.random() * 90,
-          }))
-        );
-      }, 200);
+    function updateParticleCount() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      setParticleCount(Math.max(2, Math.min(14, Math.floor((w * h) / 90000))));
+      setShapeCount(Math.max(1, Math.min(10, Math.floor((w * h) / 120000))));
     }
-  }, [particleCount]);
-  const shapePositions = useMemo(
-    () =>
-      Array.from({ length: shapeCount }, () => ({
-        top: 10 + Math.random() * 70,
-        left: 5 + Math.random() * 90,
-      })),
-    [shapeCount]
-  );
+    updateParticleCount();
+    window.addEventListener("resize", updateParticleCount);
+    return () => window.removeEventListener("resize", updateParticleCount);
+  }, []);
 
   useEffect(() => {
     // Advanced heart animation with breathing effect
@@ -221,42 +202,42 @@ const Footer = React.memo(({ language }: FooterProps) => {
       />
 
       {/* Floating particles with Chinese characters */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {particlePositions.map((pos, i) => (
-          <div
-            key={`particle-${i}`}
-            ref={(el) => {
-              if (el) particlesRef.current[i] = el;
-            }}
-            className="absolute text-[#D4AF37] opacity-20 font-chinese-decorative text-sm pointer-events-none"
-            style={{
-              top: `${pos.top}%`,
-              left: `${pos.left}%`,
-            }}
-          >
-            {["福", "寿", "囍", "龍", "鳳", "喜", "爱", "缘"][i]}
-          </div>
-        ))}
-        {shapePositions.map((pos, i) => (
-          <div
-            key={`shape-${i}`}
-            ref={(el) => {
-              if (el) particlesRef.current[i + 8] = el;
-            }}
-            className={`absolute ${
-              i % 3 === 0
-                ? "w-4 h-4 bg-[#D4AF37]/20 rounded-full"
-                : i % 3 === 1
-                ? "w-3 h-3 bg-[#B8860B]/30 rotate-45"
-                : "w-2 h-6 bg-[#EAE4CC]/25 rounded-full"
-            }`}
-            style={{
-              top: `${pos.top}%`,
-              left: `${pos.left}%`,
-            }}
-          />
-        ))}
-      </div>
+      <FloatingParticles
+        count={particleCount}
+        areaClassName="absolute inset-0 pointer-events-none overflow-hidden"
+        type="orn"
+        configs={Array.from({ length: particleCount }, (_, i) => ({
+          type: "orn" as const,
+          text: ["福", "寿", "囍", "龍", "鳳", "喜", "爱", "缘"][i],
+          style:
+            "text-[#D4AF37] opacity-20 font-chinese-decorative text-sm pointer-events-none",
+          anim: "",
+        }))}
+        minSize={12}
+        maxSize={18}
+        randomize={true}
+        zIndex={0}
+      />
+      <FloatingParticles
+        count={shapeCount}
+        areaClassName="absolute inset-0 pointer-events-none overflow-hidden"
+        type="custom"
+        configs={Array.from({ length: shapeCount }, (_, i) => ({
+          type: "custom" as const,
+          custom: undefined,
+          style:
+            i % 3 === 0
+              ? "w-4 h-4 bg-[#D4AF37]/20 rounded-full"
+              : i % 3 === 1
+              ? "w-3 h-3 bg-[#B8860B]/30 rotate-45"
+              : "w-2 h-6 bg-[#EAE4CC]/25 rounded-full",
+          anim: "",
+        }))}
+        minSize={8}
+        maxSize={24}
+        randomize={true}
+        zIndex={0}
+      />
 
       <div className="relative z-10 container mx-auto px-6 py-16">
         {/* Main Grid Layout */}
