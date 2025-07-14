@@ -97,7 +97,7 @@ const IntroduceSection = memo(
               scrollTrigger: {
                 trigger: titleRef.current,
                 start: "top 90%",
-                toggleActions: "play none none none",
+                toggleActions: "play none none reverse",
               },
             }
           );
@@ -115,7 +115,7 @@ const IntroduceSection = memo(
               scrollTrigger: {
                 trigger: descRef.current,
                 start: "top 92%",
-                toggleActions: "play none none none",
+                toggleActions: "play none none reverse",
               },
             }
           );
@@ -133,7 +133,7 @@ const IntroduceSection = memo(
               scrollTrigger: {
                 trigger: countdownTitleRef.current,
                 start: "top 94%",
-                toggleActions: "play none none none",
+                toggleActions: "play none none reverse",
               },
             }
           );
@@ -151,7 +151,7 @@ const IntroduceSection = memo(
               scrollTrigger: {
                 trigger: countdownCardsRef.current,
                 start: "top 96%",
-                toggleActions: "play none none none",
+                toggleActions: "play none none reverse",
               },
             }
           );
