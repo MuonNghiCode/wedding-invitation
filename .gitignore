@@ -12,7 +12,7 @@ dist
 dist-ssr
 *.local
 getCloudinaryPhotos.cjs
-
+getImagekitPhotos.cjs
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

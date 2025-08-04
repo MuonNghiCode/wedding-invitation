@@ -409,11 +409,15 @@ const LoveStorySection = memo(({ language }: LoveStorySectionProps) => {
 
   // Lấy danh sách ảnh từ photoList
   const photoList = getAllPhotoPaths();
-  // Lấy đúng link ảnh T-58 cho chú rể, T-4 cho cô dâu
+
   const groomPhoto =
-    photoList.find((url) => url.includes("/T-117_")) || photoList[0];
+    photoList.find((url) => url.includes("T-117.JPG")) || photoList[0];
   const bridePhoto =
-    photoList.find((url) => url.includes("/T-126_")) || photoList[1];
+    photoList.find((url) => url.includes("T-126.JPG")) || photoList[1];
+
+  // console.log("photoList", photoList);
+  console.log("groomPhoto", groomPhoto);
+  console.log("bridePhoto", bridePhoto);
 
   // Tối ưu vị trí particle chỉ random 1 lần khi mount
   // Giảm số lượng particle trên mobile

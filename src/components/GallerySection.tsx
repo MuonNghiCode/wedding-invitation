@@ -323,7 +323,8 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
         >
           {PHOTOS.map((item, idx) => {
             // Tính toán layout cố định theo idx
-            let colSpan = 1, rowSpan = 1;
+            let colSpan = 1,
+              rowSpan = 1;
             if (isMobile) {
               if (item.full) {
                 colSpan = 2;
@@ -342,12 +343,14 @@ function GallerySection({ lang = "vi" }: { lang?: LangKey }) {
               // Desktop: quy luật theo idx
               const colSpanArr = [1, 2, 3];
               const rowSpanArr = [1, 2];
-              colSpan = idx === 0 || idx === PHOTOS.length - 1
-                ? 3
-                : colSpanArr[idx % colSpanArr.length];
-              rowSpan = idx === 0 || idx === PHOTOS.length - 1
-                ? 2
-                : rowSpanArr[idx % rowSpanArr.length];
+              colSpan =
+                idx === 0 || idx === PHOTOS.length - 1
+                  ? 3
+                  : colSpanArr[idx % colSpanArr.length];
+              rowSpan =
+                idx === 0 || idx === PHOTOS.length - 1
+                  ? 2
+                  : rowSpanArr[idx % rowSpanArr.length];
             }
             const colSpanClass = colSpan === 1 ? "col-span-1" : "col-span-2";
             const rowSpanClass = rowSpan === 1 ? "row-span-1" : "row-span-2";
