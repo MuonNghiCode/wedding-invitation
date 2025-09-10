@@ -63,6 +63,11 @@ const IntroduceSection = memo(
         const now = new Date().getTime();
         const distance = weddingDate.getTime() - now;
 
+        if (distance <= 0) {
+          setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+          clearInterval(timer);
+          return;
+        }
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor(
           (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
